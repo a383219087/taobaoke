@@ -2,5 +2,22 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#2a82bf</color>
+    <color name="white">#ffffff</color>
+    <color name="deep_blue">#2a82bf</color>
+    <color name="blue">#38adff</color>
+    <color name="translate">#00000000</color>
+    <color name="color_bg">#ffffff</color>
+    <color name="text_black">#343434</color>
+    <color name="text_white">#F0F0F0</color>
+    <color name="text_red">#cc3333</color>
+    <color name="gray">#999999</color>
+    <color name="light_gray">#afafaf</color>
+    <color name="ghostwhite">#F8F8FF</color>
+    <color name="login_input_bg">#f0f0f0</color>
+    <color name="main_bottom_tab_bg">#f0f0f0</color>
+    <color name="text_blue">#38adff</color>
+    <color name="chatlist_pressed_color">#ebeced</color>
+    <color name="chatlist_top_color">#ffffff</color>
+    <color name="list_text_color">@color/text_blue</color>
 </resources>
