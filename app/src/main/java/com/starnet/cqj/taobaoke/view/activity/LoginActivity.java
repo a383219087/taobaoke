@@ -1,13 +1,17 @@
 package com.starnet.cqj.taobaoke.view.activity;
 
+import android.text.Editable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.starnet.cqj.taobaoke.R;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 public class LoginActivity extends BaseActivity {
 
@@ -17,6 +21,10 @@ public class LoginActivity extends BaseActivity {
     EditText mEdtPwd;
     @BindView(R.id.login_btn)
     Button mBtnSignIn;
+    @BindView(R.id.account_clear)
+    ImageView mIvAccountClear;
+    @BindView(R.id.pwd_clear)
+    ImageView mIvPwdClear;
 
     @Override
     protected void init() {
@@ -29,14 +37,27 @@ public class LoginActivity extends BaseActivity {
         return R.layout.activity_login;
     }
 
-    @OnClick(R.id.forgetpwd)
-    void forgetPwd(){
-        ForgetPwdActivity.start(this);
+    @Override
+    protected void initEvent() {
+        super.initEvent();
     }
 
-    @OnClick(R.id.regist)
-    void register(){
-        RegisterActivity.start(this);
+    @OnTextChanged(value = R.id.login_username, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void onAccountTextChanged(Editable editable) {
+        if(TextUtils.isEmpty(editable.toString())){
+            mIvAccountClear.setVisibility(View.GONE);
+        }else{
+            mIvAccountClear.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @OnTextChanged(value = R.id.login_pwd, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void onPwdTextChanged(Editable editable) {
+        if(TextUtils.isEmpty(editable.toString())){
+            mIvPwdClear.setVisibility(View.GONE);
+        }else{
+            mIvPwdClear.setVisibility(View.INVISIBLE);
+        }
     }
 
     @OnClick(R.id.login_btn)
@@ -44,8 +65,14 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.wechat_login)
-    void weChatLogin(){
-
+    @OnClick(R.id.account_clear)
+    void accountClear(){
+        mEdtAccount.setText("");
     }
+
+    @OnClick(R.id.pwd_clear)
+    void pwdClear(){
+        mEdtPwd.setText("");
+    }
+
 }

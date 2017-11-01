@@ -62,4 +62,6 @@
     <color name="btn_gray">#d1d1d1</color>
     <color name="glass_gall">#c2ebef</color>
     <color name="light_blue">#87d0f2</color>
+    <color name="edit_stroke_color">#e5e5e5</color>
+    <color name="main_color">#6c75f8</color>
 </resources>

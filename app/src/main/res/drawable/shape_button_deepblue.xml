@@ -18,11 +18,11 @@
         <shape>
             <gradient
                 android:angle="90"
-                android:centerColor="@color/title_bg"
+                android:centerColor="@color/main_color"
                 android:centerX="0.5"
                 android:centerY="0.5"
-                android:endColor="@color/title_bg"
-                android:startColor="@color/title_bg"
+                android:endColor="@color/main_color"
+                android:startColor="@color/main_color"
                 android:type="linear" />
 
             <padding

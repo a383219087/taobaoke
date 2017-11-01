@@ -13,8 +13,6 @@ import com.starnet.cqj.taobaoke.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Administrator on 2017/10/31.
@@ -53,8 +51,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected abstract void init();
-
     @LayoutRes
     protected abstract int getContentView();
+
+    protected abstract void init();
 }
