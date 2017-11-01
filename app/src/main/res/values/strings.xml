@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">design_demo</string>
+    <string name="app_name">淘达人CBK</string>
     <string name="prompt_email">请输入账号</string>
     <string name="prompt_password">请输入密码</string>
     <string name="action_sign_in">登  录</string>
@@ -85,4 +85,5 @@
     <string name="order_detail_title">订单详情</string>
     <string name="all_check_text">全选</string>
     <string name="check_done_commit">提交</string>
+    <string name="forget_pwd">忘记密码</string>
 </resources>

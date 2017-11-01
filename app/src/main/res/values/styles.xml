@@ -20,4 +20,8 @@
         <item name="android:background">#aeaeae</item>
     </style>
 
+    <style name="regist_agree" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/login_issave</item>
+    </style>
+
 </resources>
