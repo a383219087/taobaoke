@@ -1,7 +1,7 @@
-package com.starnet.cqj.taobaoke.view;
+package com.starnet.cqj.taobaoke.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.content.Context;
+import android.content.Intent;
 
 import com.starnet.cqj.taobaoke.R;
 
@@ -16,5 +16,10 @@ public class ForgetPwdActivity extends BaseActivity {
     @Override
     protected int getContentView() {
         return R.layout.activity_forgetpwd;
+    }
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, ForgetPwdActivity.class);
+        context.startActivity(starter);
     }
 }

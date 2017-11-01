@@ -1,18 +1,13 @@
-package com.starnet.cqj.taobaoke.view;
+package com.starnet.cqj.taobaoke.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import retrofit2.Retrofit;
 
 public class LoginActivity extends BaseActivity {
 
@@ -36,15 +31,15 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.forgetpwd)
     void forgetPwd(){
-
+        ForgetPwdActivity.start(this);
     }
 
     @OnClick(R.id.regist)
     void register(){
-
+        RegisterActivity.start(this);
     }
 
-    @OnClick(R.id.email_sign_in_button)
+    @OnClick(R.id.login_btn)
     void login(){
 
     }

@@ -1,7 +1,5 @@
-package com.starnet.cqj.taobaoke.view;
+package com.starnet.cqj.taobaoke.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
@@ -11,15 +9,13 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.all)
-    TextView text;
-
     @Override
     protected void init() {
 
     }
 
-    @OnClick(R.id.basic) void commit(){
+    @Override
+    protected void initEvent() {
 
     }
 

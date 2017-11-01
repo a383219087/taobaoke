@@ -1,10 +1,11 @@
-package com.starnet.cqj.taobaoke.view;
+package com.starnet.cqj.taobaoke.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getContentView());
         ButterKnife.bind(this);
         init();
+        initEvent();
+    }
+
+    protected void initEvent() {
+        if (mIvTitleBack != null) {
+            mIvTitleBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
     }
 
     public void setTitleName(@StringRes int name) {

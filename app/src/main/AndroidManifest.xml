@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.LoginActivity"
+            android:name=".view.activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,9 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ForgetPwdActivity" />
-        <activity android:name=".view.RegisterActivity" />
-        <activity android:name=".view.BindPhoneActivity"></activity>
+        <activity android:name=".view.activity.ForgetPwdActivity" />
+        <activity android:name=".view.activity.RegisterActivity" />
+        <activity android:name=".view.activity.BindPhoneActivity" />
+        <activity android:name=".view.activity.UserAgreementActivity"></activity>
     </application>
 
 </manifest>

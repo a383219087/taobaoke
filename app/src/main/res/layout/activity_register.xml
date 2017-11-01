@@ -128,16 +128,29 @@
 
             <View style="@style/row_line" />
 
-            <CheckBox
-                android:id="@+id/regist_recomer"
-                style="@style/regist_agree"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="    我已同意用户注册协议"
-                android:textColor="@color/btn_blue_normal"
-                android:checked="true"
-                android:textSize="14sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/regist_recomer"
+                    style="@style/regist_agree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:checked="true"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/user_agreement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/btn_blue_normal"
+                    android:text="    我已同意用户注册协议"/>
+
+            </LinearLayout>
 
             <View style="@style/row_line" />
 
