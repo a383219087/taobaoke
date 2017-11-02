@@ -20,9 +20,9 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    @BindView(R.id.title_back)
+    @Nullable @BindView(R.id.title_back)
     ImageView mIvTitleBack;
-    @BindView(R.id.title_name)
+    @Nullable @BindView(R.id.title_name)
     TextView mTvTitleName;
 
     @Override

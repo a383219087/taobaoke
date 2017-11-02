@@ -87,4 +87,6 @@
     <string name="check_done_commit">提交</string>
     <string name="forget_pwd">忘记密码</string>
     <string name="user_agreement">用户协议</string>
+    <string name="unlimited">不限</string>
+    <string name="no_data">没有找到符合条件的信息</string>
 </resources>

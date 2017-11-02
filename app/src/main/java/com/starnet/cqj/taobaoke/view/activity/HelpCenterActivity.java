@@ -1,5 +1,7 @@
 package com.starnet.cqj.taobaoke.view.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -102,5 +104,10 @@ public class HelpCenterActivity extends BaseActivity {
 
     private void getData(int type){
 
+    }
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, HelpCenterActivity.class);
+        context.startActivity(starter);
     }
 }
