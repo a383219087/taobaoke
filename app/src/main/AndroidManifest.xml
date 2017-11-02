@@ -30,6 +30,8 @@
         </activity>
         <activity android:name=".view.activity.MessageListActivity">
         </activity>
+        <activity android:name=".view.activity.ProductListActivity">
+        </activity>
     </application>
 
 </manifest>
