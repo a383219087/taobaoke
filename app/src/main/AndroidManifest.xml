@@ -28,6 +28,8 @@
         </activity>
         <activity android:name=".view.activity.QuestionDetailActivity">
         </activity>
+        <activity android:name=".view.activity.MessageListActivity">
+        </activity>
     </application>
 
 </manifest>
