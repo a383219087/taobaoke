@@ -39,7 +39,7 @@ public class RecyclerBaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerVi
             return;
         }
         mDataList.add(data);
-        notifyItemInserted(mDataList.size()+1);
+        notifyItemInserted(mDataList.size() + 1);
     }
 
     public void insert(T data) {
@@ -69,6 +69,14 @@ public class RecyclerBaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerVi
         mDataList.clear();
         mDataList.addAll(datas);
         notifyDataSetChanged();
+    }
+
+    public void update(T data) {
+        int indexOf = mDataList.indexOf(data);
+        if (indexOf != -1) {
+            mDataList.set(indexOf, data);
+        }
+        notifyItemChanged(indexOf);
     }
 
     public void remove(int position) {

@@ -9,6 +9,7 @@ public class Message {
     private String title;
     private String detail;
     private String content;
+    private String time;
     private boolean isNew;
     private boolean isDelete;
 
@@ -50,5 +51,13 @@ public class Message {
 
     public void setNew(boolean aNew) {
         isNew = aNew;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

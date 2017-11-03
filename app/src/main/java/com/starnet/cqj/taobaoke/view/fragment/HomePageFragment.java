@@ -5,9 +5,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,10 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2017/11/02.
@@ -81,18 +77,15 @@ public class HomePageFragment extends BaseFragment {
     TextView mLookBuyMore;
 
 
-    private Unbinder mUnbinder;
 
     public static HomePageFragment newInstance() {
         return new HomePageFragment();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_homepage, container, false);
-        mUnbinder = ButterKnife.bind(this, view);
-        return view;
+    int getContentRes() {
+        return R.layout.fragment_homepage;
     }
 
     @Override
@@ -120,11 +113,6 @@ public class HomePageFragment extends BaseFragment {
         mRvMainMenu.setAdapter(adapter);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mUnbinder.unbind();
-    }
 
     @OnClick(R.id.homepage_help)
     void toHelp() {
@@ -147,11 +135,6 @@ public class HomePageFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mUnbinder.unbind();
-    }
 
     @OnClick(R.id.look_buy_more)
     public void onViewClicked() {

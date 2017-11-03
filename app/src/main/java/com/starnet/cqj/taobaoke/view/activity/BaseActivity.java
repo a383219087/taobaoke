@@ -13,6 +13,7 @@ import com.starnet.cqj.taobaoke.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by Administrator on 2017/10/31.
@@ -24,6 +25,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     ImageView mIvTitleBack;
     @Nullable @BindView(R.id.title_name)
     TextView mTvTitleName;
+
+    protected CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,4 +58,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract int getContentView();
 
     protected abstract void init();
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mCompositeDisposable.dispose();
+    }
 }

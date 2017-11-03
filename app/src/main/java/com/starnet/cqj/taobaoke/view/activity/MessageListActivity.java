@@ -14,6 +14,8 @@ import com.starnet.cqj.taobaoke.view.widget.SwipeItemLayout;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 public class MessageListActivity extends BaseActivity {
 
@@ -38,6 +40,28 @@ public class MessageListActivity extends BaseActivity {
         mRvMessage.addItemDecoration(new RecyclerItemDecoration());
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_message, MessageHolder.class);
         mRvMessage.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+        mAdapter.itemClickObserve()
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        mCompositeDisposable.add(disposable);
+                    }
+                })
+                .subscribe(new Consumer<Message>() {
+                    @Override
+                    public void accept(Message message) throws Exception {
+                        if(message.isDelete()){
+                            mAdapter.remove(message);
+                        }else{
+                            MessageDetailActivity.start(MessageListActivity.this);
+                        }
+                    }
+                });
     }
 
     @OnClick(R.id.title_rightbutton)
