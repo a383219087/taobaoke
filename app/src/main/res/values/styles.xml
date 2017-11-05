@@ -24,6 +24,10 @@
         <item name="android:button">@drawable/login_issave</item>
     </style>
 
+    <style name="default_address_style" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/default_address_style</item>
+    </style>
+
     <style name="PopupWindowAnimation">
         <item name="android:windowEnterAnimation">@anim/popshow_anim</item>
         <item name="android:windowExitAnimation">@anim/pophidden_anim</item>

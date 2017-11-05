@@ -40,6 +40,17 @@
         </activity>
         <activity android:name=".view.activity.HotDetailActivity">
         </activity>
+        <activity
+            android:name=".view.activity.IntegralDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".view.activity.AddAddressActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".view.activity.AddressListActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

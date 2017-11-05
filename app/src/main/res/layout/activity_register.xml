@@ -197,15 +197,6 @@
                 android:text="注　　册"
                 android:textColor="@color/white" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:gravity="right"
-                android:paddingRight="15dp"
-                android:text="申请成为导游"
-                android:visibility="gone"
-                android:textColor="@color/lightblue" />
         </LinearLayout>
     </ScrollView>
 

@@ -116,4 +116,6 @@
     </string-array>
     <string name="action_title">活动</string>
     <string name="register_title">注册</string>
+    <string name="add_address_title">添加收货地址</string>
+    <string name="receive_address_title">收货地址</string>
 </resources>
