@@ -12,14 +12,12 @@ import com.starnet.cqj.taobaoke.view.widget.SharePopupWindow;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 public class ActionFragment extends BaseFragment {
     @BindView(R.id.title_back)
     ImageView mTitleBack;
     @BindView(R.id.title_name)
     TextView mTitleName;
-    Unbinder unbinder;
 
     public ActionFragment() {
         // Required empty public constructor
@@ -44,11 +42,6 @@ public class ActionFragment extends BaseFragment {
         mTitleName.setText(R.string.action_title);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
     @OnClick({R.id.ll_action_sign, R.id.action_share, R.id.action_buy})
     public void onViewClicked(View view) {

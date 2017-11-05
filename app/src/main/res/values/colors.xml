@@ -68,4 +68,5 @@
     <color name="choose_eara_item_press_color">#f4f4f4</color>
     <color name="main_tab_color">#d1d1d1</color>
     <color name="main_gray">#f5f5f5</color>
+    <color name="mine_btn_color">#e4ba6e</color>
 </resources>

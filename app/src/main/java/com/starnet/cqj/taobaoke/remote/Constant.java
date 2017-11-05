@@ -6,5 +6,5 @@ package com.starnet.cqj.taobaoke.remote;
 
 public class Constant {
 
-    public static final String BASE_URL ="http://192.168.84.123:8088/";
+    public static final String BASE_URL ="http://www.bfija.cn/";
 }

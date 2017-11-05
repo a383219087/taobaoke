@@ -4,8 +4,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.starnet.cqj.taobaoke.R;
-import com.starnet.cqj.taobaoke.model.menu.IMainMenu;
+import com.starnet.cqj.taobaoke.model.MainMenu;
 import com.starnet.cqj.taobaoke.view.adapter.BaseHolder;
 import com.starnet.cqj.taobaoke.view.adapter.IParamContainer;
 
@@ -16,7 +17,7 @@ import butterknife.ButterKnife;
 import io.reactivex.subjects.PublishSubject;
 
 
-public class MainMenuHolder extends BaseHolder<IMainMenu> {
+public class MainMenuHolder extends BaseHolder<MainMenu> {
 
     @BindView(R.id.menu_icon)
     ImageView mMenuIcon;
@@ -31,15 +32,18 @@ public class MainMenuHolder extends BaseHolder<IMainMenu> {
     }
 
     @Override
-    public void bind(List<IMainMenu> data, int position, IParamContainer container, PublishSubject<IMainMenu> itemClick) {
-        final IMainMenu mainMenu = data.get(position);
+    public void bind(List<MainMenu> data, int position, IParamContainer container, PublishSubject<MainMenu> itemClick) {
+        final MainMenu mainMenu = data.get(position);
         if (mainMenu != null) {
-            mMenuIcon.setImageResource(mainMenu.getDrawable());
+            Glide
+                    .with(itemView.getContext())
+                    .load(mainMenu.getPic())
+                    .into(mMenuIcon);
             mMenuName.setText(mainMenu.getName());
             mItemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mainMenu.onClick();
+
                 }
             });
         }

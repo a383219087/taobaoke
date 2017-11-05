@@ -115,4 +115,5 @@
         <item>价格最低</item>
     </string-array>
     <string name="action_title">活动</string>
+    <string name="register_title">注册</string>
 </resources>

@@ -1,8 +1,8 @@
 package com.starnet.cqj.taobaoke.view.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,36 +11,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.starnet.cqj.taobaoke.R;
-import com.starnet.cqj.taobaoke.model.menu.Baby;
-import com.starnet.cqj.taobaoke.model.menu.CarAccessory;
-import com.starnet.cqj.taobaoke.model.menu.Cosmetic;
-import com.starnet.cqj.taobaoke.model.menu.Foods;
-import com.starnet.cqj.taobaoke.model.menu.Furniture;
-import com.starnet.cqj.taobaoke.model.menu.IMainMenu;
-import com.starnet.cqj.taobaoke.model.menu.Machine;
-import com.starnet.cqj.taobaoke.model.menu.ManClothes;
-import com.starnet.cqj.taobaoke.model.menu.Shoe;
-import com.starnet.cqj.taobaoke.model.menu.Underwear;
-import com.starnet.cqj.taobaoke.model.menu.WomenClothes;
+import com.starnet.cqj.taobaoke.model.MainMenu;
+import com.starnet.cqj.taobaoke.presenter.IHomePagePresenter;
+import com.starnet.cqj.taobaoke.presenter.impl.HomePagePresenterImpl;
 import com.starnet.cqj.taobaoke.view.activity.HelpCenterActivity;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.MainMenuHolder;
 import com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2017/11/02.
  */
 
-public class HomePageFragment extends BaseFragment {
+public class HomePageFragment extends BaseFragment implements IHomePagePresenter.IView{
 
 
     @BindView(R.id.home_search_edit)
@@ -75,7 +66,11 @@ public class HomePageFragment extends BaseFragment {
     RecyclerView mRvGoodsRecommend;
     @BindView(R.id.look_buy_more)
     TextView mLookBuyMore;
+    @BindView(R.id.home_tab_rg)
+    RadioGroup mHomeTabRg;
 
+    private RecyclerBaseAdapter<MainMenu, MainMenuHolder> mAdapter;
+    private IHomePagePresenter mHomePagePresenter;
 
 
     public static HomePageFragment newInstance() {
@@ -91,28 +86,33 @@ public class HomePageFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mHomePagePresenter = new HomePagePresenterImpl(this);
         initMenu();
+        initEvent();
     }
 
     private void initMenu() {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 5);
         mRvMainMenu.setLayoutManager(layoutManager);
-        List<IMainMenu> mainMenuList = new ArrayList<>();
-        mainMenuList.add(new WomenClothes());
-        mainMenuList.add(new ManClothes());
-        mainMenuList.add(new Underwear());
-        mainMenuList.add(new Baby());
-        mainMenuList.add(new Cosmetic());
-        mainMenuList.add(new Furniture());
-        mainMenuList.add(new Shoe());
-        mainMenuList.add(new Foods());
-        mainMenuList.add(new CarAccessory());
-        mainMenuList.add(new Machine());
-        RecyclerBaseAdapter<IMainMenu, MainMenuHolder> adapter = new RecyclerBaseAdapter<>(R.layout.item_main_menu, MainMenuHolder.class);
-        adapter.setAll(mainMenuList);
-        mRvMainMenu.setAdapter(adapter);
+        mAdapter = new RecyclerBaseAdapter<>(R.layout.item_main_menu, MainMenuHolder.class);
+        mRvMainMenu.setAdapter(mAdapter);
+        mHomePagePresenter.getCategory();
     }
 
+    private void initEvent() {
+        mHomeTabRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i == R.id.home_tab_rb1) {
+                    mTabContent.setVisibility(View.VISIBLE);
+                    mTabOther.setVisibility(View.GONE);
+                } else {
+                    mTabContent.setVisibility(View.GONE);
+                    mTabOther.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
 
     @OnClick(R.id.homepage_help)
     void toHelp() {
@@ -124,19 +124,24 @@ public class HomePageFragment extends BaseFragment {
         HelpCenterActivity.start(getActivity());
     }
 
-    @OnCheckedChanged(R.id.home_tab_rg)
-    void onCheckChanged(RadioGroup group, @IdRes int checkedId) {
-        if (checkedId == R.id.home_tab_rb1) {
-            mTabContent.setVisibility(View.VISIBLE);
-            mTabOther.setVisibility(View.GONE);
-        } else {
-            mTabContent.setVisibility(View.GONE);
-            mTabOther.setVisibility(View.VISIBLE);
-        }
-    }
 
 
     @OnClick(R.id.look_buy_more)
     public void onViewClicked() {
+    }
+
+    @Override
+    public void setCategoryList(List<MainMenu> mainMenuList) {
+        mAdapter.setAll(mainMenuList);
+    }
+
+    @Override
+    public void toast(String res) {
+        Toast.makeText(getActivity(), res, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void toast(@StringRes int res) {
+        Toast.makeText(getActivity(), res, Toast.LENGTH_SHORT).show();
     }
 }
