@@ -51,6 +51,10 @@
         <activity
             android:name=".view.activity.AddressListActivity"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".view.activity.IntegralStoreActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

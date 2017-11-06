@@ -118,4 +118,5 @@
     <string name="register_title">注册</string>
     <string name="add_address_title">添加收货地址</string>
     <string name="receive_address_title">收货地址</string>
+    <string name="integral_store_title">积分商城</string>
 </resources>
