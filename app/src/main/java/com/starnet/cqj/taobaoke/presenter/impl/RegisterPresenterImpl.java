@@ -5,6 +5,8 @@ import com.starnet.cqj.taobaoke.presenter.BasePresenterImpl;
 import com.starnet.cqj.taobaoke.presenter.IRegisterPresenter;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 
+import java.util.List;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -26,14 +28,14 @@ public class RegisterPresenterImpl extends BasePresenterImpl implements IRegiste
                 .sendSMS(mobile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<JsonCommon<String>>() {
+                .subscribe(new Observer<JsonCommon<List<String>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(JsonCommon<String> value) {
+                    public void onNext(JsonCommon<List<String>> value) {
                         String code = value.getCode();
                         if ("200".equals(code)) {
                             mViewCallback.onGetCode();
@@ -61,14 +63,14 @@ public class RegisterPresenterImpl extends BasePresenterImpl implements IRegiste
                 .register(mobile, pwd, nickName,code)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<JsonCommon<String>>() {
+                .subscribe(new Observer<JsonCommon<List<String>>>() {
                     @Override
                     public void onSubscribe(Disposable disposable) {
                         mCompositeDisposable.add(disposable);
                     }
 
                     @Override
-                    public void onNext(JsonCommon<String> stringJsonCommon) {
+                    public void onNext(JsonCommon<List<String>> stringJsonCommon) {
                         String code = stringJsonCommon.getCode();
                         if ("200".equals(code)) {
                             mViewCallback.onRegisterSuccess();

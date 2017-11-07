@@ -36,8 +36,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:background="@null"
-                    android:maxLength="12"
-                    android:inputType="phone"
+                    android:maxLines="1"
                     android:hint="请输入您的昵称"
                     android:textSize="14sp" />
             </LinearLayout>

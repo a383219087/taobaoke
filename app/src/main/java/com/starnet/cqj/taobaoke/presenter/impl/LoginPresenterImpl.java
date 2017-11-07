@@ -4,8 +4,9 @@ import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.User;
 import com.starnet.cqj.taobaoke.presenter.BasePresenterImpl;
 import com.starnet.cqj.taobaoke.presenter.ILoginPresenter;
-import com.starnet.cqj.taobaoke.remote.CodeParser;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
+
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -30,19 +31,19 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
                 .login(mobile, pwd, "0")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<JsonCommon<User>>() {
+                .subscribe(new Observer<JsonCommon<List<User>>>() {
                     @Override
                     public void onSubscribe(Disposable disposable) {
                         mCompositeDisposable.add(disposable);
                     }
 
                     @Override
-                    public void onNext(JsonCommon<User> userJsonCommon) {
+                    public void onNext(JsonCommon<List<User>> userJsonCommon) {
                         String code = userJsonCommon.getCode();
                         if ("200".equals(code)) {
-                            mViewCallback.onLoginSuccess(userJsonCommon.getData());
+                            mViewCallback.onLoginSuccess(userJsonCommon.getData().get(0));
                         } else {
-                            mViewCallback.toast(CodeParser.parse(code));
+                            mViewCallback.toast(userJsonCommon.getMessage());
                         }
                     }
 

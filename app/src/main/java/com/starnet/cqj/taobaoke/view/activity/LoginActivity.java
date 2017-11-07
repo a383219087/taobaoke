@@ -3,6 +3,7 @@ package com.starnet.cqj.taobaoke.view.activity;
 import android.support.annotation.StringRes;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,11 @@ import com.starnet.cqj.taobaoke.model.User;
 import com.starnet.cqj.taobaoke.presenter.ILoginPresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.LoginPresenterImpl;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,7 +63,7 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
         if (TextUtils.isEmpty(editable.toString())) {
             mIvAccountClear.setVisibility(View.GONE);
         } else {
-            mIvAccountClear.setVisibility(View.INVISIBLE);
+            mIvAccountClear.setVisibility(View.VISIBLE);
         }
     }
 
@@ -66,7 +72,7 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
         if (TextUtils.isEmpty(editable.toString())) {
             mIvPwdClear.setVisibility(View.GONE);
         } else {
-            mIvPwdClear.setVisibility(View.INVISIBLE);
+            mIvPwdClear.setVisibility(View.VISIBLE);
         }
     }
 
@@ -83,6 +89,14 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
             case R.id.login_btn:
                 String mobile = mEdtAccount.getText().toString();
                 String pwd = mEdtPwd.getText().toString();
+                if(TextUtils.isEmpty(mobile)){
+                    toast("请输入账号");
+                    return;
+                }
+                if(TextUtils.isEmpty(pwd)){
+                    toast("请输入密码");
+                    return;
+                }
                 mPresenter.login(mobile, pwd);
                 break;
             case R.id.forgetpwd:
@@ -92,10 +106,34 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
                 RegisterActivity.start(this);
                 break;
             case R.id.wechat_login:
+                UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
+                    @Override
+                    public void onStart(SHARE_MEDIA share_media) {
+                        Log.e(TAG, "onStart: ");
+                    }
+
+                    @Override
+                    public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                        Log.e(TAG, "onComplete: "+map.toString());
+                    }
+
+                    @Override
+                    public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                        Log.e(TAG, "onError: ",throwable);
+                        throwable.printStackTrace();
+                    }
+
+                    @Override
+                    public void onCancel(SHARE_MEDIA share_media, int i) {
+                        Log.e(TAG, "onCancel: ");
+                    }
+                });
                 break;
         }
     }
 
+    private static final String TAG = "LoginActivity";
+    
     @Override
     public void toast(String res) {
         Toast.makeText(this, res, Toast.LENGTH_SHORT).show();

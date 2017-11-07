@@ -17,6 +17,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    signingConfigs {
+        debug {
+            storeFile file('taobaoke.jks')
+            storePassword "123456"
+            keyAlias "keystore"
+            keyPassword "123456"
+        }
+
+    }
 }
 
 dependencies {
