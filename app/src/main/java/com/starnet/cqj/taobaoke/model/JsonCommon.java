@@ -1,7 +1,5 @@
 package com.starnet.cqj.taobaoke.model;
 
-import java.util.List;
-
 /**
  * Created by mini on 17/11/5.
  */
@@ -10,7 +8,9 @@ public class JsonCommon<T> {
 
     private String code;
 
-    private List<T> data;
+    private String message;
+
+    private T data;
 
     public String getCode() {
         return code;
@@ -20,11 +20,19 @@ public class JsonCommon<T> {
         this.code = code;
     }
 
-    public List<T> getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(List<T> data) {
+    public void setData(T data) {
         this.data = data;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

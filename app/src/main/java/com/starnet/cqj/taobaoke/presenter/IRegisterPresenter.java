@@ -10,9 +10,15 @@ public interface IRegisterPresenter extends BasePresenter {
 
     void register(String mobile, String pwd, String nickName);
 
+    void verifyCode(String mobile,String code);
+
     interface IView extends BasePresenter.IView {
 
-        void getSMSCode(String code);
+        void onGetCode();
+
+        void onVerifySuccess();
+
+        void onRegisterSuccess();
 
     }
 }

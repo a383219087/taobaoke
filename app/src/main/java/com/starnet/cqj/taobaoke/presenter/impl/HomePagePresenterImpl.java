@@ -2,9 +2,11 @@ package com.starnet.cqj.taobaoke.presenter.impl;
 
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.MainMenu;
+import com.starnet.cqj.taobaoke.presenter.BasePresenterImpl;
 import com.starnet.cqj.taobaoke.presenter.IHomePagePresenter;
-import com.starnet.cqj.taobaoke.presenter.RxJavaDisposeHelper;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
+
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -14,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by mini on 17/11/4.
  */
-public class HomePagePresenterImpl extends RxJavaDisposeHelper implements IHomePagePresenter {
+public class HomePagePresenterImpl extends BasePresenterImpl implements IHomePagePresenter {
 
     private IView mViewCallback;
 
@@ -29,14 +31,14 @@ public class HomePagePresenterImpl extends RxJavaDisposeHelper implements IHomeP
         RemoteDataSourceBase.INSTANCE.getHomePageService().getCategory()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<JsonCommon<MainMenu>>() {
+                .subscribe(new Observer<JsonCommon<List<MainMenu>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(JsonCommon<MainMenu> value) {
+                    public void onNext(JsonCommon<List<MainMenu>> value) {
                         if (value.getCode().equals("200")) {
                             mViewCallback.setCategoryList(value.getData());
                         }

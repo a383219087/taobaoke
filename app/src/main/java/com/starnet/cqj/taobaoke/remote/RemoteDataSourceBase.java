@@ -2,6 +2,9 @@ package com.starnet.cqj.taobaoke.remote;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.starnet.cqj.taobaoke.remote.i.ICommonService;
+import com.starnet.cqj.taobaoke.remote.i.IHomePageService;
+import com.starnet.cqj.taobaoke.remote.i.ILoginService;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;

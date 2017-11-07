@@ -1,9 +1,9 @@
 package com.starnet.cqj.taobaoke.presenter.impl;
 
-import android.util.Log;
-
+import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.presenter.IRegisterPresenter;
-import com.starnet.cqj.taobaoke.presenter.RxJavaDisposeHelper;
+import com.starnet.cqj.taobaoke.presenter.BasePresenterImpl;
+import com.starnet.cqj.taobaoke.remote.CodeParser;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 
 import io.reactivex.Observer;
@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by mini on 17/11/4.
  */
-public class RegisterPresenterImpl extends RxJavaDisposeHelper implements IRegisterPresenter {
+public class RegisterPresenterImpl extends BasePresenterImpl implements IRegisterPresenter {
 
     private IView mViewCallback;
 
@@ -30,20 +30,26 @@ public class RegisterPresenterImpl extends RxJavaDisposeHelper implements IRegis
                 .sendSMS(mobile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<String>() {
+                .subscribe(new Observer<JsonCommon<String>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(String value) {
-                        Log.e(TAG, "onNext: " + value);
+                    public void onNext(JsonCommon<String> value) {
+                        String code = value.getCode();
+                        if ("200".equals(code)) {
+                            mViewCallback.onGetCode();
+                            mViewCallback.toast("验证码已下发到您手机号");
+                        } else {
+                            mViewCallback.toast(CodeParser.parse(code));
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -55,7 +61,70 @@ public class RegisterPresenterImpl extends RxJavaDisposeHelper implements IRegis
 
     @Override
     public void register(String mobile, String pwd, String nickName) {
+        RemoteDataSourceBase.INSTANCE.getLoginService()
+                .register(mobile, pwd, nickName)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<JsonCommon<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable disposable) {
+                        mCompositeDisposable.add(disposable);
+                    }
 
+                    @Override
+                    public void onNext(JsonCommon<String> stringJsonCommon) {
+                        String code = stringJsonCommon.getCode();
+                        if ("200".equals(code)) {
+                            mViewCallback.onRegisterSuccess();
+                        } else {
+                            mViewCallback.toast(CodeParser.parse(code));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void verifyCode(String mobile, String code) {
+        RemoteDataSourceBase.INSTANCE.getCommonService()
+                .verifySMS(mobile,code)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<JsonCommon<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable disposable) {
+                        mCompositeDisposable.add(disposable);
+                    }
+
+                    @Override
+                    public void onNext(JsonCommon<String> stringJsonCommon) {
+                        String code = stringJsonCommon.getCode();
+                        if ("200".equals(code)) {
+                            mViewCallback.onVerifySuccess();
+                        } else {
+                            mViewCallback.toast(CodeParser.parse(code));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override

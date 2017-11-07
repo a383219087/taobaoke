@@ -3,6 +3,7 @@ package com.starnet.cqj.taobaoke.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.StringRes;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -39,6 +40,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
     TextView mUserAgreement;
     @BindView(R.id.recommend_id)
     EditText mRecommendId;
+    @BindView(R.id.regist_nick)
+    EditText mEdtNickName;
     @BindView(R.id.recom_ln)
     LinearLayout mRecomLn;
     @BindView(R.id.regist_commit)
@@ -70,7 +73,6 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
                 String mobile = mRegistUsername.getText().toString();
                 if (StringUtils.isPhone(mobile)) {
                     mRegisterPresenter.sendSMS(mobile);
-                    mRegistGetCode.start();
                 } else {
                     toast("请输入正确的电话号码");
                 }
@@ -79,8 +81,42 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
                 UserAgreementActivity.start(this);
                 break;
             case R.id.regist_commit:
+                register();
                 break;
         }
+    }
+
+    private void register() {
+        String mobile = mRegistUsername.getText().toString();
+        String pwd = mRegistPwd.getText().toString();
+        String pwdAgain = mRegistPwdagain.getText().toString();
+        String code = mRegistCodeEdt.getText().toString();
+        String nickName = mEdtNickName.getText().toString();
+        if(TextUtils.isEmpty(mobile)){
+            toast("请输入电话号码");
+            return;
+        }
+        if(TextUtils.isEmpty(pwd)){
+            toast("请输入密码");
+            return;
+        }
+        if(TextUtils.isEmpty(pwdAgain)){
+            toast("请再次输入密码");
+            return;
+        }
+        if(TextUtils.isEmpty(nickName)){
+            toast("请输入昵称");
+            return;
+        }
+        if(!mRegistRecomer.isChecked()){
+            toast("请详细阅读并同意注册协议");
+            return;
+        }
+        if(!pwd.equals(pwdAgain)){
+            toast("两次输入的密码不一致");
+            return;
+        }
+        mRegisterPresenter.verifyCode(mobile,code);
     }
 
 
@@ -95,8 +131,22 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
     }
 
     @Override
-    public void getSMSCode(String code) {
+    public void onGetCode() {
+        mRegistGetCode.start();
+    }
 
+    @Override
+    public void onVerifySuccess() {
+        String mobile = mRegistUsername.getText().toString();
+        String pwd = mRegistPwd.getText().toString();
+        String nickName = mEdtNickName.getText().toString();
+        mRegisterPresenter.register(mobile,pwd,nickName);
+    }
+
+    @Override
+    public void onRegisterSuccess() {
+        toast("注册成功");
+        finish();
     }
 
     @Override

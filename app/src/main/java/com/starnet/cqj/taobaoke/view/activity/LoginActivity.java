@@ -1,19 +1,25 @@
 package com.starnet.cqj.taobaoke.view.activity;
 
+import android.support.annotation.StringRes;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.starnet.cqj.taobaoke.R;
+import com.starnet.cqj.taobaoke.model.User;
+import com.starnet.cqj.taobaoke.presenter.ILoginPresenter;
+import com.starnet.cqj.taobaoke.presenter.impl.LoginPresenterImpl;
+import com.starnet.cqj.taobaoke.view.BaseApplication;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements ILoginPresenter.IView {
 
     @BindView(R.id.login_username)
     EditText mEdtAccount;
@@ -25,6 +31,7 @@ public class LoginActivity extends BaseActivity {
     ImageView mIvAccountClear;
     @BindView(R.id.pwd_clear)
     ImageView mIvPwdClear;
+    private ILoginPresenter mPresenter;
 
     @Override
     protected void init() {
@@ -32,6 +39,7 @@ public class LoginActivity extends BaseActivity {
             mIvTitleBack.setVisibility(View.GONE);
         }
         setTitleName(R.string.app_name);
+        mPresenter = new LoginPresenterImpl(this);
     }
 
     @Override
@@ -73,9 +81,12 @@ public class LoginActivity extends BaseActivity {
                 mEdtPwd.setText("");
                 break;
             case R.id.login_btn:
-                MainActivity.start(this);
+                String mobile = mEdtAccount.getText().toString();
+                String pwd = mEdtPwd.getText().toString();
+                mPresenter.login(mobile, pwd);
                 break;
             case R.id.forgetpwd:
+                ForgetPwdActivity.start(this);
                 break;
             case R.id.regist:
                 RegisterActivity.start(this);
@@ -83,5 +94,22 @@ public class LoginActivity extends BaseActivity {
             case R.id.wechat_login:
                 break;
         }
+    }
+
+    @Override
+    public void toast(String res) {
+        Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void toast(@StringRes int res) {
+        Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLoginSuccess(User user) {
+        ((BaseApplication) getApplication()).user = user;
+        MainActivity.start(this);
+        finish();
     }
 }

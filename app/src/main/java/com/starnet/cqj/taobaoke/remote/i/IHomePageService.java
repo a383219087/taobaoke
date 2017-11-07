@@ -1,7 +1,9 @@
-package com.starnet.cqj.taobaoke.remote;
+package com.starnet.cqj.taobaoke.remote.i;
 
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.MainMenu;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.POST;
@@ -13,5 +15,5 @@ import retrofit2.http.POST;
 public interface IHomePageService {
 
     @POST("/category")
-    Observable<JsonCommon<MainMenu>> getCategory();
+    Observable<JsonCommon<List<MainMenu>>> getCategory();
 }
