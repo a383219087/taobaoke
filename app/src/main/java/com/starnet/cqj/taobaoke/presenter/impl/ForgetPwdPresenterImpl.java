@@ -2,7 +2,7 @@ package com.starnet.cqj.taobaoke.presenter.impl;
 
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.presenter.BasePresenterImpl;
-import com.starnet.cqj.taobaoke.presenter.IRegisterPresenter;
+import com.starnet.cqj.taobaoke.presenter.IForgetPwdPresenter;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 
 import io.reactivex.Observer;
@@ -10,15 +10,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class RegisterPresenterImpl extends BasePresenterImpl implements IRegisterPresenter {
+
+public class ForgetPwdPresenterImpl extends BasePresenterImpl implements IForgetPwdPresenter {
 
     private IView mViewCallback;
 
-    public RegisterPresenterImpl(IView viewCallback) {
+    public ForgetPwdPresenterImpl(IView viewCallback) {
         mViewCallback = viewCallback;
     }
-
-    private static final String TAG = "RegisterPresenterImpl";
 
     @Override
     public void sendSMS(String mobile) {
@@ -56,30 +55,29 @@ public class RegisterPresenterImpl extends BasePresenterImpl implements IRegiste
     }
 
     @Override
-    public void register(String mobile, String pwd, String nickName,String code) {
+    public void reset(String mobile, String pwd, String pwdAgain, String code) {
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .register(mobile, pwd, nickName,code)
-                .subscribeOn(Schedulers.io())
+                .resetPwd(mobile, pwd, pwdAgain, code)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<JsonCommon<String>>() {
                     @Override
-                    public void onSubscribe(Disposable disposable) {
-                        mCompositeDisposable.add(disposable);
+                    public void onSubscribe(Disposable d) {
+                        mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(JsonCommon<String> stringJsonCommon) {
-                        String code = stringJsonCommon.getCode();
+                    public void onNext(JsonCommon<String> value) {
+                        String code = value.getCode();
                         if ("200".equals(code)) {
-                            mViewCallback.onRegisterSuccess();
+                            mViewCallback.onResetSuccess();
                         } else {
-                            mViewCallback.toast(stringJsonCommon.getMessage());
+                            mViewCallback.toast(value.getMessage());
                         }
                     }
 
                     @Override
-                    public void onError(Throwable throwable) {
-                        throwable.printStackTrace();
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -89,42 +87,8 @@ public class RegisterPresenterImpl extends BasePresenterImpl implements IRegiste
                 });
     }
 
-//    @Override
-//    public void verifyCode(String mobile, String code) {
-//        RemoteDataSourceBase.INSTANCE.getCommonService()
-//                .verifySMS(mobile,code)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<JsonCommon<String>>() {
-//                    @Override
-//                    public void onSubscribe(Disposable disposable) {
-//                        mCompositeDisposable.add(disposable);
-//                    }
-//
-//                    @Override
-//                    public void onNext(JsonCommon<String> stringJsonCommon) {
-//                        String code = stringJsonCommon.getCode();
-//                        if ("200".equals(code)) {
-//                            mViewCallback.onVerifySuccess();
-//                        } else {
-//                            mViewCallback.toast(CodeParser.parse(code));
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable throwable) {
-//                        throwable.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//    }
-
     @Override
     public void onDestroy() {
-        super.onDestroy();
+
     }
 }

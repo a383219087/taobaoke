@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.starnet.cqj.taobaoke.R;
 
@@ -19,7 +20,7 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by Administrator on 2017/10/31.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity{
 
     @Nullable @BindView(R.id.title_back)
     ImageView mIvTitleBack;
@@ -63,5 +64,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mCompositeDisposable.dispose();
+    }
+
+    public void toast(String res) {
+        Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
+    }
+
+    public void toast(@StringRes int res) {
+        Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
     }
 }

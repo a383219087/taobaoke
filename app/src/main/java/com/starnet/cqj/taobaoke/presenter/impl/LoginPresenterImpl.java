@@ -26,7 +26,7 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
 
     @Override
     public void login(String mobile, String pwd) {
-        RemoteDataSourceBase.INSTANCE.getLoginService()
+        RemoteDataSourceBase.INSTANCE.getUserService()
                 .login(mobile, pwd, "0")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -5,11 +5,8 @@ import android.content.Intent;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.starnet.cqj.taobaoke.R;
@@ -36,16 +33,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
     EditText mRegistPwdagain;
     @BindView(R.id.regist_recomer)
     CheckBox mRegistRecomer;
-    @BindView(R.id.user_agreement)
-    TextView mUserAgreement;
-    @BindView(R.id.recommend_id)
-    EditText mRecommendId;
     @BindView(R.id.regist_nick)
     EditText mEdtNickName;
-    @BindView(R.id.recom_ln)
-    LinearLayout mRecomLn;
-    @BindView(R.id.regist_commit)
-    Button mRegistCommit;
 
     private IRegisterPresenter mRegisterPresenter;
 
@@ -92,31 +81,35 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
         String pwdAgain = mRegistPwdagain.getText().toString();
         String code = mRegistCodeEdt.getText().toString();
         String nickName = mEdtNickName.getText().toString();
-        if(TextUtils.isEmpty(mobile)){
+        if (TextUtils.isEmpty(mobile)) {
             toast("请输入电话号码");
             return;
         }
-        if(TextUtils.isEmpty(pwd)){
+        if (TextUtils.isEmpty(pwd)) {
             toast("请输入密码");
             return;
         }
-        if(TextUtils.isEmpty(pwdAgain)){
+        if (TextUtils.isEmpty(pwdAgain)) {
             toast("请再次输入密码");
             return;
         }
-        if(TextUtils.isEmpty(nickName)){
+        if (TextUtils.isEmpty(code)) {
+            toast("请输入验证码");
+            return;
+        }
+        if (TextUtils.isEmpty(nickName)) {
             toast("请输入昵称");
             return;
         }
-        if(!mRegistRecomer.isChecked()){
+        if (!mRegistRecomer.isChecked()) {
             toast("请详细阅读并同意注册协议");
             return;
         }
-        if(!pwd.equals(pwdAgain)){
+        if (!pwd.equals(pwdAgain)) {
             toast("两次输入的密码不一致");
             return;
         }
-        mRegisterPresenter.verifyCode(mobile,code);
+        mRegisterPresenter.register(mobile, pwd, nickName, code);
     }
 
 
@@ -133,14 +126,6 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
     @Override
     public void onGetCode() {
         mRegistGetCode.start();
-    }
-
-    @Override
-    public void onVerifySuccess() {
-        String mobile = mRegistUsername.getText().toString();
-        String pwd = mRegistPwd.getText().toString();
-        String nickName = mEdtNickName.getText().toString();
-        mRegisterPresenter.register(mobile,pwd,nickName);
     }
 
     @Override

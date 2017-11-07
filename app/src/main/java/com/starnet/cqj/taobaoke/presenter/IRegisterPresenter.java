@@ -8,15 +8,15 @@ public interface IRegisterPresenter extends BasePresenter {
 
     void sendSMS(String mobile);
 
-    void register(String mobile, String pwd, String nickName);
+    void register(String mobile, String pwd, String nickName,String code);
 
-    void verifyCode(String mobile,String code);
+//    void verifyCode(String mobile,String code);
 
     interface IView extends BasePresenter.IView {
 
         void onGetCode();
 
-        void onVerifySuccess();
+//        void onVerifySuccess();
 
         void onRegisterSuccess();
 
