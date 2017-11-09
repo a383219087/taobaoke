@@ -2,6 +2,7 @@ package com.starnet.cqj.taobaoke.view.adapter.viewholder;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
@@ -12,7 +13,6 @@ import com.starnet.cqj.taobaoke.view.adapter.IParamContainer;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.subjects.PublishSubject;
 
 /**
@@ -29,12 +29,11 @@ public class MessageHolder extends BaseHolder<Message> {
     ImageView mIvMessageNew;
     @BindView(R.id.tv_message_delete)
     TextView mTvMessageDelete;
-    private View mItemView;
+    @BindView(R.id.ll_message_click)
+    LinearLayout mLlClick;
 
     public MessageHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this, itemView);
-        mItemView = itemView;
     }
 
     @Override
@@ -48,7 +47,7 @@ public class MessageHolder extends BaseHolder<Message> {
             } else {
                 mIvMessageNew.setVisibility(View.GONE);
             }
-            mItemView.setOnClickListener(new View.OnClickListener() {
+            mLlClick.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     itemClick.onNext(message);

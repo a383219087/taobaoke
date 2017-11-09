@@ -70,4 +70,6 @@
     <color name="main_gray">#f5f5f5</color>
     <color name="mine_btn_color">#e4ba6e</color>
     <color name="product_item_red_text">#ff186a</color>
+    <color name="search_bg">#f8f8f8</color>
+    <color name="message_price_text_color">#ed6b46</color>
 </resources>

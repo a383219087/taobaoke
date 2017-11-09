@@ -6,8 +6,6 @@ import com.starnet.cqj.taobaoke.presenter.BasePresenterImpl;
 import com.starnet.cqj.taobaoke.presenter.ILoginPresenter;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 
-import java.util.List;
-
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -31,17 +29,17 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
                 .login(mobile, pwd, "0")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<JsonCommon<List<User>>>() {
+                .subscribe(new Observer<JsonCommon<User>>() {
                     @Override
                     public void onSubscribe(Disposable disposable) {
                         mCompositeDisposable.add(disposable);
                     }
 
                     @Override
-                    public void onNext(JsonCommon<List<User>> userJsonCommon) {
+                    public void onNext(JsonCommon<User> userJsonCommon) {
                         String code = userJsonCommon.getCode();
                         if ("200".equals(code)) {
-                            mViewCallback.onLoginSuccess(userJsonCommon.getData().get(0));
+                            mViewCallback.onLoginSuccess(userJsonCommon.getData());
                         } else {
                             mViewCallback.toast(userJsonCommon.getMessage());
                         }

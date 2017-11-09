@@ -6,5 +6,7 @@ package com.starnet.cqj.taobaoke.remote;
 
 public class Constant {
 
-    public static final String BASE_URL ="http://www.bfija.cn/";
+    public static final String BASE_URL ="http://api.bfija.cn/";
+
+    public static final String COMMON_PREFERENCE_NAME ="tdr";
 }

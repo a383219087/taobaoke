@@ -25,11 +25,8 @@ public class SortHolder extends BaseHolder<ProductSort> {
     @BindView(R.id.iv_sort_check)
     ImageView mIvSortCheck;
 
-    private View mItemView;
-
     public SortHolder(View itemView) {
         super(itemView);
-        mItemView = itemView;
     }
 
     @Override

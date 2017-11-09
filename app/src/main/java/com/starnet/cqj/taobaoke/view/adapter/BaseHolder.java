@@ -5,6 +5,7 @@ import android.view.View;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
 import io.reactivex.subjects.PublishSubject;
 
 /**
@@ -13,8 +14,12 @@ import io.reactivex.subjects.PublishSubject;
 public abstract class BaseHolder<T> extends RecyclerView.ViewHolder{
 
 
+    protected View mItemView;
+
     public BaseHolder(View itemView) {
         super(itemView);
+        mItemView = itemView;
+        ButterKnife.bind(this, itemView);
     }
 
     public abstract void bind(List<T> data, int position, IParamContainer container, PublishSubject<T> itemClick);

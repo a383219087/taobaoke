@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:src="@drawable/taoqianggou_icon"/>
@@ -41,7 +41,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="120dp"
+                android:layout_width="105dp"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/default_padding"
                 android:layout_marginTop="16dp"
@@ -51,8 +51,9 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="80dp"
                 android:layout_margin="6dp"
+                android:layout_gravity="center"
                 android:src="@drawable/discounts_icon"
                 android:scaleType="centerCrop"
                 android:id="@+id/discounts_link"/>
@@ -74,7 +75,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
-                    android:padding="4dp"
+                    android:padding="8dp"
                     android:src="@drawable/brand_icon"/>
 
                 <ImageView
@@ -96,12 +97,12 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
-                    android:padding="4dp"
+                    android:padding="8dp"
                     android:src="@drawable/must_buy_icon"/>
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="45dp"
                     android:src="@drawable/must_buy_test_icon"
                     android:id="@+id/must_buy_link"/>
 

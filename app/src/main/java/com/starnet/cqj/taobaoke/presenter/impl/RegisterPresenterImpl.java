@@ -58,9 +58,9 @@ public class RegisterPresenterImpl extends BasePresenterImpl implements IRegiste
     }
 
     @Override
-    public void register(String mobile, String pwd, String nickName,String code) {
+    public void register(String mobile, String pwd, String nickName, String code) {
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .register(mobile, pwd, nickName,code)
+                .register(mobile, pwd, pwd, nickName, code)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<JsonCommon<List<String>>>() {

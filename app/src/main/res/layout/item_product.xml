@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical">
 
     <RelativeLayout
@@ -9,6 +9,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/iv_product"
             android:layout_width="175dp"
             android:layout_height="175dp"
             android:src="@drawable/product_test"
@@ -18,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
+            android:layout_marginTop="1dp"
             android:background="@drawable/product_discounts_bg"
             android:gravity="center"
             android:orientation="vertical">
@@ -69,7 +71,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
+        android:layerType="software"
         android:background="@drawable/imaginary_line"/>
 
     <LinearLayout

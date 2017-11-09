@@ -25,11 +25,8 @@ public class ClassifyHolder extends BaseHolder<String> {
     @BindView(R.id.tv_item_classify)
     AppCompatButton mTvItemClassify;
 
-    private View mItemView;
-
     public ClassifyHolder(View itemView) {
         super(itemView);
-        mItemView = itemView;
     }
 
     @Override

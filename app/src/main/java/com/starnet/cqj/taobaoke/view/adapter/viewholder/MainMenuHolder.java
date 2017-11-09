@@ -13,7 +13,6 @@ import com.starnet.cqj.taobaoke.view.adapter.IParamContainer;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.subjects.PublishSubject;
 
 
@@ -23,12 +22,9 @@ public class MainMenuHolder extends BaseHolder<MainMenu> {
     ImageView mMenuIcon;
     @BindView(R.id.menu_name)
     TextView mMenuName;
-    private View mItemView;
 
     public MainMenuHolder(View itemView) {
         super(itemView);
-        mItemView = itemView;
-        ButterKnife.bind(this, itemView);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.starnet.cqj.taobaoke.remote.i.ICommonService;
 import com.starnet.cqj.taobaoke.remote.i.IHomePageService;
+import com.starnet.cqj.taobaoke.remote.i.ISearchService;
 import com.starnet.cqj.taobaoke.remote.i.IUserService;
 
 import retrofit2.Retrofit;
@@ -44,6 +45,10 @@ public enum RemoteDataSourceBase {
 
     public ICommonService getCommonService() {
         return mRetrofit.create(ICommonService.class);
+    }
+
+    public ISearchService getSearchService() {
+        return mRetrofit.create(ISearchService.class);
     }
 
 }

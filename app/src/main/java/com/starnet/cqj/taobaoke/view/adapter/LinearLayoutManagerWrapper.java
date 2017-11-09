@@ -29,4 +29,9 @@ public class LinearLayoutManagerWrapper extends LinearLayoutManager {
             e.printStackTrace();
         }
     }
+
+    public boolean canScrollVertically() {
+        return false;
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.starnet.cqj.taobaoke.view.activity;
 
-import android.support.annotation.StringRes;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -8,12 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.User;
 import com.starnet.cqj.taobaoke.presenter.ILoginPresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.LoginPresenterImpl;
+import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -27,6 +28,7 @@ import butterknife.OnTextChanged;
 
 public class LoginActivity extends BaseActivity implements ILoginPresenter.IView {
 
+    public static final String KEY_ACCOUNT = "account";
     @BindView(R.id.login_username)
     EditText mEdtAccount;
     @BindView(R.id.login_pwd)
@@ -37,7 +39,10 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
     ImageView mIvAccountClear;
     @BindView(R.id.pwd_clear)
     ImageView mIvPwdClear;
+
     private ILoginPresenter mPresenter;
+    private SharedPreferences mSharedPreferences;
+
 
     @Override
     protected void init() {
@@ -46,6 +51,17 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
         }
         setTitleName(R.string.app_name);
         mPresenter = new LoginPresenterImpl(this);
+        mSharedPreferences = getSharedPreferences(Constant.COMMON_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        String account = mSharedPreferences.getString(KEY_ACCOUNT, "");
+        if(!TextUtils.isEmpty(account)){
+            mEdtAccount.setText(account);
+            mEdtPwd.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mEdtPwd.requestFocus();
+                }
+            },100);
+        }
     }
 
     @Override
@@ -134,19 +150,14 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
 
     private static final String TAG = "LoginActivity";
     
-    @Override
-    public void toast(String res) {
-        Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void toast(@StringRes int res) {
-        Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public void onLoginSuccess(User user) {
+        toast("登录成功");
         ((BaseApplication) getApplication()).user = user;
+        SharedPreferences.Editor edit = mSharedPreferences.edit();
+        edit.putString(KEY_ACCOUNT,mEdtAccount.getText().toString());
+        edit.apply();
         MainActivity.start(this);
         finish();
     }

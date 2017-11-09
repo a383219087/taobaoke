@@ -11,7 +11,6 @@ import com.starnet.cqj.taobaoke.view.adapter.IParamContainer;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.subjects.PublishSubject;
 
 /**
@@ -27,12 +26,8 @@ public class QuestionListHolder extends BaseHolder<Question>{
     TextView mTvDetail;
 
 
-    private View mItemView;
-
     public QuestionListHolder(View itemView) {
         super(itemView);
-        mItemView = itemView;
-        ButterKnife.bind(this,itemView);
     }
 
     @Override

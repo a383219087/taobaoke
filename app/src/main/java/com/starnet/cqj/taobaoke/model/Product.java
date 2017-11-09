@@ -1,19 +1,32 @@
 package com.starnet.cqj.taobaoke.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Product {
 
-    private String id;
-    private String origin_price;
-    private String price;
-    private int itemid;
-    private String coupon_fee;
-    private String url;
-    private int sell;
-    private int istmall;
-    private int score;
-    private String icon;
-    private String itempic;
-    private String title;
+    private String id;//商品ID
+    @SerializedName("orgin_price")
+    private String origin_price;//原始价格
+    @SerializedName("price")
+    private String price;//券后价格
+    @SerializedName("itemid")
+    private String itemid;//淘宝ID
+    @SerializedName("coupon_fee")
+    private String coupon_fee;//优惠券面值
+    @SerializedName("url")
+    private String url;//拿券地址
+    @SerializedName("sell")
+    private int sell;//销售数量
+    @SerializedName("istmall")
+    private int istmall;//是否天猫1是0否
+    @SerializedName("score")
+    private String score;//可获得的积分
+    @SerializedName("icon")
+    private String icon;//天猫或淘宝小图标
+    @SerializedName("itempic")
+    private String itempic;//商品图片
+    @SerializedName("title")
+    private String title;//商品标题
 
     public String getId() {
         return id;
@@ -39,11 +52,11 @@ public class Product {
         this.price = price;
     }
 
-    public int getItemid() {
+    public String getItemid() {
         return itemid;
     }
 
-    public void setItemid(int itemid) {
+    public void setItemid(String itemid) {
         this.itemid = itemid;
     }
 
@@ -79,11 +92,11 @@ public class Product {
         this.istmall = istmall;
     }
 
-    public int getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(String score) {
         this.score = score;
     }
 
