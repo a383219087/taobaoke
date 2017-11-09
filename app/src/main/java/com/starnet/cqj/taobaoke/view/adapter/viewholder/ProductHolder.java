@@ -50,6 +50,12 @@ public class ProductHolder extends BaseHolder<Product> {
             mTvOriginPrice.setText(product.getOrigin_price());
             mTvPrice.setText(product.getPrice());
             mTvSellCount.setText(String.valueOf(product.getSell()));
+            mItemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         }
     }
 }

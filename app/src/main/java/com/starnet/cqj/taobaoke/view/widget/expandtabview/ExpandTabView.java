@@ -1,11 +1,9 @@
 package com.starnet.cqj.taobaoke.view.widget.expandtabview;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -16,6 +14,9 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.starnet.cqj.taobaoke.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -55,9 +56,6 @@ public class ExpandTabView extends LinearLayout implements OnDismissListener {
 		}
 	}
 
-	public void setTitle(String title){
-		
-	}
 	/**
 	 * 根据选择的位置获取tabitem显示的值
 	 */
@@ -87,12 +85,12 @@ public class ExpandTabView extends LinearLayout implements OnDismissListener {
 			r.setTag(SMALL);
 			ToggleButton tButton = (ToggleButton) inflater.inflate(R.layout.toggle_button, this, false);
 			addView(tButton);
-//			View line = new TextView(mContext);
-//			line.setBackgroundResource(R.drawable.choosebar_line);
-//			if (i < viewArray.size() - 1) {
-//				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(2, LinearLayout.LayoutParams.FILL_PARENT);
-//				addView(line, lp);
-//			}
+			View line = new TextView(mContext);
+			line.setBackgroundResource(R.color.gray);
+			if (i < viewArray.size() - 1) {
+				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(1, 30);
+				addView(line, lp);
+			}
 			mToggleButton.add(tButton);
 			tButton.setTag(i);
 			tButton.setText(mTextArray.get(i));
@@ -130,7 +128,7 @@ public class ExpandTabView extends LinearLayout implements OnDismissListener {
 		if (popupWindow == null) {
 			popupWindow = new PopupWindow(mViewArray.get(selectPosition), displayWidth, displayHeight);
 			popupWindow.setAnimationStyle(R.style.PopupWindowAnimation);
-			popupWindow.setFocusable(false);
+			popupWindow.setFocusable(true);
 			popupWindow.setOutsideTouchable(true);
 		}
 
@@ -192,6 +190,7 @@ public class ExpandTabView extends LinearLayout implements OnDismissListener {
 		displayWidth = ((Activity) mContext).getWindowManager().getDefaultDisplay().getWidth();
 		displayHeight = ((Activity) mContext).getWindowManager().getDefaultDisplay().getHeight();
 		setOrientation(LinearLayout.HORIZONTAL);
+		setGravity(Gravity.CENTER_VERTICAL);
 	}
 
 	@Override

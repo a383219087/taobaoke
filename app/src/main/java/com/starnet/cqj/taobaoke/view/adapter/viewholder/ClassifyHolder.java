@@ -4,6 +4,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 
 import com.starnet.cqj.taobaoke.R;
+import com.starnet.cqj.taobaoke.model.MainMenu;
 import com.starnet.cqj.taobaoke.view.adapter.BaseHolder;
 import com.starnet.cqj.taobaoke.view.adapter.IParamContainer;
 
@@ -16,7 +17,7 @@ import io.reactivex.subjects.PublishSubject;
  * Created by mini on 17/11/2.
  */
 
-public class ClassifyHolder extends BaseHolder<String> {
+public class ClassifyHolder extends BaseHolder<MainMenu> {
 
 
     private static final String KEY_OLD_SELECT_BTN = "old_select_btn";
@@ -30,9 +31,9 @@ public class ClassifyHolder extends BaseHolder<String> {
     }
 
     @Override
-    public void bind(List<String> data, int position, final IParamContainer container, PublishSubject<String> itemClick) {
-        String value = data.get(position);
-        mTvItemClassify.setText(value);
+    public void bind(List<MainMenu> data, int position, final IParamContainer container, final PublishSubject<MainMenu> itemClick) {
+        final MainMenu value = data.get(position);
+        mTvItemClassify.setText(value.getName());
         mItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,6 +43,7 @@ public class ClassifyHolder extends BaseHolder<String> {
                 }
                 view.setSelected(true);
                 container.set(KEY_OLD_SELECT_BTN, view);
+                itemClick.onNext(value);
             }
         });
     }

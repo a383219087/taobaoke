@@ -18,8 +18,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.subjects.PublishSubject;
 
 
 public class SortView extends RelativeLayout implements ViewBaseAction {
@@ -30,6 +32,7 @@ public class SortView extends RelativeLayout implements ViewBaseAction {
     private RecyclerBaseAdapter<ProductSort, SortHolder> mAdapter;
     private Disposable mDisposable;
     private ProductSort mOldCheckOsort;
+    private PublishSubject<ProductSort> mPublishSubject = PublishSubject.create();
 
     public SortView(Context context) {
         this(context, null);
@@ -84,6 +87,7 @@ public class SortView extends RelativeLayout implements ViewBaseAction {
                 .subscribe(new Consumer<ProductSort>() {
                     @Override
                     public void accept(ProductSort productSort) throws Exception {
+                        mPublishSubject.onNext(productSort);
                         mOldCheckOsort.setChecked(false);
                         mAdapter.update(mOldCheckOsort);
                         productSort.setChecked(true);
@@ -91,6 +95,10 @@ public class SortView extends RelativeLayout implements ViewBaseAction {
                         mOldCheckOsort = productSort;
                     }
                 });
+    }
+
+    public Observable<ProductSort> getObservable() {
+        return mPublishSubject;
     }
 
     @Override
@@ -103,9 +111,7 @@ public class SortView extends RelativeLayout implements ViewBaseAction {
 
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
+    public void onDestroy() {
         if (mDisposable != null) {
             mDisposable.dispose();
         }

@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:background="?android:attr/selectableItemBackground"
+              android:clickable="true"
               android:orientation="vertical">
 
     <RelativeLayout
@@ -72,8 +74,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layerType="software"
-        android:background="@drawable/imaginary_line"/>
+        android:background="@drawable/imaginary_line"
+        android:layerType="software"/>
 
     <LinearLayout
         android:layout_width="match_parent"

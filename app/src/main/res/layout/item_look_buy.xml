@@ -2,94 +2,102 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="130dp"
               android:layout_height="130dp"
-              android:background="@color/white"
               android:layout_marginLeft="10dp"
+              android:background="@color/white"
               android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iv_product"
-        android:layout_width="130dp"
-        android:layout_height="60dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/look_buy_test"
-        />
-
-    <TextView
-        android:id="@+id/tv_product_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="2dp"
-        android:lines="1"
-        android:text="格力电饭煲"
-        android:textColor="@color/textblack"
-        android:textSize="11sp"/>
-
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="2dp"
-        android:gravity="bottom"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/selectableItemBackground"
+        android:id="@+id/ll_click"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_product"
+            android:layout_width="130dp"
+            android:layout_height="60dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/look_buy_test"
+            />
 
         <TextView
+            android:id="@+id/tv_product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥"
-            android:textColor="@color/product_item_red_text"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:lines="1"
+            android:text="格力电饭煲"
+            android:textColor="@color/textblack"
             android:textSize="11sp"/>
 
-        <TextView
-            android:id="@+id/tv_price"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="399"
-            android:textColor="@color/product_item_red_text"
-            android:textSize="11sp"/>
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_origin_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="￥399"
-            android:textColor="@color/gray"
-            android:textSize="10sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥"
+                android:textColor="@color/product_item_red_text"
+                android:textSize="11sp"/>
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="399"
+                android:textColor="@color/product_item_red_text"
+                android:textSize="11sp"/>
+
+            <TextView
+                android:id="@+id/tv_origin_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥399"
+                android:textColor="@color/gray"
+                android:textSize="10sp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/look_buy_bottom_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:text="领券"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_discounts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:gravity="center"
+                android:text="立减200元"
+                android:textColor="@color/main_color"
+                android:textSize="11sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
 
     </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="2dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:background="@drawable/look_buy_bottom_bg">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="领券"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="10sp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="立减200元"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:textColor="@color/main_color"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:id="@+id/tv_discounts"
-            android:textSize="11sp"/>
-
-    </LinearLayout>
-
 </LinearLayout>

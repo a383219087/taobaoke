@@ -3,6 +3,7 @@ package com.starnet.cqj.taobaoke.view.adapter.viewholder;
 import android.graphics.Paint;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,6 +33,8 @@ public class LookBuyHolder extends BaseHolder<Product> {
     TextView mTvOriginPrice;
     @BindView(R.id.tv_discounts)
     TextView mTvDiscounts;
+    @BindView(R.id.ll_click)
+    LinearLayout mLlClick;
 
     public LookBuyHolder(View itemView) {
         super(itemView);
@@ -49,6 +52,12 @@ public class LookBuyHolder extends BaseHolder<Product> {
             mTvOriginPrice.setText(String.format("￥%s", product.getOrigin_price()));
             mTvOriginPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             mTvDiscounts.setText(String.format("立减%s元", product.getCoupon_fee()));
+            mLlClick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         }
     }
 }

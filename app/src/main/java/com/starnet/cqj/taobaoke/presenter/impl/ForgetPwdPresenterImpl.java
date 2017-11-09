@@ -61,14 +61,15 @@ public class ForgetPwdPresenterImpl extends BasePresenterImpl implements IForget
         RemoteDataSourceBase.INSTANCE.getUserService()
                 .resetPwd(mobile, pwd, pwdAgain, code)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<JsonCommon<String>>() {
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<JsonCommon<List<String>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(JsonCommon<String> value) {
+                    public void onNext(JsonCommon<List<String>> value) {
                         String code = value.getCode();
                         if ("200".equals(code)) {
                             mViewCallback.onResetSuccess();

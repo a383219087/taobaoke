@@ -24,7 +24,7 @@ public interface IUserService {
 
 
     @POST("/resetPass")
-    Observable<JsonCommon<String>> resetPwd(@Query("mobile") String mobile, @Query("password") String password, @Query("password_confirm") String pwdAgain, @Query("code") String code);
+    Observable<JsonCommon<List<String>>> resetPwd(@Query("mobile") String mobile, @Query("password") String password, @Query("password_confirm") String pwdAgain, @Query("code") String code);
 
     @POST("/person")
     Observable<JsonCommon<List<User>>> person(@Header("Authorization") String header);

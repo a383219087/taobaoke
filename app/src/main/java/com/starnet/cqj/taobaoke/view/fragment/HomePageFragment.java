@@ -20,6 +20,7 @@ import com.starnet.cqj.taobaoke.presenter.IHomePagePresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.HomePagePresenterImpl;
 import com.starnet.cqj.taobaoke.view.activity.HelpCenterActivity;
 import com.starnet.cqj.taobaoke.view.activity.MessageListActivity;
+import com.starnet.cqj.taobaoke.view.activity.ProductListActivity;
 import com.starnet.cqj.taobaoke.view.adapter.LinearLayoutManagerWrapper;
 import com.starnet.cqj.taobaoke.view.adapter.MyViewPagerAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.NoScrollGridLayoutManager;
@@ -159,6 +160,7 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
                 }
             }
         });
+
     }
 
     @OnClick(R.id.homepage_help)
@@ -178,6 +180,8 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
 
     @OnClick(R.id.look_buy_more)
     public void onViewClicked() {
+
+        ProductListActivity.start(getActivity());
     }
 
     @Override

@@ -50,6 +50,7 @@ public class HelpCenterActivity extends BaseActivity {
 
     @Override
     protected void init() {
+        setTitleName(R.string.help_center_title);
         mTvGeneralQuestion.setSelected(true);
         mIvGeneralQuestion.setSelected(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManagerWrapper(this));

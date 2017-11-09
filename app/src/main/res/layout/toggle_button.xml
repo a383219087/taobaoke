@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:background="@color/white"
     android:drawableRight="@drawable/expand_tab_selector"
+    android:paddingRight="20dp"
     android:gravity="center"
     android:maxLines="1"
     android:text="ToggleButton"
-    android:textColor="@color/black"
+    android:background="@color/transparent"
+    android:textColor="@color/main_bottom_text_color"
+    android:textSize="12sp"
     android:textOff="@null"
     android:textOn="@null">
 

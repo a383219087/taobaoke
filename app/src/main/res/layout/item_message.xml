@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/ll_message_click"
         android:layout_width="match_parent"
-        android:background="?attr/selectableItemBackground"
+        android:background="?android:attr/selectableItemBackground"
         android:layout_height="55dp"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
