@@ -3,6 +3,8 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/main_gray"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
               android:orientation="vertical">
 
     <include layout="@layout/title_layout"/>
@@ -45,8 +47,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:hint="请输入收货人姓名"
+                    android:hint="@string/please_input_name"
                     android:textColorHint="@color/gray"
+                    android:background="@color/transparent"
                     android:textSize="13sp"
                     />
 
@@ -73,7 +76,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:hint="请输入收货人联系电话"
+                    android:inputType="phone"
+                    android:background="@color/transparent"
+                    android:hint="@string/please_input_phone"
                     android:textColorHint="@color/gray"
                     android:textSize="13sp"
                     />
@@ -86,8 +91,8 @@
                 android:id="@+id/ll_choose_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -100,11 +105,12 @@
                     android:textSize="15sp"/>
 
                 <TextView
+                    android:id="@+id/tv_choose_area"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:hint="请选择"
+                    android:hint="@string/please_choose"
                     android:textColorHint="@color/gray"
                     android:textSize="13sp"
                     />
@@ -138,8 +144,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:hint="请完善详细地址"
+                    android:hint="@string/please_input_detail_address"
                     android:textColorHint="@color/gray"
+                    android:background="@color/transparent"
                     android:textSize="13sp"
                     />
 
@@ -187,7 +194,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/shape_button"
         android:gravity="center"
-        android:text="注册"
+        android:text="添加"
         android:textColor="@color/white"
         android:textSize="15sp"/>
 

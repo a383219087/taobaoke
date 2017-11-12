@@ -8,13 +8,13 @@ import java.util.List;
  * Created by Administrator on 2017/11/09.
  */
 
-public class ProductResult {
+public class ProductResult<T> {
 
     @SerializedName("page")
     private int page;
 
     @SerializedName("list")
-    private List<Product> mProductList;
+    private List<T> mProductList;
 
     public int getPage() {
         return page;
@@ -24,11 +24,11 @@ public class ProductResult {
         this.page = page;
     }
 
-    public List<Product> getProductList() {
+    public List<T> getList() {
         return mProductList;
     }
 
-    public void setProductList(List<Product> productList) {
+    public void setList(List<T> productList) {
         mProductList = productList;
     }
 }

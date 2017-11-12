@@ -35,8 +35,8 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="10dp"
-                    android:layout_height="20dp"
+                    android:layout_width="5dp"
+                    android:layout_height="15dp"
                     android:background="@color/main_color"/>
 
                 <TextView

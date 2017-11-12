@@ -12,6 +12,7 @@
         android:orientation="horizontal"
         android:padding="15dp"
         android:gravity="center"
+        android:id="@+id/to_my_integral"
         android:background="@color/main_gray">
 
         <ImageView
@@ -52,6 +53,7 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:padding="5dp"
         android:id="@+id/rv_integral_product"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

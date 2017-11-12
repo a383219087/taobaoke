@@ -6,6 +6,7 @@ import com.starnet.cqj.taobaoke.remote.i.ICommonService;
 import com.starnet.cqj.taobaoke.remote.i.IHomePageService;
 import com.starnet.cqj.taobaoke.remote.i.ISearchService;
 import com.starnet.cqj.taobaoke.remote.i.IUserService;
+import com.starnet.cqj.taobaoke.remote.i.IntegralService;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -49,6 +50,10 @@ public enum RemoteDataSourceBase {
 
     public ISearchService getSearchService() {
         return mRetrofit.create(ISearchService.class);
+    }
+
+    public IntegralService getIntegralService() {
+        return mRetrofit.create(IntegralService.class);
     }
 
 }

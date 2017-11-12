@@ -2,6 +2,7 @@ package com.starnet.cqj.taobaoke.remote.i;
 
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.MainMenu;
+import com.starnet.cqj.taobaoke.model.Product;
 import com.starnet.cqj.taobaoke.model.ProductResult;
 
 import java.util.List;
@@ -20,8 +21,8 @@ public interface IHomePageService {
     Observable<JsonCommon<List<MainMenu>>> getCategory();
 
     @POST("/video")
-    Observable<JsonCommon<ProductResult>> getLookBuy(@Query("page") int page);
+    Observable<JsonCommon<ProductResult<Product>>> getLookBuy(@Query("page") int page);
 
     @POST("/pop")
-    Observable<JsonCommon<ProductResult>> getRecommend(@Query("page") int page);
+    Observable<JsonCommon<ProductResult<Product>>> getRecommend(@Query("page") int page);
 }

@@ -12,6 +12,15 @@ public class User {
     private float credit1;
     private float credit2;
     private float credit3;
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public String getToken() {
         return token;

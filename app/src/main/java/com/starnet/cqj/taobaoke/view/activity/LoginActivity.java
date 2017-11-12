@@ -53,14 +53,14 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
         mPresenter = new LoginPresenterImpl(this);
         mSharedPreferences = getSharedPreferences(Constant.COMMON_PREFERENCE_NAME, Context.MODE_PRIVATE);
         String account = mSharedPreferences.getString(KEY_ACCOUNT, "");
-        if(!TextUtils.isEmpty(account)){
+        if (!TextUtils.isEmpty(account)) {
             mEdtAccount.setText(account);
             mEdtPwd.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mEdtPwd.requestFocus();
                 }
-            },100);
+            }, 100);
         }
     }
 
@@ -105,11 +105,11 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
             case R.id.login_btn:
                 String mobile = mEdtAccount.getText().toString();
                 String pwd = mEdtPwd.getText().toString();
-                if(TextUtils.isEmpty(mobile)){
+                if (TextUtils.isEmpty(mobile)) {
                     toast("请输入账号");
                     return;
                 }
-                if(TextUtils.isEmpty(pwd)){
+                if (TextUtils.isEmpty(pwd)) {
                     toast("请输入密码");
                     return;
                 }
@@ -130,12 +130,12 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
 
                     @Override
                     public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-                        Log.e(TAG, "onComplete: "+map.toString());
+                        Log.e(TAG, "onComplete: " + map.toString());
                     }
 
                     @Override
                     public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-                        Log.e(TAG, "onError: ",throwable);
+                        Log.e(TAG, "onError: ", throwable);
                         throwable.printStackTrace();
                     }
 
@@ -149,14 +149,14 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
     }
 
     private static final String TAG = "LoginActivity";
-    
+
 
     @Override
     public void onLoginSuccess(User user) {
         toast("登录成功");
-        ((BaseApplication) getApplication()).user = user;
+        ((BaseApplication) getApplication()).token = Constant.HEADER_PREFIX + user.getToken();
         SharedPreferences.Editor edit = mSharedPreferences.edit();
-        edit.putString(KEY_ACCOUNT,mEdtAccount.getText().toString());
+        edit.putString(KEY_ACCOUNT, mEdtAccount.getText().toString());
         edit.apply();
         MainActivity.start(this);
         finish();
