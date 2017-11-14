@@ -92,6 +92,7 @@ public class IntegralStoreActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_rightbutton:
+                ExchangeRecordActivity.start(this);
                 break;
             case R.id.to_my_integral:
                 break;

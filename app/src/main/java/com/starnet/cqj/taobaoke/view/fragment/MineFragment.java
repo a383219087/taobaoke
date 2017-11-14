@@ -17,6 +17,7 @@ import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.activity.AddressListActivity;
 import com.starnet.cqj.taobaoke.view.activity.IntegralStoreActivity;
+import com.starnet.cqj.taobaoke.view.activity.WithdrawalsActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -87,6 +88,7 @@ public class MineFragment extends BaseFragment {
             case R.id.btn_recheck:
                 break;
             case R.id.btn_to_money:
+                WithdrawalsActivity.start(getActivity(),mTvToMoney.getText().toString());
                 break;
             case R.id.ll_order:
                 break;

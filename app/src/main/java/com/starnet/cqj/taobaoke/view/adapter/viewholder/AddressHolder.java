@@ -3,6 +3,7 @@ package com.starnet.cqj.taobaoke.view.adapter.viewholder;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.Address;
@@ -67,6 +68,10 @@ public class AddressHolder extends BaseHolder<Address> {
         }
         switch (view.getId()) {
             case R.id.iv_delete:
+                if("1".equals(mAddress.getIsDefault())){
+                    Toast.makeText(itemView.getContext(), "默认地址不支持删除", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 mAddress.setDelete(true);
                 mItemClick.onNext(mAddress);
                 break;

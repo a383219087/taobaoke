@@ -11,16 +11,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.starnet.cqj.taobaoke.R;
+import com.starnet.cqj.taobaoke.model.Address;
 import com.starnet.cqj.taobaoke.model.IntegralProduct;
+import com.starnet.cqj.taobaoke.presenter.IntegralProductDetailPresenter;
+import com.starnet.cqj.taobaoke.presenter.impl.IntegralProductDetailPresenterImpl;
+import com.starnet.cqj.taobaoke.view.BaseApplication;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * Created by mini on 17/11/11.
- */
 
-public class IntegralProductDetailActivity extends BaseActivity {
+public class IntegralProductDetailActivity extends BaseActivity implements IntegralProductDetailPresenter.IView {
 
 
     public static final String KEY_DATA = "data";
@@ -49,6 +50,9 @@ public class IntegralProductDetailActivity extends BaseActivity {
     @BindView(R.id.btn_exchange)
     Button mBtnExchange;
 
+    private IntegralProductDetailPresenter mPresenter;
+    private IntegralProduct mProduct;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_integral_product_detail;
@@ -56,22 +60,28 @@ public class IntegralProductDetailActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        IntegralProduct product = (IntegralProduct) getIntent().getSerializableExtra(KEY_DATA);
-        if (product == null) {
+        mProduct = (IntegralProduct) getIntent().getSerializableExtra(KEY_DATA);
+        if (mProduct == null) {
             toast("数据错误，请重试");
             return;
         }
         Glide.with(this)
-                .load(product.getPic())
+                .load(mProduct.getPic())
                 .into(mIvProductPic);
-        mTvTitle.setText(product.getTitle());
-        mTvScore.setText(String.format("%s积分", product.getScore()));
-        mTvProductDetail.setText(Html.fromHtml(product.getDetail()));
+        mTvTitle.setText(mProduct.getTitle());
+        mTvScore.setText(String.format("%s积分", mProduct.getScore()));
+        mTvProductDetail.setText(Html.fromHtml(mProduct.getDetail()));
+        mPresenter = new IntegralProductDetailPresenterImpl(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getAddress();
     }
 
     private void getAddress() {
-
+        mPresenter.getAddress(((BaseApplication) getApplication()).token);
     }
 
 
@@ -83,10 +93,20 @@ public class IntegralProductDetailActivity extends BaseActivity {
                 break;
             case R.id.ll_have_address:
             case R.id.ll_no_address:
+                AddressListActivity.start(this);
                 break;
             case R.id.ll_more:
                 break;
             case R.id.btn_exchange:
+                if (mProduct == null) {
+                    return;
+                }
+                if (mLlNoAddress.getVisibility() == View.VISIBLE) {
+                    toast("请设置默认地址");
+                    return;
+                }
+                mPresenter.exchange(((BaseApplication) getApplication()).token, mProduct.getScore(), mTvReceiveAddress.getText().toString(),
+                        mTvReceivePhone.getText().toString(), mProduct.getId(), mTvReceiveName.getText().toString());
                 break;
         }
     }
@@ -95,5 +115,24 @@ public class IntegralProductDetailActivity extends BaseActivity {
         Intent starter = new Intent(context, IntegralProductDetailActivity.class);
         starter.putExtra(KEY_DATA, product);
         context.startActivity(starter);
+    }
+
+    @Override
+    public void onGetAddress(Address address) {
+        if (address != null) {
+            mLlNoAddress.setVisibility(View.GONE);
+            mLlHaveAddress.setVisibility(View.VISIBLE);
+            mTvReceiveName.setText(address.getName());
+            mTvReceivePhone.setText(address.getPhone());
+            mTvReceiveAddress.setText(address.getArea() + "," + address.getAddress());
+        } else {
+            mLlNoAddress.setVisibility(View.VISIBLE);
+            mLlHaveAddress.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onExchange() {
+
     }
 }
