@@ -4,13 +4,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,39 +21,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestureListener {
-    public static final int COLOR_BG_WEEK_TITLE = Color.parseColor("#FF0000"); // 星期标题背景颜色
-    public static final int COLOR_TX_WEEK_TITLE = Color.parseColor("#FFFFFF"); // 星期标题文字颜色
-    public static final int BEFORE_TODAY_BACKGROUND = Color.parseColor("#FFE4E4E4"); // 星期标题文字颜色
-    public static final int COLOR_TX_THIS_MONTH_DAY = Color.parseColor("#000000"); // 当前月日历数字颜色
-    public static final int COLOR_TX_OTHER_MONTH_DAY = Color.parseColor("#ff999999"); // 其他月日历数字颜色
-    public static final int COLOR_TX_THIS_DAY = Color.parseColor("#00ff00"); // 当天日历数字颜色
-    public static final int COLOR_BG_THIS_DAY = Color.parseColor("#ffcccccc"); // 当天日历背景颜色
+public class SignCalendar extends ViewFlipper {
+    public static final int COLOR_BG_WEEK_TITLE = Color.parseColor("#F8F8F8"); // 星期标题背景颜色
+    public static final int COLOR_TX_WEEK_TITLE = Color.parseColor("#353535"); // 星期标题文字颜色
+    public static final int COLOR_TX_THIS_MONTH_DAY = Color.parseColor("#6C75F8"); // 当前月日历数字颜色
+    public static final int COLOR_TX_OTHER_MONTH_DAY = Color.parseColor("#999999"); // 其他月日历数字颜色
+    public static final int COLOR_TX_THIS_DAY = Color.parseColor("#FFFFFF"); // 当天日历数字颜色
     public static final int COLOR_BG_CALENDAR = Color.parseColor("#FFFFFF"); // 日历背景色
 
-    private GestureDetector gd; // 手势监听器
-    private Animation push_left_in; // 动画-左进
-    private Animation push_left_out; // 动画-左出
-    private Animation push_right_in; // 动画-右进
-    private Animation push_right_out; // 动画-右出
 
     private int ROWS_TOTAL = 6; // 日历的行数
     private int COLS_TOTAL = 7; // 日历的列数
     private String[][] dates = new String[6][7]; // 当前日历日期
-    private float tb;
 
     private OnCalendarClickListener onCalendarClickListener; // 日历翻页回调
     private OnCalendarDateChangedListener onCalendarDateChangedListener; // 日历点击回调
 
-    private String[] weekday = new String[] { "日", "一", "二", "三", "四", "五", "六" }; // 星期标题
+    private String[] weekday = new String[]{"日", "一", "二", "三", "四", "五", "六"}; // 星期标题
 
     private int calendarYear; // 日历年份
     private int calendarMonth; // 日历月份
     private Date thisday = new Date(); // 今天
     private Date calendarday; // 日历这个月第一天(1号)
 
-    private LinearLayout firstCalendar; // 第一个日历
-    private LinearLayout secondCalendar; // 第二个日历
     private LinearLayout currentCalendar; // 当前显示的日历
 
     private Map<String, Integer> marksMap = new HashMap<String, Integer>(); // 储存某个日子被标注(Integer
@@ -78,29 +64,16 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
 
     private void init() {
         setBackgroundColor(COLOR_BG_CALENDAR);
-        // 实例化收拾监听器
-        gd = new GestureDetector(this.getContext(), this);
-        // 初始化日历翻动动画
-        push_left_in = AnimationUtils.loadAnimation(getContext(), R.anim.popshow_anim);
-        push_left_out = AnimationUtils.loadAnimation(getContext(), R.anim.pophidden_anim);
-        push_right_in = AnimationUtils.loadAnimation(getContext(), R.anim.popshow_anim);
-        push_right_out = AnimationUtils.loadAnimation(getContext(), R.anim.pophidden_anim);
         // 初始化第一个日历
-        firstCalendar = new LinearLayout(getContext());
+        LinearLayout firstCalendar = new LinearLayout(getContext());
         firstCalendar.setOrientation(LinearLayout.VERTICAL);
-        firstCalendar.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
-        // 初始化第二个日历
-        secondCalendar = new LinearLayout(getContext());
-        secondCalendar.setOrientation(LinearLayout.VERTICAL);
-        secondCalendar.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+        firstCalendar.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         // 设置默认日历为第一个日历
         currentCalendar = firstCalendar;
         // 加入ViewFlipper
         addView(firstCalendar);
-        addView(secondCalendar);
         // 绘制线条框架
         drawFrame(firstCalendar);
-        drawFrame(secondCalendar);
         // 设置日历上的日子(1号)
         calendarYear = thisday.getYear() + 1900;
         calendarMonth = thisday.getMonth();
@@ -114,11 +87,10 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
         LinearLayout title = new LinearLayout(getContext());
         title.setBackgroundColor(COLOR_BG_WEEK_TITLE);
         title.setOrientation(LinearLayout.HORIZONTAL);
-        LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(MarginLayoutParams.MATCH_PARENT,
-                MarginLayoutParams.WRAP_CONTENT, 0.5f);
         Resources res = getResources();
-        tb = res.getDimension(R.dimen.default_padding);
-        // layout.setMargins(0, 0, 0, (int) (tb * 1.2));
+        int tb = res.getDimensionPixelOffset(R.dimen.week_height);
+        LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(MarginLayoutParams.MATCH_PARENT,
+                tb);
         title.setLayoutParams(layout);
         oneCalendar.addView(title);
 
@@ -126,9 +98,9 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
         for (int i = 0; i < COLS_TOTAL; i++) {
             TextView view = new TextView(getContext());
             view.setGravity(Gravity.CENTER);
-            view.setPadding(0, 10, 0, 10);
+            view.setPadding(0, 5, 0, 5);
             view.setText(weekday[i]);
-            view.setTextColor(Color.WHITE);
+            view.setTextColor(COLOR_TX_WEEK_TITLE);
             view.setLayoutParams(new LinearLayout.LayoutParams(0, -1, 1));
             title.addView(view);
         }
@@ -136,49 +108,30 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
         // 添加日期布局
         LinearLayout content = new LinearLayout(getContext());
         content.setOrientation(LinearLayout.VERTICAL);
-        content.setLayoutParams(new LinearLayout.LayoutParams(-1, 0, 7f));
+        content.setLayoutParams(new LinearLayout.LayoutParams(-1, -2));
         oneCalendar.addView(content);
 
         // 添加日期TextView
         for (int i = 0; i < ROWS_TOTAL; i++) {
             LinearLayout row = new LinearLayout(getContext());
             row.setOrientation(LinearLayout.HORIZONTAL);
-            row.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
+            row.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.day_height)));
             content.addView(row);
+            if (i != ROWS_TOTAL - 1) {
+                View lineView = new View(getContext());
+                LinearLayout.LayoutParams lineParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.line));
+                lineParams.setMargins(20, 0, 20, 0);
+                lineView.setLayoutParams(lineParams);
+                lineView.setBackgroundColor(getResources().getColor(R.color.main_gray));
+                content.addView(lineView);
+            }
+
             // 绘制日历上的列
             for (int j = 0; j < COLS_TOTAL; j++) {
                 RelativeLayout col = new RelativeLayout(getContext());
-                col.setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1));
-                col.setBackgroundResource(R.drawable.ic_delete);
-                // col.setBackgroundResource(R.drawable.sign_dialog_day_bg);
+                col.setLayoutParams(new LinearLayout.LayoutParams(0, -1, 1));
                 col.setClickable(false);
                 row.addView(col); // 给每一个日子加上监听
-                col.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ViewGroup parent = (ViewGroup) v.getParent();
-                        int row = 0, col = 0;
-
-                        // 获取列坐标
-                        for (int i = 0; i < parent.getChildCount(); i++) {
-                            if (v.equals(parent.getChildAt(i))) {
-                                col = i;
-                                break;
-                            }
-                        }
-                        // 获取行坐标
-                        ViewGroup pparent = (ViewGroup) parent.getParent();
-                        for (int i = 0; i < pparent.getChildCount(); i++) {
-                            if (parent.equals(pparent.getChildAt(i))) {
-                                row = i;
-                                break;
-                            }
-                        }
-                        if (onCalendarClickListener != null) {
-                            onCalendarClickListener.onCalendarClick(row, col, dates[row][col]);
-                        }
-                    }
-                });
             }
         }
     }
@@ -234,15 +187,7 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
                             view.setGravity(Gravity.CENTER);
                             group.addView(view);
                         }
-                        view.setText(Integer.toString(lastMonthDay));
-                        view.setTextColor(COLOR_TX_OTHER_MONTH_DAY);
                         dates[0][k] = format(new Date(year, month, lastMonthDay));
-                        // 设置日期背景色
-                        if (dayBgColorMap.get(dates[0][k]) != null) {
-                            view.setBackgroundResource(dayBgColorMap.get(dates[0][k]));
-                        } else {
-                            view.setBackgroundColor(Color.TRANSPARENT);
-                        }
                         // 设置标记
                         setMarker(group, 0, k);
                     }
@@ -250,15 +195,17 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
                     // 这个月第一天是礼拜天，不用绘制上个月的日期，直接绘制这个月的日期
                 } else {
                     RelativeLayout group = getDateView(i, j);
-                    group.setGravity(Gravity.TOP);
                     TextView view = null;
                     if (group.getChildCount() > 0) {
                         view = (TextView) group.getChildAt(0);
                     } else {
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1, -1);
+                        int pixelOffset = getResources().getDimensionPixelOffset(R.dimen.calendar_text_width);
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(pixelOffset, pixelOffset);
+                        params.addRule(RelativeLayout.CENTER_IN_PARENT);
                         view = new TextView(getContext());
                         view.setLayoutParams(params);
                         view.setGravity(Gravity.CENTER);
+                        view.setTextSize(15);
                         group.addView(view);
                     }
 
@@ -271,49 +218,31 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
                                 && thisday.getYear() == calendarday.getYear()) {
                             // view.setText("今天");
                             view.setTextColor(COLOR_TX_THIS_DAY);
-                            // view.setBackgroundResource(R.drawable.bg_sign_today);
-                        } else if (thisday.getMonth() == calendarday.getMonth()
+                            view.setBackgroundResource(R.drawable.bg_sign_today);
+                        } else if (thisday.getDate() > day && thisday.getMonth() == calendarday.getMonth()
                                 && thisday.getYear() == calendarday.getYear()) {
-                            // 绘制本月的颜色
                             view.setTextColor(COLOR_TX_THIS_MONTH_DAY);
                         } else {
-                            // 其他日期
                             view.setTextColor(COLOR_TX_OTHER_MONTH_DAY);
-                        }
-                        // 上面首先设置了一下默认的"当天"背景色，当有特殊需求时，才给当日填充背景色
-                        // 设置日期背景色
-                        if (dayBgColorMap.get(dates[i][j]) != null) {
-                            // view.setTextColor(Color.WHITE);
-                            // view.setBackgroundResource(dayBgColorMap.get(dates[i][j]));
                         }
                         // 设置标记
                         setMarker(group, i, j);
                         day++;
                         // 下个月
                     } else {
-                        if (calendarday.getMonth() == Calendar.DECEMBER) {
-                            dates[i][j] = format(new Date(calendarday.getYear() + 1, Calendar.JANUARY, nextMonthDay));
-                        } else {
-                            dates[i][j] = format(
-                                    new Date(calendarday.getYear(), calendarday.getMonth() + 1, nextMonthDay));
+                        if (i < 5) {
+                            LinearLayout content = (LinearLayout) currentCalendar.getChildAt(1);
+                            content.getChildAt(content.getChildCount()-1).setVisibility(GONE);
+                            content.getChildAt(content.getChildCount()-2).setVisibility(GONE);
                         }
-                        view.setText(Integer.toString(nextMonthDay));
-                        view.setTextColor(COLOR_TX_OTHER_MONTH_DAY);
-                        // 设置日期背景色
-                        if (dayBgColorMap.get(dates[i][j]) != null) {
-                            // view.setBackgroundResource(dayBgColorMap
-                            // .get(dates[i][j]));
-                        } else {
-                            view.setBackgroundColor(Color.TRANSPARENT);
-                        }
-                        // 设置标记
-                        setMarker(group, i, j);
-                        nextMonthDay++;
+                        break;
                     }
                 }
             }
         }
     }
+
+    private static final String TAG = "SignCalendar";
 
     /**
      * onClick接口回调
@@ -344,7 +273,6 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
 
     /**
      * 根据当前月，展示一个日历
-     *
      */
     public void showCalendar() {
         Date now = new Date();
@@ -354,61 +282,6 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
         setCalendarDate();
     }
 
-    /**
-     * 下一月日历
-     */
-    public synchronized void nextMonth() {
-        // 改变日历上下顺序
-        if (currentCalendar == firstCalendar) {
-            currentCalendar = secondCalendar;
-        } else {
-            currentCalendar = firstCalendar;
-        }
-        // 设置动画
-        setInAnimation(push_left_in);
-        setOutAnimation(push_left_out);
-        // 改变日历日期
-        if (calendarMonth == Calendar.DECEMBER) {
-            calendarYear++;
-            calendarMonth = Calendar.JANUARY;
-        } else {
-            calendarMonth++;
-        }
-        calendarday = new Date(calendarYear - 1900, calendarMonth, 1);
-        // 填充日历
-        setCalendarDate();
-        // 下翻到下一月
-        showNext();
-        // 回调
-        if (onCalendarDateChangedListener != null) {
-            onCalendarDateChangedListener.onCalendarDateChanged(calendarYear, calendarMonth + 1);
-        }
-    }
-
-    /**
-     * 上一月日历
-     */
-    public synchronized void lastMonth() {
-        if (currentCalendar == firstCalendar) {
-            currentCalendar = secondCalendar;
-        } else {
-            currentCalendar = firstCalendar;
-        }
-        setInAnimation(push_right_in);
-        setOutAnimation(push_right_out);
-        if (calendarMonth == Calendar.JANUARY) {
-            calendarYear--;
-            calendarMonth = Calendar.DECEMBER;
-        } else {
-            calendarMonth--;
-        }
-        calendarday = new Date(calendarYear - 1900, calendarMonth, 1);
-        setCalendarDate();
-        showPrevious();
-        if (onCalendarDateChangedListener != null) {
-            onCalendarDateChangedListener.onCalendarDateChanged(calendarYear, calendarMonth + 1);
-        }
-    }
 
     /**
      * 获取日历当前年份
@@ -424,38 +297,44 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
         return calendarday.getMonth() + 1;
     }
 
-    /**
-     * 在日历上做一个标记
-     *
-     * @param date
-     *            日期
-     * @param id
-     *            bitmap res id
-     */
-    public void addMark(Date date, int id) {
-        addMark(format(date), id);
+    public void addMark(Date date) {
+        addMark(date, 0);
     }
 
     /**
      * 在日历上做一个标记
      *
-     * @param date
-     *            日期
-     * @param id
-     *            bitmap res id
+     * @param date 日期
+     * @param id   bitmap res id
+     */
+    public void addMark(Date date, int id) {
+        addMark(format(date), id);
+    }
+
+    public void addMark(String date) {
+        addMark(date, 0);
+    }
+
+    /**
+     * 在日历上做一个标记
+     *
+     * @param date 日期
+     * @param id   bitmap res id
      */
     public void addMark(String date, int id) {
         marksMap.put(date, id);
         setCalendarDate();
     }
 
+    public void addMarks(Date[] date) {
+        addMarks(date, 0);
+    }
+
     /**
      * 在日历上做一组标记
      *
-     * @param date
-     *            日期
-     * @param id
-     *            bitmap res id
+     * @param date 日期
+     * @param id   bitmap res id
      */
     public void addMarks(Date[] date, int id) {
         for (int i = 0; i < date.length; i++) {
@@ -464,13 +343,15 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
         setCalendarDate();
     }
 
+    public void addMarks(List<String> date) {
+        addMarks(date, 0);
+    }
+
     /**
      * 在日历上做一组标记
      *
-     * @param date
-     *            日期
-     * @param id
-     *            bitmap res id
+     * @param date 日期
+     * @param id   bitmap res id
      */
     public void addMarks(List<String> date, int id) {
         for (int i = 0; i < date.size(); i++) {
@@ -570,7 +451,6 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
 
     /**
      * 移除日历具体某个日期的背景色
-     *
      */
     public void removeAllBgColor() {
         dayBgColorMap.clear();
@@ -607,20 +487,25 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
     private void setMarker(RelativeLayout group, int i, int j) {
         int childCount = group.getChildCount();
         // dates[i][j]=2015-12-20等为要对比的日期，marksMap中包括了dates[i][j]时就进入下面的if语句
-        if (marksMap.get(dates[i][j]) != null) {
+        if (marksMap.containsKey(dates[i][j])) {
             if (childCount < 2) {
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int) (tb * 2), (int) (tb * 2));
+                int tb = getResources().getDimensionPixelOffset(R.dimen.default_padding);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(tb * 2, tb * 2);
                 // params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 // params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                params.setMargins(0, 0, 1, 1);
-                params.addRule(RelativeLayout.CENTER_IN_PARENT);
+                params.setMargins(0, 0, 0, 5);
+                params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                params.addRule(RelativeLayout.CENTER_HORIZONTAL);
                 ImageView markView = new ImageView(getContext());
-                markView.setImageResource(marksMap.get(dates[i][j]));
                 markView.setLayoutParams(params);
-
+                markView.setBackgroundColor(getResources().getColor(R.color.transparent));
                 //标记图片 可自定义
-                markView.setBackgroundResource(R.drawable.calendar_check);
-
+                markView.setImageResource(R.drawable.calendar_check);
+                View childAt = group.getChildAt(0);
+                if (childAt != null && childAt instanceof TextView) {
+                    childAt.setBackgroundColor(getResources().getColor(R.color.white));
+                    ((TextView) childAt).setTextColor(COLOR_TX_THIS_MONTH_DAY);
+                }
                 group.addView(markView);
             }
         } else {
@@ -645,6 +530,11 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
         return time.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
+    private int getDateNum() {
+        Calendar time = Calendar.getInstance();
+        return time.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+
     /**
      * 根据行列号获得包装每一个日子的LinearLayout
      *
@@ -653,7 +543,11 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
      * @return
      */
     private RelativeLayout getDateView(int row, int col) {
-        return (RelativeLayout) ((LinearLayout) ((LinearLayout) currentCalendar.getChildAt(1)).getChildAt(row))
+        View childAt = ((LinearLayout) currentCalendar.getChildAt(1)).getChildAt(row);
+        if (row > 0) {
+            childAt = ((LinearLayout) currentCalendar.getChildAt(1)).getChildAt(row * 2);
+        }
+        return (RelativeLayout) ((LinearLayout) childAt)
                 .getChildAt(col);
     }
 
@@ -682,51 +576,6 @@ public class SignCalendar extends ViewFlipper implements GestureDetector.OnGestu
         return "" + i;
     }
 
-    /***********************************************
-     * Override methods
-     **********************************************/
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (gd != null) {
-            if (gd.onTouchEvent(ev))
-                return true;
-        }
-        return super.dispatchTouchEvent(ev);
-    }
-
-    public boolean onTouchEvent(MotionEvent event) {
-        return this.gd.onTouchEvent(event);
-    }
-
-    public boolean onDown(MotionEvent e) {
-        return false;
-    }
-
-    public void onShowPress(MotionEvent e) {
-    }
-
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
-
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
-
-    public void onLongPress(MotionEvent e) {
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        // 向左/上滑动
-        if (e1.getX() - e2.getX() > 20) {
-            // nextMonth();
-        }
-        // 向右/下滑动
-        else if (e1.getX() - e2.getX() < -20) {
-            // lastMonth();
-        }
-        return false;
-    }
 
     /***********************************************
      * get/set methods

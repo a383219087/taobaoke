@@ -83,6 +83,7 @@
         <activity android:name=".view.activity.ExchangeRecordActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.WithdrawalsActivity"/>
+        <activity android:name=".view.activity.UserCheckActivity"/>
 
         <meta-data
             android:name="UMENG_APPKEY"
