@@ -78,9 +78,10 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_user_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="CNCBK用户名"
+                        android:text="@string/cncbk_user_name"
                         android:textColor="@color/textblack"
                         android:textSize="15sp"/>
 
@@ -325,13 +326,6 @@
                 android:textSize="15sp"
                 android:textStyle="bold"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="20dp"
-                android:background="@color/main_gray"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"/>
 
 
         </LinearLayout>

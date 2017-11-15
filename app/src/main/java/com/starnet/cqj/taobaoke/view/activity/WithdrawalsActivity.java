@@ -3,6 +3,7 @@ package com.starnet.cqj.taobaoke.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,15 +12,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
+import com.starnet.cqj.taobaoke.model.CNCBKUser;
+import com.starnet.cqj.taobaoke.presenter.IWithdrawalsPresenter;
+import com.starnet.cqj.taobaoke.presenter.impl.WithdrawalsPresenterImpl;
+import com.starnet.cqj.taobaoke.view.BaseApplication;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * Created by mini on 17/11/14.
- */
 
-public class WithdrawalsActivity extends BaseActivity {
+public class WithdrawalsActivity extends BaseActivity implements IWithdrawalsPresenter.IView {
 
 
     public static final String KEY_SCORE = "score";
@@ -45,6 +47,11 @@ public class WithdrawalsActivity extends BaseActivity {
     TextView mTvTip3;
     @BindView(R.id.btn_withdrawals)
     Button mBtnWithdrawals;
+    @BindView(R.id.tv_user_name)
+    TextView mTvUserName;
+    @BindView(R.id.ll_add_account)
+    LinearLayout mLlAddAccount;
+    private IWithdrawalsPresenter mPresenter;
 
     @Override
     protected int getContentView() {
@@ -62,6 +69,8 @@ public class WithdrawalsActivity extends BaseActivity {
 
         String score = getIntent().getStringExtra(KEY_SCORE);
         mTvScore.setText(String.format("￥%s", score));
+        mPresenter = new WithdrawalsPresenterImpl(this);
+        mPresenter.getBindUser(((BaseApplication) getApplication()).token);
     }
 
 
@@ -78,15 +87,80 @@ public class WithdrawalsActivity extends BaseActivity {
                 }
                 break;
             case R.id.btn_bind:
+                String userName = mEdtBindAccount.getText().toString();
+                if (TextUtils.isEmpty(userName)) {
+                    toast("请输入用户名");
+                    mEdtBindAccount.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mEdtBindAccount.requestFocus();
+                        }
+                    }, 50);
+                    return;
+                }
+                String phone = mEdtBindPhone.getText().toString();
+                if (TextUtils.isEmpty(phone)) {
+                    toast("请输入电话");
+                    mEdtBindPhone.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mEdtBindPhone.requestFocus();
+                        }
+                    }, 50);
+                    return;
+                }
+                mPresenter.bindUser(((BaseApplication) getApplication()).token, userName, phone);
                 break;
             case R.id.btn_withdrawals:
+                String score = mEdtWithdrawalsIntegral.getText().toString();
+                if (TextUtils.isEmpty(score)) {
+                    toast("请输入要提取的积分");
+                    mEdtWithdrawalsIntegral.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mEdtWithdrawalsIntegral.requestFocus();
+                        }
+                    }, 50);
+                    return;
+                }
+                mPresenter.cashCNCBK(((BaseApplication) getApplication()).token, score);
                 break;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.onDestroy();
+        }
+    }
+
+    @Override
+    public void onGetBindUser(CNCBKUser user) {
+        if (user == null || (TextUtils.isEmpty(user.getName()) && TextUtils.isEmpty(user.getPhone()))) {
+            mLlAddAccount.setClickable(true);
+            mTvArrow.setVisibility(View.VISIBLE);
+            mTvUserName.setText(R.string.cncbk_user_name);
+        } else {
+            mLlBind.setVisibility(View.GONE);
+            mLlAddAccount.setClickable(false);
+            mTvArrow.setVisibility(View.GONE);
+            mTvUserName.setText(user.getName() + "（" + user.getPhone() + "）");
+        }
+    }
+
+    @Override
+    public void onCash() {
+        toast("提取成功");
+        mEdtWithdrawalsIntegral.setText("");
+    }
+
 
     public static void start(Context context, String score) {
         Intent starter = new Intent(context, WithdrawalsActivity.class);
         starter.putExtra(KEY_SCORE, score);
         context.startActivity(starter);
     }
+
 }

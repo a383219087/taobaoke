@@ -128,4 +128,5 @@
     <string name="please_input_detail_address">请完善详细地址</string>
     <string name="please_choose">请选择</string>
     <string name="exchange_record_title">兑换记录</string>
+    <string name="cncbk_user_name">CNCBK用户名</string>
 </resources>

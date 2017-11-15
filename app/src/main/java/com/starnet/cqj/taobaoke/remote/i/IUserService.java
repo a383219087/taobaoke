@@ -1,6 +1,7 @@
 package com.starnet.cqj.taobaoke.remote.i;
 
 import com.starnet.cqj.taobaoke.model.Address;
+import com.starnet.cqj.taobaoke.model.CNCBKUser;
 import com.starnet.cqj.taobaoke.model.ExchangeRecord;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.ProductResult;
@@ -50,14 +51,23 @@ public interface IUserService {
 
     @POST("/integralOder")
     Observable<JsonCommon<Object>> integralOrder(@Header("Authorization") String header,
-                                                       @Query("score") String score,
-                                                       @Query("address") String address,
-                                                       @Query("phone") String phone,
-                                                       @Query("integral_id") String integralId,
-                                                       @Query("name") String name
+                                                 @Query("score") String score,
+                                                 @Query("address") String address,
+                                                 @Query("phone") String phone,
+                                                 @Query("integral_id") String integralId,
+                                                 @Query("name") String name
     );
 
     @POST("/integralRecord")
     Observable<JsonCommon<List<ExchangeRecord>>> integralRecord(@Header("Authorization") String header, @Query("page") int page);
+
+    @POST("/cncbk")
+    Observable<JsonCommon<CNCBKUser>> cncbk(@Header("Authorization") String header);
+
+    @POST("/bindCNCBK")
+    Observable<JsonCommon<Object>> bindCNCBK(@Header("Authorization") String header, @Query("username") String userName, @Query("phone") String phone);
+
+    @POST("/cashCNCBK")
+    Observable<JsonCommon<Object>> cashCNCBK(@Header("Authorization") String header, @Query("score") String score);
 
 }
