@@ -129,4 +129,6 @@
     <string name="please_choose">请选择</string>
     <string name="exchange_record_title">兑换记录</string>
     <string name="cncbk_user_name">CNCBK用户名</string>
+    <string name="account_bind_title">账号绑定</string>
+    <string name="bind_exist_title">绑定已有账号</string>
 </resources>

@@ -17,7 +17,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
+        PlatformConfig.setWeixin("wxe30a5dd92858b191", "092d65fdb02ab67f86f764d5b8e6b21b");
         PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
         UMShareAPI.get(this);
     }

@@ -183,12 +183,14 @@
                 android:background="@color/gray"/>
 
             <ImageButton
+                android:id="@+id/iv_wechat_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:src="@drawable/weixinlogin_icon"/>
 
             <TextView
+                android:id="@+id/tv_wechat_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_padding"

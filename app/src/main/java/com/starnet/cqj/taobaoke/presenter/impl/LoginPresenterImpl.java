@@ -26,7 +26,7 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
     @Override
     public void login(String mobile, String pwd) {
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .login(mobile, pwd, "0")
+                .login(mobile, pwd, "0","")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<JsonCommon<User>>() {
@@ -41,6 +41,42 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
                         if ("200".equals(code)) {
                             mViewCallback.onLoginSuccess(userJsonCommon.getData());
                         } else {
+                            mViewCallback.toast(userJsonCommon.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void wechatLogin(String openId) {
+        RemoteDataSourceBase.INSTANCE.getUserService()
+                .login("", "", "1",openId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<JsonCommon<User>>() {
+                    @Override
+                    public void onSubscribe(Disposable disposable) {
+                        mCompositeDisposable.add(disposable);
+                    }
+
+                    @Override
+                    public void onNext(JsonCommon<User> userJsonCommon) {
+                        String code = userJsonCommon.getCode();
+                        if ("200".equals(code)) {
+                            mViewCallback.onLoginSuccess(userJsonCommon.getData());
+                        } else if("9000".equals(code)){
+                            mViewCallback.noBind();
+                        }else {
                             mViewCallback.toast(userJsonCommon.getMessage());
                         }
                     }

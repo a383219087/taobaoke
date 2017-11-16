@@ -2,15 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.starnet.cqj.taobaoke">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
 
     <application
         android:name=".view.BaseApplication"
@@ -31,31 +31,41 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.ForgetPwdActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.RegisterActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.BindPhoneActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.UserAgreementActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.HelpCenterActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".view.activity.ForgetPwdActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.BindPhoneActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.UserAgreementActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.HelpCenterActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.QuestionDetailActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".view.activity.QuestionDetailActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.MessageListActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".view.activity.MessageListActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.ProductListActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".view.activity.ProductListActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.MessageDetailActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".view.activity.MessageDetailActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.HotDetailActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".view.activity.HotDetailActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".view.activity.IntegralDetailActivity"
@@ -72,22 +82,30 @@
         <activity
             android:name=".view.activity.IntegralStoreActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.SearchActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.SearchActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".view.activity.ProductDetailActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.IntegralProductDetailActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ExchangeRecordActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.IntegralProductDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.ExchangeRecordActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.WithdrawalsActivity"/>
         <activity android:name=".view.activity.UserCheckActivity"/>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"/>
+        <activity android:name=".view.activity.BindActivity"/>
+        <activity android:name=".view.activity.BindExistActivity"/>
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5a01bad6f43e481555000186" >
+            android:value="5a01bad6f43e481555000186">
         </meta-data>
     </application>
 

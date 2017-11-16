@@ -1,6 +1,7 @@
 package com.starnet.cqj.taobaoke.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -12,10 +13,12 @@ import android.widget.ImageView;
 
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.User;
+import com.starnet.cqj.taobaoke.model.WechatUser;
 import com.starnet.cqj.taobaoke.presenter.ILoginPresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.LoginPresenterImpl;
 import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
+import com.umeng.socialize.Config;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -42,6 +45,7 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
 
     private ILoginPresenter mPresenter;
     private SharedPreferences mSharedPreferences;
+    private WechatUser mWechatUser;
 
 
     @Override
@@ -62,6 +66,7 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
                 }
             }, 100);
         }
+        Config.DEBUG = true;
     }
 
     @Override
@@ -92,8 +97,14 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);//完成回调
+    }
 
-    @OnClick({R.id.account_clear, R.id.pwd_clear, R.id.login_btn, R.id.forgetpwd, R.id.regist, R.id.wechat_login})
+    @OnClick({R.id.account_clear, R.id.pwd_clear, R.id.login_btn, R.id.forgetpwd, R.id.regist, R.id.wechat_login,
+            R.id.iv_wechat_login, R.id.tv_wechat_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.account_clear:
@@ -122,6 +133,8 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
                 RegisterActivity.start(this);
                 break;
             case R.id.wechat_login:
+            case R.id.iv_wechat_login:
+            case R.id.tv_wechat_login:
                 UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
                     @Override
                     public void onStart(SHARE_MEDIA share_media) {
@@ -131,6 +144,14 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
                     @Override
                     public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
                         Log.e(TAG, "onComplete: " + map.toString());
+                        mWechatUser = new WechatUser();
+                        mWechatUser.setOpenid(map.get("openid"));
+                        mWechatUser.setAvatar(map.get("iconurl"));
+                        mWechatUser.setGender(map.get("gender"));
+                        mWechatUser.setNickname(map.get("name"));
+                        mWechatUser.setUnionId(map.get("unionid"));
+
+                        mPresenter.wechatLogin(mWechatUser.getOpenid());
                     }
 
                     @Override
@@ -160,5 +181,10 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
         edit.apply();
         MainActivity.start(this);
         finish();
+    }
+
+    @Override
+    public void noBind() {
+        BindActivity.start(this, mWechatUser);
     }
 }

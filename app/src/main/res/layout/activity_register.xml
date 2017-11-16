@@ -173,6 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/btn_blue_normal"
+                    android:textSize="14sp"
                     android:text="    我已同意用户注册协议"/>
 
             </LinearLayout>
