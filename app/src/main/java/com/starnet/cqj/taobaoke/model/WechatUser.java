@@ -3,9 +3,6 @@ package com.starnet.cqj.taobaoke.model;
 import java.io.Serializable;
 import java.net.URLDecoder;
 
-/**
- * Created by mini on 17/11/16.
- */
 
 public class WechatUser implements Serializable{
 

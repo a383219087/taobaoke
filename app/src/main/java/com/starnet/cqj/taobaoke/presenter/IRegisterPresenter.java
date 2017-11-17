@@ -1,5 +1,7 @@
 package com.starnet.cqj.taobaoke.presenter;
 
+import com.starnet.cqj.taobaoke.model.User;
+
 /**
  * Created by mini on 17/11/4.
  */
@@ -18,7 +20,7 @@ public interface IRegisterPresenter extends BasePresenter {
 
 //        void onVerifySuccess();
 
-        void onRegisterSuccess();
+        void onRegisterSuccess(User user);
 
     }
 }

@@ -95,13 +95,24 @@
         <activity
             android:name=".view.activity.ExchangeRecordActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.WithdrawalsActivity"/>
-        <activity android:name=".view.activity.UserCheckActivity"/>
+        <activity
+            android:name=".view.activity.WithdrawalsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.UserCheckActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"/>
-        <activity android:name=".view.activity.BindActivity"/>
-        <activity android:name=".view.activity.BindExistActivity"/>
+        <activity
+            android:name=".view.activity.BindActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.BindExistActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.BindNewActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="UMENG_APPKEY"

@@ -70,4 +70,15 @@ public interface IUserService {
     @POST("/cashCNCBK")
     Observable<JsonCommon<Object>> cashCNCBK(@Header("Authorization") String header, @Query("score") String score);
 
+    @POST("/bindUser")
+    Observable<JsonCommon<User>> bindUser(@Query("mobile") String mobile, @Query("openid") String openid,
+                                            @Query("nickname") String nickName,
+                                            @Query("password") String password,
+                                            @Query("password_confirm") String passwordConfirm,
+                                            @Query("avatar") String avatar,
+                                            @Query("unionid") String unionid,
+                                            @Query("gender") String gender,
+                                            @Query("code") String code,
+                                            @Query("is_create") String isCreate);
+
 }

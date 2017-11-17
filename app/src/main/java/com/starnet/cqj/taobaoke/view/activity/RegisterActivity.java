@@ -7,9 +7,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.starnet.cqj.taobaoke.R;
+import com.starnet.cqj.taobaoke.model.User;
 import com.starnet.cqj.taobaoke.presenter.IRegisterPresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.RegisterPresenterImpl;
 import com.starnet.cqj.taobaoke.utils.StringUtils;
@@ -35,13 +37,19 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
     CheckBox mRegistRecomer;
     @BindView(R.id.regist_nick)
     EditText mEdtNickName;
+    @BindView(R.id.ll_nick_name)
+    LinearLayout mLlNickName;
 
     private IRegisterPresenter mRegisterPresenter;
 
     @Override
     protected void init() {
         setTitleName(R.string.register_title);
-        mRegisterPresenter = new RegisterPresenterImpl(this);
+        mRegisterPresenter = getPresenter();
+    }
+
+    protected IRegisterPresenter getPresenter() {
+        return new RegisterPresenterImpl(this);
     }
 
     @Override
@@ -97,10 +105,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
             toast("请输入验证码");
             return;
         }
-        if (TextUtils.isEmpty(nickName)) {
-            toast("请输入昵称");
-            return;
-        }
+        if (!checkNickName(nickName)) return;
         if (!mRegistRecomer.isChecked()) {
             toast("请详细阅读并同意注册协议");
             return;
@@ -110,6 +115,14 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
             return;
         }
         mRegisterPresenter.register(mobile, pwd, nickName, code);
+    }
+
+    protected boolean checkNickName(String nickName) {
+        if (TextUtils.isEmpty(nickName)) {
+            toast("请输入昵称");
+            return false;
+        }
+        return true;
     }
 
 
@@ -129,7 +142,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
     }
 
     @Override
-    public void onRegisterSuccess() {
+    public void onRegisterSuccess(User user) {
         toast("注册成功");
         finish();
     }

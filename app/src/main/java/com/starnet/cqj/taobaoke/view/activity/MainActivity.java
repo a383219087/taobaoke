@@ -75,4 +75,10 @@ public class MainActivity extends BaseActivity {
         Intent starter = new Intent(context, MainActivity.class);
         context.startActivity(starter);
     }
+
+    public static void startTop(Context context) {
+        Intent starter = new Intent(context, MainActivity.class);
+        starter.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(starter);
+    }
 }

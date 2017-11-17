@@ -15,14 +15,10 @@ import com.starnet.cqj.taobaoke.model.WechatUser;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * Created by mini on 17/11/16.
- */
 
 public class BindActivity extends BaseActivity {
 
 
-    public static final String KEY_ICON_URL = "icon_url";
     public static final String KEY_USER = "user";
     @BindView(R.id.iv_avatar)
     ImageView mIvAvatar;
@@ -61,6 +57,7 @@ public class BindActivity extends BaseActivity {
                 BindExistActivity.start(this, mWechatUser);
                 break;
             case R.id.btn_bind_new:
+                BindNewActivity.start(this, mWechatUser);
                 break;
         }
     }

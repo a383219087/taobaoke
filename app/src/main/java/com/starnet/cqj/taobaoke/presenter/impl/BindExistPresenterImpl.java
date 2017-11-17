@@ -1,8 +1,10 @@
 package com.starnet.cqj.taobaoke.presenter.impl;
 
 import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.User;
+import com.starnet.cqj.taobaoke.model.WechatUser;
 import com.starnet.cqj.taobaoke.presenter.BasePresenterImpl;
-import com.starnet.cqj.taobaoke.presenter.IRegisterPresenter;
+import com.starnet.cqj.taobaoke.presenter.IBindExistPresenter;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 
 import java.util.List;
@@ -12,18 +14,21 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class RegisterPresenterImpl extends BasePresenterImpl implements IRegisterPresenter {
+public class BindExistPresenterImpl extends BasePresenterImpl implements IBindExistPresenter {
 
     private IView mViewCallback;
 
-    public RegisterPresenterImpl(IView viewCallback) {
+    public BindExistPresenterImpl(IView viewCallback) {
         mViewCallback = viewCallback;
     }
 
-    private static final String TAG = "RegisterPresenterImpl";
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 
     @Override
-    public void sendSMS(String mobile) {
+    public void getCode(String mobile) {
         RemoteDataSourceBase.INSTANCE.getCommonService()
                 .sendSMS(mobile)
                 .subscribeOn(Schedulers.io())
@@ -58,29 +63,31 @@ public class RegisterPresenterImpl extends BasePresenterImpl implements IRegiste
     }
 
     @Override
-    public void register(String mobile, String pwd, String nickName, String code) {
+    public void bind(WechatUser user) {
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .register(mobile, pwd, pwd, nickName, code)
-                .subscribeOn(Schedulers.io())
+                .bindUser(user.getMobile(),user.getOpenid(),
+                        user.getNickname(),user.getPassword(),
+                        user.getPassword_confirm(),user.getAvatar(),
+                        user.getUnionId(),user.getGender(),
+                        user.getCode(),user.getIs_create())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<JsonCommon<List<String>>>() {
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<JsonCommon<User>>() {
                     @Override
                     public void onSubscribe(Disposable disposable) {
                         mCompositeDisposable.add(disposable);
                     }
 
                     @Override
-                    public void onNext(JsonCommon<List<String>> stringJsonCommon) {
-                        String code = stringJsonCommon.getCode();
-                        if ("200".equals(code)) {
-                            mViewCallback.onRegisterSuccess(null);
-                        } else {
-                            mViewCallback.toast(stringJsonCommon.getMessage());
+                    public void onNext(JsonCommon<User> objectJsonCommon) {
+                        if(isValidResult(objectJsonCommon,mViewCallback)){
+                            mViewCallback.onBind(objectJsonCommon.getData());
                         }
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
+
                         throwable.printStackTrace();
                     }
 
@@ -89,44 +96,5 @@ public class RegisterPresenterImpl extends BasePresenterImpl implements IRegiste
 
                     }
                 });
-    }
-
-//    @Override
-//    public void verifyCode(String mobile, String code) {
-//        RemoteDataSourceBase.INSTANCE.getCommonService()
-//                .verifySMS(mobile,code)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<JsonCommon<String>>() {
-//                    @Override
-//                    public void onSubscribe(Disposable disposable) {
-//                        mCompositeDisposable.add(disposable);
-//                    }
-//
-//                    @Override
-//                    public void onNext(JsonCommon<String> stringJsonCommon) {
-//                        String code = stringJsonCommon.getCode();
-//                        if ("200".equals(code)) {
-//                            mViewCallback.onVerifySuccess();
-//                        } else {
-//                            mViewCallback.toast(CodeParser.parse(code));
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable throwable) {
-//                        throwable.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 }
