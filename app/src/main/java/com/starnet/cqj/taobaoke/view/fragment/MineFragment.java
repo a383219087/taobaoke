@@ -15,8 +15,9 @@ import com.starnet.cqj.taobaoke.model.User;
 import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
-import com.starnet.cqj.taobaoke.view.activity.AddressListActivity;
 import com.starnet.cqj.taobaoke.view.activity.IntegralStoreActivity;
+import com.starnet.cqj.taobaoke.view.activity.MedalListActivity;
+import com.starnet.cqj.taobaoke.view.activity.PersonActivity;
 import com.starnet.cqj.taobaoke.view.activity.WithdrawalsActivity;
 
 import butterknife.BindView;
@@ -46,6 +47,7 @@ public class MineFragment extends BaseFragment {
     TextView mTvRecheck;
     @BindView(R.id.tv_to_money)
     TextView mTvToMoney;
+    private User mUser;
 
     public MineFragment() {
         //empty
@@ -71,6 +73,11 @@ public class MineFragment extends BaseFragment {
         mCvOne.setCardElevation(8);
         mCvTwo.setCardElevation(8);
         mCvThree.setCardElevation(8);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getData();
     }
 
@@ -80,15 +87,17 @@ public class MineFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ib_setting:
-                break;
-            case R.id.iv_avatar:
+                if (mUser == null) {
+                    return;
+                }
+                PersonActivity.start(getActivity(), mUser);
                 break;
             case R.id.btn_ice:
                 break;
             case R.id.btn_recheck:
                 break;
             case R.id.btn_to_money:
-                WithdrawalsActivity.start(getActivity(),mTvToMoney.getText().toString());
+                WithdrawalsActivity.start(getActivity(), mTvToMoney.getText().toString());
                 break;
             case R.id.ll_order:
                 break;
@@ -96,7 +105,7 @@ public class MineFragment extends BaseFragment {
                 IntegralStoreActivity.start(getActivity());
                 break;
             case R.id.ll_medal:
-                AddressListActivity.start(getActivity());
+                MedalListActivity.start(getActivity());
                 break;
             case R.id.ll_share:
                 break;
@@ -114,15 +123,15 @@ public class MineFragment extends BaseFragment {
                     @Override
                     public void accept(JsonCommon<User> userJsonCommon) throws Exception {
                         if ("200".equals(userJsonCommon.getCode())) {
-                            User user = userJsonCommon.getData();
-                            mTvName.setText(user.getNickname());
-                            mTvPhone.setText(user.getMobile());
-                            mTvToMoney.setText(String.valueOf(user.getCredit1()));
-                            mTvIce.setText(String.valueOf(user.getCredit2()));
-                            mTvRecheck.setText(String.valueOf(user.getCredit3()));
-                            if(!TextUtils.isEmpty(user.getAvatar())){
+                            mUser = userJsonCommon.getData();
+                            mTvName.setText(mUser.getNickname());
+                            mTvPhone.setText(mUser.getMobile());
+                            mTvToMoney.setText(String.valueOf(mUser.getCredit1()));
+                            mTvIce.setText(String.valueOf(mUser.getCredit2()));
+                            mTvRecheck.setText(String.valueOf(mUser.getCredit3()));
+                            if (!TextUtils.isEmpty(mUser.getAvatar())) {
                                 Glide.with(getActivity())
-                                        .load(user.getAvatar())
+                                        .load(mUser.getAvatar())
                                         .into(mIvAvatar);
                             }
                         } else {

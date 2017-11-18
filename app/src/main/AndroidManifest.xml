@@ -113,6 +113,15 @@
         <activity
             android:name=".view.activity.BindNewActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.PersonActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.MedalListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.EditNickNameActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="UMENG_APPKEY"

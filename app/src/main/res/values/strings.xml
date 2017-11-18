@@ -132,4 +132,7 @@
     <string name="account_bind_title">账号绑定</string>
     <string name="bind_exist_title">绑定已有账号</string>
     <string name="user_sign_title">签到</string>
+    <string name="person_title">个人资料</string>
+    <string name="change_phone_title">修改绑定手机号</string>
+    <string name="edit_nick_title">修改昵称</string>
 </resources>

@@ -214,7 +214,7 @@ public class HelpCenterActivity extends BaseActivity {
             viewList.add(imageView);
         }
         mVpBanner.setAdapter(new MyViewPagerAdapter(viewList));
-
+        mVpBanner.startAutoScroll();
 
     }
 
@@ -247,6 +247,9 @@ public class HelpCenterActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         mRecyclerView.removeOnScrollListener(mOnScrollListener);
+        if (mVpBanner != null) {
+            mVpBanner.stopAutoScroll();
+        }
     }
 
     public static void start(Context context) {

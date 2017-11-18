@@ -3,7 +3,9 @@ package com.starnet.cqj.taobaoke.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
 
     @SerializedName("token")
     private String token;

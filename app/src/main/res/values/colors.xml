@@ -72,4 +72,5 @@
     <color name="product_item_red_text">#ff186a</color>
     <color name="search_bg">#f8f8f8</color>
     <color name="message_price_text_color">#ed6b46</color>
+    <color name="medal_normal_color">#dcdcdc</color>
 </resources>

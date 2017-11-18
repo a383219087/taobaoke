@@ -4,6 +4,7 @@ import com.starnet.cqj.taobaoke.model.Address;
 import com.starnet.cqj.taobaoke.model.CNCBKUser;
 import com.starnet.cqj.taobaoke.model.ExchangeRecord;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.Medal;
 import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.User;
 
@@ -80,5 +81,12 @@ public interface IUserService {
                                             @Query("gender") String gender,
                                             @Query("code") String code,
                                             @Query("is_create") String isCreate);
+
+
+    @POST("/bindPhone")
+    Observable<JsonCommon<Object>> bindPhone(@Header("Authorization") String header, @Query("phone") String phone, @Query("code") String code);
+
+    @POST("/medals")
+    Observable<JsonCommon<List<Medal>>> getMedals(@Header("Authorization") String header, @Query("type") int type);
 
 }
