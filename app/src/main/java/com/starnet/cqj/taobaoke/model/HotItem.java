@@ -1,15 +1,13 @@
 package com.starnet.cqj.taobaoke.model;
 
 /**
- * Created by mini on 17/11/1.
+ * Created by mini on 17/11/18.
  */
 
-public class Question {
+public class HotItem {
 
     private String id;
     private String name;
-    private String detail;
-
 
     public String getId() {
         return id;
@@ -25,13 +23,5 @@ public class Question {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
     }
 }

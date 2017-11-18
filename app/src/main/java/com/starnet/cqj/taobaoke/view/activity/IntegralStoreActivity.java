@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.IntegralProduct;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
-import com.starnet.cqj.taobaoke.model.ProductResult;
+import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
@@ -68,12 +68,12 @@ public class IntegralStoreActivity extends BaseActivity {
     private void getData() {
         RemoteDataSourceBase.INSTANCE.getIntegralService()
                 .integral(Constant.HEADER_PREFIX + ((BaseApplication) getApplication()).token)
-                .compose(this.<JsonCommon<ProductResult<IntegralProduct>>>bindToLifecycle())
+                .compose(this.<JsonCommon<ResultWrapper<IntegralProduct>>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<JsonCommon<ProductResult<IntegralProduct>>>() {
+                .subscribe(new Consumer<JsonCommon<ResultWrapper<IntegralProduct>>>() {
                     @Override
-                    public void accept(JsonCommon<ProductResult<IntegralProduct>> productResultJsonCommon) throws Exception {
+                    public void accept(JsonCommon<ResultWrapper<IntegralProduct>> productResultJsonCommon) throws Exception {
                         if("200".equals(productResultJsonCommon.getCode())){
                             mAdapter.setAll(productResultJsonCommon.getData().getList());
                         }else{

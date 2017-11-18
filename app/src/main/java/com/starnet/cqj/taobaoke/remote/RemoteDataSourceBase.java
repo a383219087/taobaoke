@@ -2,8 +2,10 @@ package com.starnet.cqj.taobaoke.remote;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.starnet.cqj.taobaoke.remote.i.IActionService;
 import com.starnet.cqj.taobaoke.remote.i.ICommonService;
 import com.starnet.cqj.taobaoke.remote.i.IHomePageService;
+import com.starnet.cqj.taobaoke.remote.i.IHotService;
 import com.starnet.cqj.taobaoke.remote.i.ISearchService;
 import com.starnet.cqj.taobaoke.remote.i.IUserService;
 import com.starnet.cqj.taobaoke.remote.i.IntegralService;
@@ -54,6 +56,14 @@ public enum RemoteDataSourceBase {
 
     public IntegralService getIntegralService() {
         return mRetrofit.create(IntegralService.class);
+    }
+
+    public IActionService getActionService() {
+        return mRetrofit.create(IActionService.class);
+    }
+
+    public IHotService getHotService() {
+        return mRetrofit.create(IHotService.class);
     }
 
 }

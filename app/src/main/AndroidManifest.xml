@@ -99,7 +99,7 @@
             android:name=".view.activity.WithdrawalsActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".view.activity.UserCheckActivity"
+            android:name=".view.activity.UserSignActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".wxapi.WXEntryActivity"

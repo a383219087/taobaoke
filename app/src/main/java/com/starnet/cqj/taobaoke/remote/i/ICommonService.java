@@ -1,6 +1,10 @@
 package com.starnet.cqj.taobaoke.remote.i;
 
+import com.starnet.cqj.taobaoke.model.Article;
+import com.starnet.cqj.taobaoke.model.HelpDetail;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.ResultWrapper;
+import com.starnet.cqj.taobaoke.model.ResultWithBanner;
 
 import java.util.List;
 
@@ -19,4 +23,15 @@ public interface ICommonService {
 
     @POST("/verifySMS")
     Observable<JsonCommon<String>> verifySMS(@Query("mobile") String mobile,@Query("code") String code);
+
+    @POST("help/pages")
+    Observable<JsonCommon<ResultWrapper<Article>>> getHelpListPage(@Query("page") int page, @Query("type") int type);
+
+    @POST("/article")
+    Observable<JsonCommon<ResultWithBanner<Article>>> getHelpList(@Query("type") int type);
+
+    @POST("/article/{id}")
+    Observable<JsonCommon<HelpDetail>> getHelpContent(@Query("id") String id);
+
+
 }

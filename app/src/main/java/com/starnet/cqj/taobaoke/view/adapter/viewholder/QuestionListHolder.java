@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
-import com.starnet.cqj.taobaoke.model.Question;
+import com.starnet.cqj.taobaoke.model.Article;
 import com.starnet.cqj.taobaoke.view.adapter.BaseHolder;
 import com.starnet.cqj.taobaoke.view.adapter.IParamContainer;
 
@@ -17,7 +17,7 @@ import io.reactivex.subjects.PublishSubject;
  * Created by mini on 17/11/1.
  */
 
-public class QuestionListHolder extends BaseHolder<Question>{
+public class QuestionListHolder extends BaseHolder<Article>{
 
     @BindView(R.id.question_item_title)
     TextView mTvTitle;
@@ -31,10 +31,10 @@ public class QuestionListHolder extends BaseHolder<Question>{
     }
 
     @Override
-    public void bind(List<Question> data, int position, IParamContainer container, final PublishSubject<Question> itemClick) {
-        final Question question = data.get(position);
-        mTvTitle.setText(question.getName());
-        mTvDetail.setText(question.getDetail());
+    public void bind(List<Article> data, int position, IParamContainer container, final PublishSubject<Article> itemClick) {
+        final Article question = data.get(position);
+        mTvTitle.setText(question.getTitle());
+        mTvDetail.setText(question.getDec());
         mItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

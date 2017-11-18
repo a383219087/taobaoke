@@ -4,7 +4,7 @@ import com.starnet.cqj.taobaoke.model.Address;
 import com.starnet.cqj.taobaoke.model.CNCBKUser;
 import com.starnet.cqj.taobaoke.model.ExchangeRecord;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
-import com.starnet.cqj.taobaoke.model.ProductResult;
+import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.User;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public interface IUserService {
     Observable<JsonCommon<User>> person(@Header("Authorization") String header);
 
     @POST("/address")
-    Observable<JsonCommon<ProductResult<Address>>> getAddress(@Header("Authorization") String header);
+    Observable<JsonCommon<ResultWrapper<Address>>> getAddress(@Header("Authorization") String header);
 
     @POST("/delAddr")
     Observable<JsonCommon<List<String>>> deleteAddress(@Header("Authorization") String header, @Query("id") int id);

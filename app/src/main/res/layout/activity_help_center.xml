@@ -7,11 +7,10 @@
 
     <include layout="@layout/title_layout"/>
 
-    <ImageView
+    <com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:src="@drawable/help_top_image"
-        android:scaleType="centerCrop"
+        android:id="@+id/vp_banner"
         />
 
     <LinearLayout
@@ -21,6 +20,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/ll_general"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -28,13 +28,14 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/help_btn_general_question"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/help_btn_text_color"
-                android:layout_marginTop="@dimen/default_padding"
                 android:layout_marginBottom="@dimen/default_padding"
-                android:id="@+id/help_btn_general_question"
-                android:text="常见问题"/>
+                android:layout_marginTop="@dimen/default_padding"
+                android:text="常见问题"
+                android:textColor="@color/help_btn_text_color"
+                android:textSize="12sp"/>
 
             <ImageView
                 android:id="@+id/help_btn_general_question_iv"
@@ -45,6 +46,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_integral"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -55,10 +57,11 @@
                 android:id="@+id/help_btn_integral_question"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/help_btn_text_color"
-                android:layout_marginTop="@dimen/default_padding"
                 android:layout_marginBottom="@dimen/default_padding"
-                android:text="积分问题"/>
+                android:layout_marginTop="@dimen/default_padding"
+                android:text="积分问题"
+                android:textColor="@color/help_btn_text_color"
+                android:textSize="12sp"/>
 
             <ImageView
                 android:id="@+id/help_btn_integral_question_iv"
@@ -69,6 +72,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_how_shopping"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -79,10 +83,11 @@
                 android:id="@+id/help_btn_how_shopping"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/help_btn_text_color"
-                android:layout_marginTop="@dimen/default_padding"
                 android:layout_marginBottom="@dimen/default_padding"
-                android:text="如何购物"/>
+                android:layout_marginTop="@dimen/default_padding"
+                android:text="如何购物"
+                android:textColor="@color/help_btn_text_color"
+                android:textSize="12sp"/>
 
             <ImageView
                 android:id="@+id/help_btn_how_shopping_iv"
@@ -93,6 +98,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_other"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -103,10 +109,11 @@
                 android:id="@+id/help_btn_other"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/help_btn_text_color"
-                android:layout_marginTop="@dimen/default_padding"
                 android:layout_marginBottom="@dimen/default_padding"
-                android:text="淘达人"/>
+                android:layout_marginTop="@dimen/default_padding"
+                android:text="淘达人"
+                android:textColor="@color/help_btn_text_color"
+                android:textSize="12sp"/>
 
             <ImageView
                 android:id="@+id/help_btn_other_iv"
@@ -119,9 +126,9 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/wrong_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:id="@+id/wrong_list"/>
+        android:background="@color/white"/>
 
 </LinearLayout>

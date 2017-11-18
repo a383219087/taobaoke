@@ -2,7 +2,7 @@ package com.starnet.cqj.taobaoke.presenter.impl;
 
 import com.starnet.cqj.taobaoke.model.Address;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
-import com.starnet.cqj.taobaoke.model.ProductResult;
+import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.presenter.BasePresenterImpl;
 import com.starnet.cqj.taobaoke.presenter.IAddressListPresenter;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
@@ -31,14 +31,14 @@ public class AddressListPresenterImpl extends BasePresenterImpl implements IAddr
                 .getAddress(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<JsonCommon<ProductResult<Address>>>() {
+                .subscribe(new Observer<JsonCommon<ResultWrapper<Address>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(JsonCommon<ProductResult<Address>> value) {
+                    public void onNext(JsonCommon<ResultWrapper<Address>> value) {
                         if (isValidResult(value, mViewCallback)) {
                             mViewCallback.onGetAddressDone(value.getData().getList());
                         }

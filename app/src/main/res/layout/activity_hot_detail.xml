@@ -12,19 +12,19 @@
         android:id="@+id/tv_detail_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="秋季辛苦xxx衣服上市咯"
+        android:layout_marginBottom="@dimen/default_padding"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="@dimen/default_padding"
-        android:layout_marginBottom="@dimen/default_padding"
+        android:text="秋季辛苦xxx衣服上市咯"
+        android:textColor="@color/textblack"
         android:textSize="20sp"
-        android:textColor="@color/textblack"/>
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
         android:layout_marginBottom="@dimen/default_padding"
+        android:layout_marginLeft="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -37,8 +37,8 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/see_icon"
             android:layout_marginLeft="16dp"
+            android:src="@drawable/see_icon"
             />
 
         <TextView
@@ -53,39 +53,24 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layerType="software"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:background="@drawable/imaginary_line"/>
+        android:background="@drawable/imaginary_line"
+        android:layerType="software"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_padding"
-        android:padding="@dimen/default_padding"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/iv_detail_big_image"
-            android:layout_width="match_parent"
-            android:layout_height="185dp"
-            android:src="@drawable/hot_detail_test_icon"
-            android:scaleType="fitCenter"/>
 
         <TextView
+            android:id="@+id/tv_detail_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/textblack"
-            android:layout_marginTop="16dp"
+            android:layout_margin="16dp"
             android:text="asdfasdfsdfsadfsdfasdfasdfsdfsfsdfasdfsdf"
-            android:textSize="16sp"
-            android:id="@+id/tv_detail_content"/>
+            android:textColor="@color/textblack"
+            android:textSize="16sp"/>
 
-
-    </LinearLayout>
     </ScrollView>
 </LinearLayout>

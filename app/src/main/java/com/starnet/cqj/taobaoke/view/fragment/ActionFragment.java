@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
-import com.starnet.cqj.taobaoke.view.activity.UserCheckActivity;
+import com.starnet.cqj.taobaoke.view.activity.UserSignActivity;
 import com.starnet.cqj.taobaoke.view.widget.SharePopupWindow;
 
 import butterknife.BindView;
@@ -48,7 +48,7 @@ public class ActionFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_action_sign:
-                UserCheckActivity.start(getActivity());
+                UserSignActivity.start(getActivity());
                 break;
             case R.id.action_share:
                 SharePopupWindow sharePopupWindow = new SharePopupWindow(getActivity());

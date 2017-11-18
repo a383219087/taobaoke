@@ -18,7 +18,7 @@ public class RecyclerItemDecoration extends RecyclerView.ItemDecoration {
     public RecyclerItemDecoration() {
 //        mDrawable = context.getResources().getDrawable(android.R.drawable.ic_menu_always_landscape_portrait);
         mPaint = new Paint();
-        mPaint.setColor(Color.parseColor("#000000"));
+        mPaint.setColor(Color.parseColor("#999999"));
         mPaint.setStyle(Paint.Style.FILL);
     }
 

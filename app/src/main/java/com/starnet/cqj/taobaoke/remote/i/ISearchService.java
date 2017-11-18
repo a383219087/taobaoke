@@ -2,7 +2,7 @@ package com.starnet.cqj.taobaoke.remote.i;
 
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.Product;
-import com.starnet.cqj.taobaoke.model.ProductResult;
+import com.starnet.cqj.taobaoke.model.ResultWrapper;
 
 import io.reactivex.Observable;
 import retrofit2.http.POST;
@@ -24,7 +24,7 @@ public interface ISearchService {
      * @return
      */
     @POST("/superSearch")
-    Observable<JsonCommon<ProductResult<Product>>> superSearch(@Query("keyword") String key, @Query("page") int page, @Query("stype") int stype, @Query("type") int type);
+    Observable<JsonCommon<ResultWrapper<Product>>> superSearch(@Query("keyword") String key, @Query("page") int page, @Query("stype") int stype, @Query("type") int type);
 
     /**
      *
@@ -35,5 +35,5 @@ public interface ISearchService {
      * @return
      */
     @POST("/site")
-    Observable<JsonCommon<ProductResult<Product>>> site(@Query("keywords") String key, @Query("typename") String typename, @Query("minfee") String minfee, @Query("maxfee") String maxfee);
+    Observable<JsonCommon<ResultWrapper<Product>>> site(@Query("keywords") String key, @Query("typename") String typename, @Query("minfee") String minfee, @Query("maxfee") String maxfee);
 }

@@ -1,48 +1,46 @@
 package com.starnet.cqj.taobaoke.presenter.impl;
 
-import com.starnet.cqj.taobaoke.model.Address;
+import com.starnet.cqj.taobaoke.model.Article;
+import com.starnet.cqj.taobaoke.model.HotItem;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.ResultWithBanner;
 import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.presenter.BasePresenterImpl;
-import com.starnet.cqj.taobaoke.presenter.IntegralProductDetailPresenter;
+import com.starnet.cqj.taobaoke.presenter.IHotPresenter;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
-
-import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class IntegralProductDetailPresenterImpl extends BasePresenterImpl implements IntegralProductDetailPresenter {
+/**
+ * Created by mini on 17/11/18.
+ */
+public class HotPresenterImpl extends BasePresenterImpl implements IHotPresenter {
 
     private IView mViewCallback;
 
-    public IntegralProductDetailPresenterImpl(IView viewCallback) {
+    public HotPresenterImpl(IView viewCallback) {
         mViewCallback = viewCallback;
     }
 
     @Override
-    public void getAddress(String header) {
-        RemoteDataSourceBase.INSTANCE.getUserService()
-                .getAddress(header)
-                .subscribeOn(Schedulers.io())
+    public void getItem() {
+        RemoteDataSourceBase.INSTANCE.getHotService()
+                .getItem()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<JsonCommon<ResultWrapper<Address>>>() {
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<JsonCommon<ResultWrapper<HotItem>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(JsonCommon<ResultWrapper<Address>> value) {
+                    public void onNext(JsonCommon<ResultWrapper<HotItem>> value) {
                         if (isValidResult(value, mViewCallback)) {
-                            List<Address> list = value.getData().getList();
-                            if (list != null && !list.isEmpty()) {
-                                mViewCallback.onGetAddress(list.get(0));
-                                return;
-                            }
-                            mViewCallback.onGetAddress(null);
+                            mViewCallback.onGetItem(value.getData().getList());
                         }
                     }
 
@@ -59,27 +57,28 @@ public class IntegralProductDetailPresenterImpl extends BasePresenterImpl implem
     }
 
     @Override
-    public void exchange(String header, String score, String address, String phone, String integralId, String name) {
-        RemoteDataSourceBase.INSTANCE.getUserService()
-                .integralOrder(header, score, address, phone, integralId, name)
+    public void getList(String itemId) {
+        RemoteDataSourceBase.INSTANCE.getHotService()
+                .getHotArticle(itemId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<JsonCommon<Object>>() {
+                .subscribe(new Observer<JsonCommon<ResultWithBanner<Article>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(JsonCommon<Object> value) {
+                    public void onNext(JsonCommon<ResultWithBanner<Article>> value) {
                         if (isValidResult(value, mViewCallback)) {
-                            mViewCallback.toast("兑换成功");
-                            mViewCallback.onExchange();
+                            mViewCallback.setBanner(value.getData().getBannerList());
+                            mViewCallback.setArticleList(value.getData().getList());
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
+
                         e.printStackTrace();
                     }
 
@@ -88,9 +87,12 @@ public class IntegralProductDetailPresenterImpl extends BasePresenterImpl implem
 
                     }
                 });
-
     }
 
+    @Override
+    public void getMoreList(int page, String itemId) {
+
+    }
 
     @Override
     public void onDestroy() {

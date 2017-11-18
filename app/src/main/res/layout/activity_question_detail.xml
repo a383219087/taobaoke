@@ -13,13 +13,13 @@
         android:layout_height="44dp"
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
-        android:text="如何成为会员是的分手的看"
         android:textColor="#3c3c3c"
         android:textSize="18sp"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layerType="software"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/imaginary_line"/>
@@ -28,9 +28,11 @@
         android:id="@+id/iv_question_icon"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        android:src="@drawable/help_top_image"
+        android:layout_margin="10dp"
         android:scaleType="centerCrop"
-        android:layout_margin="10dp"/>
+        android:src="@drawable/help_top_image"
+        android:visibility="gone"/>
+
 
     <TextView
         android:id="@+id/tv_question_content"
@@ -38,7 +40,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:gravity="center_vertical"
-        android:text="如何成为会员是的分手的看"
         android:textColor="#3c3c3c"
         android:textSize="13sp"/>
 

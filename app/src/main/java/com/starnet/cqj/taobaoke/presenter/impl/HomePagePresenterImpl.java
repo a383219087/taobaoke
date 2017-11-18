@@ -3,7 +3,7 @@ package com.starnet.cqj.taobaoke.presenter.impl;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.MainMenu;
 import com.starnet.cqj.taobaoke.model.Product;
-import com.starnet.cqj.taobaoke.model.ProductResult;
+import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.presenter.BasePresenterImpl;
 import com.starnet.cqj.taobaoke.presenter.IHomePagePresenter;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
@@ -53,9 +53,9 @@ public class HomePagePresenterImpl extends BasePresenterImpl implements IHomePag
                 .getLookBuy(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<JsonCommon<ProductResult<Product>>>() {
+                .subscribe(new Consumer<JsonCommon<ResultWrapper<Product>>>() {
                     @Override
-                    public void accept(JsonCommon<ProductResult<Product>> listJsonCommon) throws Exception {
+                    public void accept(JsonCommon<ResultWrapper<Product>> listJsonCommon) throws Exception {
                         if (listJsonCommon.getCode().equals("200")) {
                             mViewCallback.setLookBuy(listJsonCommon.getData().getList());
                         }else{
@@ -76,9 +76,9 @@ public class HomePagePresenterImpl extends BasePresenterImpl implements IHomePag
                 .getRecommend(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<JsonCommon<ProductResult<Product>>>() {
+                .subscribe(new Consumer<JsonCommon<ResultWrapper<Product>>>() {
                     @Override
-                    public void accept(JsonCommon<ProductResult<Product>> listJsonCommon) throws Exception {
+                    public void accept(JsonCommon<ResultWrapper<Product>> listJsonCommon) throws Exception {
                         if (listJsonCommon.getCode().equals("200")) {
                             mViewCallback.setRecommend(listJsonCommon.getData().getList());
                         }else{
