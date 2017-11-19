@@ -1,8 +1,5 @@
 package com.starnet.cqj.taobaoke.view.widget;
 
-import java.lang.ref.WeakReference;
-import java.lang.reflect.Field;
-
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.animation.Interpolator;
+
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
 
 /**
  * Auto Scroll View Pager
@@ -70,6 +70,8 @@ public class AutoScrollViewPager extends ViewPager {
     private CustomDurationScroller scroller                    = null;
 
     public static final int        SCROLL_WHAT                 = 0;
+    private int lastX;
+    private int lastY;
 
     public AutoScrollViewPager(Context paramContext) {
         super(paramContext);
@@ -221,6 +223,35 @@ public class AutoScrollViewPager extends ViewPager {
             }
         }
         getParent().requestDisallowInterceptTouchEvent(true);
+        int x = (int) ev.getRawX();
+        int y = (int) ev.getRawY();
+        int dealtX = 0;
+        int dealtY = 0;
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                dealtX = 0;
+                dealtY = 0;
+                // 保证子View能够接收到Action_move事件
+                getParent().requestDisallowInterceptTouchEvent(true);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                dealtX += Math.abs(x - lastX);
+                dealtY += Math.abs(y - lastY);
+                // 这里是够拦截的判断依据是左右滑动，读者可根据自己的逻辑进行是否拦截
+                if (dealtX >= dealtY) {
+                    getParent().requestDisallowInterceptTouchEvent(true);
+                } else {
+                    getParent().requestDisallowInterceptTouchEvent(false);
+                }
+                lastX = x;
+                lastY = y;
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+
+        }
 
         return super.dispatchTouchEvent(ev);
     }

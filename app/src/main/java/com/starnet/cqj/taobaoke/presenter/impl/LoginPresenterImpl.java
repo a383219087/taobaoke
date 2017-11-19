@@ -24,9 +24,9 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
     }
 
     @Override
-    public void login(String mobile, String pwd) {
+    public void login(String mobile, String pwd,String regId) {
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .login(mobile, pwd, "0","")
+                .login(mobile, pwd,regId, "0","")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<JsonCommon<User>>() {
@@ -58,9 +58,9 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
     }
 
     @Override
-    public void wechatLogin(String openId) {
+    public void wechatLogin(String openId,String regId) {
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .login("", "", "1",openId)
+                .login("", "",regId, "1",openId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<JsonCommon<User>>() {

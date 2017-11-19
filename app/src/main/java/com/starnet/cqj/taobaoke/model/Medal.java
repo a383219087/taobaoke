@@ -2,8 +2,10 @@ package com.starnet.cqj.taobaoke.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
-public class Medal {
+
+public class Medal implements Serializable{
 
     @SerializedName("is_get")
     private String isGet;

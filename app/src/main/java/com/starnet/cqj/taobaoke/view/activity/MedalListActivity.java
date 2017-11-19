@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
@@ -39,10 +38,11 @@ public class MedalListActivity extends BaseActivity {
 
     @Override
     protected void init() {
+        setTitleName(R.string.my_medal_title);
         mTabs.addTab(mTabs.newTab().setText("普通勋章"));
         mTabs.addTab(mTabs.newTab().setText("特别勋章"));
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_medal, MedalItemHolder.class);
-        mRvMedal.setLayoutManager(new GridLayoutManager(this, 2));
+        mRvMedal.setLayoutManager(new GridLayoutManager(this, 3));
         mRvMedal.addItemDecoration(new RecyclerSpaceDecoration(getResources().getDimensionPixelOffset(R.dimen.product_item_padding)));
         mRvMedal.setAdapter(mAdapter);
         getData();
@@ -72,12 +72,18 @@ public class MedalListActivity extends BaseActivity {
 
             }
         });
+        mAdapter.itemClickObserve()
+                .compose(this.<Medal>bindToLifecycle())
+                .subscribe(new Consumer<Medal>() {
+                    @Override
+                    public void accept(Medal medal) throws Exception {
+                        MedalDetailActivity.start(MedalListActivity.this, medal);
+                    }
+                });
     }
 
-    private static final String TAG = "MedalListActivity";
 
     private void getData() {
-        Log.e(TAG, "getData: ");
         RemoteDataSourceBase.INSTANCE.getUserService()
                 .getMedals(((BaseApplication) getApplication()).token, mType)
                 .compose(this.<JsonCommon<List<Medal>>>bindToLifecycle())

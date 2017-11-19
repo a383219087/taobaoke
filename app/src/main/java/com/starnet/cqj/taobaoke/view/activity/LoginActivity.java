@@ -28,6 +28,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import cn.jpush.android.api.JPushInterface;
 
 public class LoginActivity extends BaseActivity implements ILoginPresenter.IView {
 
@@ -124,7 +125,8 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
                     toast("请输入密码");
                     return;
                 }
-                mPresenter.login(mobile, pwd);
+                String regId = JPushInterface.getRegistrationID(this);
+                mPresenter.login(mobile, pwd,regId);
                 break;
             case R.id.forgetpwd:
                 ForgetPwdActivity.start(this);
@@ -150,8 +152,8 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
                         mWechatUser.setGender(map.get("gender"));
                         mWechatUser.setNickname(map.get("name"));
                         mWechatUser.setUnionId(map.get("unionid"));
-
-                        mPresenter.wechatLogin(mWechatUser.getOpenid());
+                        String regId = JPushInterface.getRegistrationID(LoginActivity.this);
+                        mPresenter.wechatLogin(mWechatUser.getOpenid(),regId);
                     }
 
                     @Override

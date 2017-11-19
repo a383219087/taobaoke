@@ -25,7 +25,7 @@ public interface IUserService {
     Observable<JsonCommon<List<String>>> register(@Query("mobile") String mobile, @Query("password") String password, @Query("password_confirm") String confirmPwd, @Query("nickname") String nickname, @Query("code") String code);
 
     @POST("/login")
-    Observable<JsonCommon<User>> login(@Query("mobile") String mobile, @Query("password") String password, @Query("is_wechat") String isWechat,@Query("openid") String openid);
+    Observable<JsonCommon<User>> login(@Query("mobile") String mobile, @Query("password") String password, @Query("reg_id") String regId, @Query("is_wechat") String isWechat,@Query("openid") String openid);
 
 
     @POST("/resetPass")

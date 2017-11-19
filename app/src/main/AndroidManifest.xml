@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.starnet.cqj.taobaoke">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -122,11 +123,29 @@
         <activity
             android:name=".view.activity.EditNickNameActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.MedalDetailActivity"
+            android:theme="@style/DialogActivity"/>
 
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5a01bad6f43e481555000186">
         </meta-data>
+
+        <receiver
+            android:name=".view.widget.JGReceiver"
+            android:enabled="true"
+            tools:node="replace">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION"/>
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED"/>
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED"/>
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED"/>
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION"/>
+                <action android:name="cn.jpush.android.intent.CONNECTION"/>
+
+                <category android:name="com.starnet.cqj.taobaoke"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 

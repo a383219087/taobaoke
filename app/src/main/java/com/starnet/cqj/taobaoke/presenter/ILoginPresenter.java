@@ -8,9 +8,9 @@ import com.starnet.cqj.taobaoke.model.User;
 
 public interface ILoginPresenter extends BasePresenter {
 
-    void login(String mobile,String pwd);
+    void login(String mobile,String pwd,String regId);
 
-    void wechatLogin(String openId);
+    void wechatLogin(String openId,String regId);
 
     interface IView extends BasePresenter.IView{
 

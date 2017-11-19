@@ -135,4 +135,5 @@
     <string name="person_title">个人资料</string>
     <string name="change_phone_title">修改绑定手机号</string>
     <string name="edit_nick_title">修改昵称</string>
+    <string name="my_medal_title">我的勋章</string>
 </resources>
