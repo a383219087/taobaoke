@@ -125,6 +125,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.MedalDetailActivity"
             android:theme="@style/DialogActivity"/>
+        <activity android:name=".view.activity.OrderListActivity"/>
 
         <meta-data
             android:name="UMENG_APPKEY"

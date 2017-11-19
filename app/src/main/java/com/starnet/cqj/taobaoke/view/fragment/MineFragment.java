@@ -3,6 +3,7 @@ package com.starnet.cqj.taobaoke.view.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,8 +18,10 @@ import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.activity.IntegralStoreActivity;
 import com.starnet.cqj.taobaoke.view.activity.MedalListActivity;
+import com.starnet.cqj.taobaoke.view.activity.OrderListActivity;
 import com.starnet.cqj.taobaoke.view.activity.PersonActivity;
 import com.starnet.cqj.taobaoke.view.activity.WithdrawalsActivity;
+import com.starnet.cqj.taobaoke.view.widget.SharePopupWindow;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -100,6 +103,7 @@ public class MineFragment extends BaseFragment {
                 WithdrawalsActivity.start(getActivity(), mTvToMoney.getText().toString());
                 break;
             case R.id.ll_order:
+                OrderListActivity.start(getActivity());
                 break;
             case R.id.ll_integral:
                 IntegralStoreActivity.start(getActivity());
@@ -108,6 +112,8 @@ public class MineFragment extends BaseFragment {
                 MedalListActivity.start(getActivity());
                 break;
             case R.id.ll_share:
+                SharePopupWindow sharePopupWindow = new SharePopupWindow(getActivity());
+                sharePopupWindow.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
         }
     }

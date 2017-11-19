@@ -5,6 +5,7 @@ import com.starnet.cqj.taobaoke.model.CNCBKUser;
 import com.starnet.cqj.taobaoke.model.ExchangeRecord;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.Medal;
+import com.starnet.cqj.taobaoke.model.Order;
 import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.User;
 
@@ -88,5 +89,12 @@ public interface IUserService {
 
     @POST("/medals")
     Observable<JsonCommon<List<Medal>>> getMedals(@Header("Authorization") String header, @Query("type") int type);
+
+    @POST("/order")
+    Observable<JsonCommon<ResultWrapper<Order>>> getOrder(@Header("Authorization") String header, @Query("q") String keyWord);
+
+    @POST("/bindOrder")
+    Observable<JsonCommon<Object>> bindOrder(@Header("Authorization") String header, @Query("order_id") String orderId);
+
 
 }

@@ -87,6 +87,10 @@ public class RecyclerBaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerVi
         notifyItemRemoved(position);
     }
 
+    public List<T> getDataList() {
+        return mDataList;
+    }
+
     public void remove(T data) {
         if (data == null) {
             return;
