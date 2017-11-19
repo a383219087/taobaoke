@@ -1,6 +1,8 @@
 package com.starnet.cqj.taobaoke.view.activity;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RadioGroup;
@@ -21,6 +23,7 @@ public class MainActivity extends BaseActivity {
     private ActionFragment mActionFragment;
     private HotFragment mHotFragment;
     private MineFragment mMineFragment;
+    private Fragment mCurrentFragment;
 
     @Override
     protected void init() {
@@ -28,10 +31,7 @@ public class MainActivity extends BaseActivity {
         mActionFragment = ActionFragment.newInstance();
         mHotFragment = HotFragment.newInstance();
         mMineFragment = MineFragment.newInstance();
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.homepage_fragment_container, mHomePageFragment)
-                .commit();
+        startFragmentAdd(mHomePageFragment);
     }
 
     @Override
@@ -39,30 +39,41 @@ public class MainActivity extends BaseActivity {
         mRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                FragmentManager fragmentManager = getFragmentManager();
                 if (checkedId == R.id.rb_home) {
-                    fragmentManager
-                            .beginTransaction()
-                            .replace(R.id.homepage_fragment_container, mHomePageFragment)
-                            .commit();
+                    startFragmentAdd(mHomePageFragment);
                 } else if (checkedId == R.id.rb_action) {
-                    fragmentManager
-                            .beginTransaction()
-                            .replace(R.id.homepage_fragment_container, mActionFragment)
-                            .commit();
+                    startFragmentAdd(mActionFragment);
                 } else if (checkedId == R.id.rb_hot) {
-                    fragmentManager
-                            .beginTransaction()
-                            .replace(R.id.homepage_fragment_container, mHotFragment)
-                            .commit();
+                    startFragmentAdd(mHotFragment);
                 } else if (checkedId == R.id.rb_mine) {
-                    fragmentManager
-                            .beginTransaction()
-                            .replace(R.id.homepage_fragment_container, mMineFragment)
-                            .commit();
+                    startFragmentAdd(mMineFragment);
                 }
             }
         });
+    }
+
+    // fragment的切换
+    private void startFragmentAdd(Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager
+                .beginTransaction();
+        if (mCurrentFragment == null) {
+            fragmentTransaction.add(R.id.homepage_fragment_container, fragment).commit();
+            mCurrentFragment = fragment;
+        }
+        if (mCurrentFragment != fragment) {
+            // 先判断是否被add过
+            if (!fragment.isAdded()) {
+                // 隐藏当前的fragment，add下一个到Activity中
+                fragmentTransaction.hide(mCurrentFragment)
+                        .add(R.id.homepage_fragment_container, fragment).commit();
+            } else {
+                // 隐藏当前的fragment，显示下一个
+                fragmentTransaction.hide(mCurrentFragment).show(fragment)
+                        .commit();
+            }
+            mCurrentFragment = fragment;
+        }
     }
 
     @Override

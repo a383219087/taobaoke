@@ -20,7 +20,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         PlatformConfig.setWeixin("wxe30a5dd92858b191", "092d65fdb02ab67f86f764d5b8e6b21b");
-        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+        PlatformConfig.setQQZone("1106545614", "F0ZZ3xJYvvNKrxY8");
         UMShareAPI.get(this);
         JPushInterface.init(this);
         JPushInterface.setDebugMode(true);
