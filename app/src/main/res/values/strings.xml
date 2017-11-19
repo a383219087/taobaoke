@@ -137,4 +137,6 @@
     <string name="edit_nick_title">修改昵称</string>
     <string name="my_medal_title">我的勋章</string>
     <string name="my_order_title">我的订单</string>
+    <string name="ice_integral_title">冻结白积分</string>
+    <string name="recheck_integral_title">待确认白积分</string>
 </resources>

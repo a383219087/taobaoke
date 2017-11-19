@@ -3,6 +3,7 @@ package com.starnet.cqj.taobaoke.remote.i;
 import com.starnet.cqj.taobaoke.model.Address;
 import com.starnet.cqj.taobaoke.model.CNCBKUser;
 import com.starnet.cqj.taobaoke.model.ExchangeRecord;
+import com.starnet.cqj.taobaoke.model.IntegralDetail;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.Medal;
 import com.starnet.cqj.taobaoke.model.Order;
@@ -95,6 +96,12 @@ public interface IUserService {
 
     @POST("/bindOrder")
     Observable<JsonCommon<Object>> bindOrder(@Header("Authorization") String header, @Query("order_id") String orderId);
+
+    @POST("/djsCncbk")
+    Observable<JsonCommon<ResultWrapper<IntegralDetail>>> djsCncbk(@Header("Authorization") String header, @Query("page") int page);
+
+    @POST("/djCncbk")
+    Observable<JsonCommon<ResultWrapper<IntegralDetail>>> djCncbk(@Header("Authorization") String header, @Query("page") int page);
 
 
 }

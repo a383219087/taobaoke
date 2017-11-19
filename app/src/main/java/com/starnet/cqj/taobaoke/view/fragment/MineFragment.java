@@ -16,10 +16,12 @@ import com.starnet.cqj.taobaoke.model.User;
 import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
+import com.starnet.cqj.taobaoke.view.activity.IceIntegralDetailActivity;
 import com.starnet.cqj.taobaoke.view.activity.IntegralStoreActivity;
 import com.starnet.cqj.taobaoke.view.activity.MedalListActivity;
 import com.starnet.cqj.taobaoke.view.activity.OrderListActivity;
 import com.starnet.cqj.taobaoke.view.activity.PersonActivity;
+import com.starnet.cqj.taobaoke.view.activity.ReCheckIntegralDetailActivity;
 import com.starnet.cqj.taobaoke.view.activity.WithdrawalsActivity;
 import com.starnet.cqj.taobaoke.view.widget.SharePopupWindow;
 
@@ -96,8 +98,10 @@ public class MineFragment extends BaseFragment {
                 PersonActivity.start(getActivity(), mUser);
                 break;
             case R.id.btn_ice:
+                IceIntegralDetailActivity.start(getActivity());
                 break;
             case R.id.btn_recheck:
+                ReCheckIntegralDetailActivity.start(getActivity());
                 break;
             case R.id.btn_to_money:
                 WithdrawalsActivity.start(getActivity(), mTvToMoney.getText().toString());

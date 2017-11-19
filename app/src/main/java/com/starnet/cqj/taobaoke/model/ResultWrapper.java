@@ -19,6 +19,17 @@ public class ResultWrapper<T> {
     @SerializedName("count")
     private String count;
 
+    @SerializedName("all_score")
+    private String allScore;
+
+    public String getAllScore() {
+        return allScore;
+    }
+
+    public void setAllScore(String allScore) {
+        this.allScore = allScore;
+    }
+
     public String getCount() {
         return count;
     }
