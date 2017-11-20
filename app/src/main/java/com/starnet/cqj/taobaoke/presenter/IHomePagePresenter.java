@@ -1,5 +1,7 @@
 package com.starnet.cqj.taobaoke.presenter;
 
+import com.starnet.cqj.taobaoke.model.BuyTip;
+import com.starnet.cqj.taobaoke.model.HomePageBanner;
 import com.starnet.cqj.taobaoke.model.MainMenu;
 import com.starnet.cqj.taobaoke.model.Product;
 
@@ -17,6 +19,10 @@ public interface IHomePagePresenter extends BasePresenter{
 
     void getRecommend();
 
+    void getBanner();
+
+    void getTip();
+
     interface IView extends BasePresenter.IView{
 
         void setCategoryList(List<MainMenu> mainMenuList);
@@ -24,6 +30,10 @@ public interface IHomePagePresenter extends BasePresenter{
         void setLookBuy(List<Product> productList);
 
         void setRecommend(List<Product> productList);
+
+        void setBanner(HomePageBanner banner);
+
+        void setTip(BuyTip tip);
 
     }
 }

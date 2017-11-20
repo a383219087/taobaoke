@@ -105,6 +105,7 @@
                 android:layout_marginTop="@dimen/default_padding"
                 android:background="@drawable/tip_message_bg"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -126,39 +127,38 @@
                     android:id="@+id/tv_message_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="小女人"
                     android:textColor="@color/textblack"
                     android:textSize="9sp"/>
                 <TextView
+                    android:id="@+id/tv_message_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/default_padding"
-                    android:text="下单抢券省了"
                     android:textColor="@color/textblack"
                     android:textSize="9sp"/>
-                <TextView
-                    android:id="@+id/tv_message_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="100.00"
-                    android:textColor="@color/message_price_text_color"
-                    android:textSize="9sp"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_message_price"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="100.00"-->
+                    <!--android:textColor="@color/message_price_text_color"-->
+                    <!--android:textSize="9sp"/>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="元"
-                    android:textColor="@color/textblack"
-                    android:textSize="9sp"/>
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="元"-->
+                    <!--android:textColor="@color/textblack"-->
+                    <!--android:textSize="9sp"/>-->
 
-                <TextView
-                    android:id="@+id/tv_message_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2017年11月9日 16:27:37"
-                    android:textColor="@color/textblack"
-                    android:layout_marginLeft="@dimen/default_padding"
-                    android:textSize="9sp"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_message_time"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="2017年11月9日 16:27:37"-->
+                    <!--android:textColor="@color/textblack"-->
+                    <!--android:layout_marginLeft="@dimen/default_padding"-->
+                    <!--android:textSize="9sp"/>-->
 
             </LinearLayout>
 

@@ -147,6 +147,7 @@
             android:theme="@style/DialogActivity"/>
         <activity android:name=".view.activity.OrderListActivity"/>
         <activity android:name=".view.activity.IceIntegralDetailActivity"/>
+        <activity android:name=".view.activity.WebViewActivity"/>
 
         <meta-data
             android:name="UMENG_APPKEY"

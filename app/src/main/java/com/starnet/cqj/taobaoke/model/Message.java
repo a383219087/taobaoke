@@ -6,12 +6,28 @@ package com.starnet.cqj.taobaoke.model;
 
 public class Message {
 
+    private String id;
     private String title;
-    private String detail;
     private String content;
     private String time;
-    private boolean isNew;
+    private String isread;
     private boolean isDelete;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getIsread() {
+        return isread;
+    }
+
+    public void setIsread(String isread) {
+        this.isread = isread;
+    }
 
     public boolean isDelete() {
         return isDelete;
@@ -29,13 +45,6 @@ public class Message {
         this.title = title;
     }
 
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
 
     public String getContent() {
         return content;
@@ -46,11 +55,7 @@ public class Message {
     }
 
     public boolean isNew() {
-        return isNew;
-    }
-
-    public void setNew(boolean aNew) {
-        isNew = aNew;
+        return isread.equals("0");
     }
 
     public String getTime() {

@@ -1,5 +1,7 @@
 package com.starnet.cqj.taobaoke.remote.i;
 
+import com.starnet.cqj.taobaoke.model.BuyTip;
+import com.starnet.cqj.taobaoke.model.HomePageBanner;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.MainMenu;
 import com.starnet.cqj.taobaoke.model.Product;
@@ -25,4 +27,10 @@ public interface IHomePageService {
 
     @POST("/pop")
     Observable<JsonCommon<ResultWrapper<Product>>> getRecommend(@Query("page") int page);
+
+    @POST("/banner")
+    Observable<JsonCommon<HomePageBanner>> banner();
+
+    @POST("/volist")
+    Observable<JsonCommon<BuyTip>> volist();
 }

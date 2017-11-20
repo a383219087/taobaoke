@@ -8,8 +8,18 @@ public class Banner {
 
     private String title;
 
-    private String id;
+    private String url;
     private String pic;
+
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -19,12 +29,12 @@ public class Banner {
         this.title = title;
     }
 
-    public String getId() {
-        return id;
+    public String getUrl() {
+        return url;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getPic() {

@@ -41,7 +41,7 @@ public class MessageHolder extends BaseHolder<Message> {
         final Message message = data.get(position);
         if (message != null) {
             mTvMessageTitle.setText(message.getTitle());
-            mTvMessageDetail.setText(message.getDetail());
+            mTvMessageDetail.setText(message.getTime());
             if (message.isNew()) {
                 mIvMessageNew.setVisibility(View.VISIBLE);
             } else {

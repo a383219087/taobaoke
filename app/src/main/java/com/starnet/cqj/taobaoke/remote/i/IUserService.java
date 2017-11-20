@@ -6,6 +6,7 @@ import com.starnet.cqj.taobaoke.model.ExchangeRecord;
 import com.starnet.cqj.taobaoke.model.IntegralDetail;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.Medal;
+import com.starnet.cqj.taobaoke.model.Message;
 import com.starnet.cqj.taobaoke.model.Order;
 import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.User;
@@ -27,7 +28,7 @@ public interface IUserService {
     Observable<JsonCommon<List<String>>> register(@Query("mobile") String mobile, @Query("password") String password, @Query("password_confirm") String confirmPwd, @Query("nickname") String nickname, @Query("code") String code);
 
     @POST("/login")
-    Observable<JsonCommon<User>> login(@Query("mobile") String mobile, @Query("password") String password, @Query("reg_id") String regId, @Query("is_wechat") String isWechat,@Query("openid") String openid);
+    Observable<JsonCommon<User>> login(@Query("mobile") String mobile, @Query("password") String password, @Query("reg_id") String regId, @Query("is_wechat") String isWechat, @Query("openid") String openid);
 
 
     @POST("/resetPass")
@@ -75,14 +76,14 @@ public interface IUserService {
 
     @POST("/bindUser")
     Observable<JsonCommon<User>> bindUser(@Query("mobile") String mobile, @Query("openid") String openid,
-                                            @Query("nickname") String nickName,
-                                            @Query("password") String password,
-                                            @Query("password_confirm") String passwordConfirm,
-                                            @Query("avatar") String avatar,
-                                            @Query("unionid") String unionid,
-                                            @Query("gender") String gender,
-                                            @Query("code") String code,
-                                            @Query("is_create") String isCreate);
+                                          @Query("nickname") String nickName,
+                                          @Query("password") String password,
+                                          @Query("password_confirm") String passwordConfirm,
+                                          @Query("avatar") String avatar,
+                                          @Query("unionid") String unionid,
+                                          @Query("gender") String gender,
+                                          @Query("code") String code,
+                                          @Query("is_create") String isCreate);
 
 
     @POST("/bindPhone")
@@ -102,6 +103,15 @@ public interface IUserService {
 
     @POST("/djCncbk")
     Observable<JsonCommon<ResultWrapper<IntegralDetail>>> djCncbk(@Header("Authorization") String header, @Query("page") int page);
+
+    @POST("/sysmsg")
+    Observable<JsonCommon<List<Message>>> sysmsg(@Header("Authorization") String header);
+
+    @POST("/message")
+    Observable<JsonCommon<Message>> message(@Header("Authorization") String header, @Query("id") String id);
+
+    @POST("/delMsg")
+    Observable<JsonCommon<Object>> delMsg(@Header("Authorization") String header, @Query("id") String id);
 
 
 }

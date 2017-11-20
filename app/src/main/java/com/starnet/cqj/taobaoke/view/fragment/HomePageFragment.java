@@ -13,7 +13,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.starnet.cqj.taobaoke.R;
+import com.starnet.cqj.taobaoke.model.Banner;
+import com.starnet.cqj.taobaoke.model.BuyTip;
+import com.starnet.cqj.taobaoke.model.HomePageBanner;
 import com.starnet.cqj.taobaoke.model.MainMenu;
 import com.starnet.cqj.taobaoke.model.Product;
 import com.starnet.cqj.taobaoke.presenter.IHomePagePresenter;
@@ -21,6 +25,7 @@ import com.starnet.cqj.taobaoke.presenter.impl.HomePagePresenterImpl;
 import com.starnet.cqj.taobaoke.view.activity.HelpCenterActivity;
 import com.starnet.cqj.taobaoke.view.activity.MessageListActivity;
 import com.starnet.cqj.taobaoke.view.activity.ProductListActivity;
+import com.starnet.cqj.taobaoke.view.activity.WebViewActivity;
 import com.starnet.cqj.taobaoke.view.adapter.LinearLayoutManagerWrapper;
 import com.starnet.cqj.taobaoke.view.adapter.MyViewPagerAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.NoScrollGridLayoutManager;
@@ -31,11 +36,13 @@ import com.starnet.cqj.taobaoke.view.adapter.viewholder.MainMenuHolder;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.ProductHolder;
 import com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 public class HomePageFragment extends BaseFragment implements IHomePagePresenter.IView {
 
@@ -48,10 +55,10 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
     ImageView mMessageAvatar;
     @BindView(R.id.tv_message_name)
     TextView mTvMessageName;
-    @BindView(R.id.tv_message_price)
-    TextView mTvMessagePrice;
-    @BindView(R.id.tv_message_time)
-    TextView mTvMessageTime;
+    @BindView(R.id.tv_message_content)
+    TextView mTvMessageContent;
+    //    @BindView(R.id.tv_message_time)
+//    TextView mTvMessageTime;
     @BindView(R.id.main_ll_message)
     LinearLayout mMainLlMessage;
     @BindView(R.id.tab_other)
@@ -100,12 +107,13 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
         super.onViewCreated(view, savedInstanceState);
         mHomePagePresenter = new HomePagePresenterImpl(this);
         init();
-        initBanner();
         initMenu();
         initEvent();
     }
 
     private void init() {
+        mHomePagePresenter.getTip();
+        mHomePagePresenter.getBanner();
         mLookBuyAdapter = new RecyclerBaseAdapter<>(R.layout.item_look_buy, LookBuyHolder.class);
         mLookBuyRv.setLayoutManager(new LinearLayoutManagerWrapper(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         mLookBuyRv.setAdapter(mLookBuyAdapter);
@@ -115,28 +123,6 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
         mRecommendAdapter = new RecyclerBaseAdapter<>(R.layout.item_product, ProductHolder.class);
         mRvGoodsRecommend.setAdapter(mRecommendAdapter);
         mHomePagePresenter.getRecommend();
-    }
-
-    private void initBanner() {
-        List<View> viewList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            ImageView iv = new ImageView(getActivity());
-            iv.setImageResource(R.drawable.banner_test1);
-            viewList.add(iv);
-        }
-        MyViewPagerAdapter adapter = new MyViewPagerAdapter(viewList);
-        mMainAutoBanner.setAdapter(adapter);
-        mMainAutoBanner.startAutoScroll(2000);
-
-        List<View> viewList2 = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            ImageView iv = new ImageView(getActivity());
-            iv.setImageResource(R.drawable.banner_test2);
-            viewList2.add(iv);
-        }
-        MyViewPagerAdapter adapter2 = new MyViewPagerAdapter(viewList2);
-        mMainMediumBanner.setAdapter(adapter2);
-        mMainMediumBanner.startAutoScroll(2000);
     }
 
     private void initMenu() {
@@ -160,6 +146,27 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
                 }
             }
         });
+
+        mLookBuyAdapter.itemClickObserve()
+                .compose(this.<Product>bindToLifecycle())
+                .subscribe(new Consumer<Product>() {
+                    @Override
+                    public void accept(Product product) throws Exception {
+                        String url = product.getUrl();
+                        url = URLDecoder.decode(url);
+                        WebViewActivity.start(getActivity(), url);
+                    }
+                });
+        mRecommendAdapter.itemClickObserve()
+                .compose(this.<Product>bindToLifecycle())
+                .subscribe(new Consumer<Product>() {
+                    @Override
+                    public void accept(Product product) throws Exception {
+                        String url = product.getUrl();
+                        url = URLDecoder.decode(url);
+                        WebViewActivity.start(getActivity(), url);
+                    }
+                });
 
     }
 
@@ -197,6 +204,57 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
     @Override
     public void setRecommend(List<Product> productList) {
         mRecommendAdapter.setAll(productList);
+    }
+
+    @Override
+    public void setBanner(HomePageBanner banner) {
+        List<View> viewList = new ArrayList<>();
+        List<Banner> bannerTop = banner.getTop();
+        for (int i = 0; i < bannerTop.size(); i++) {
+            ImageView iv = new ImageView(getActivity());
+            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            final Banner item = bannerTop.get(i);
+            Glide.with(getActivity()).load(item.getPic()).into(iv);
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    WebViewActivity.start(getActivity(), item.getUrl());
+                }
+            });
+            viewList.add(iv);
+        }
+        MyViewPagerAdapter adapter = new MyViewPagerAdapter(viewList);
+        mMainAutoBanner.setAdapter(adapter);
+        mMainAutoBanner.startAutoScroll(2000);
+
+        List<View> viewList2 = new ArrayList<>();
+        List<Banner> bannerMid = banner.getMid();
+        for (int i = 0; i < bannerMid.size(); i++) {
+            ImageView iv = new ImageView(getActivity());
+            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            final Banner item = bannerMid.get(i);
+            Glide.with(getActivity()).load(item.getPic()).into(iv);
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    WebViewActivity.start(getActivity(), item.getUrl());
+                }
+            });
+            viewList2.add(iv);
+        }
+        MyViewPagerAdapter adapter2 = new MyViewPagerAdapter(viewList2);
+        mMainMediumBanner.setAdapter(adapter2);
+        mMainMediumBanner.startAutoScroll(2000);
+    }
+
+    @Override
+    public void setTip(BuyTip tip) {
+        if (tip != null) {
+            mMainLlMessage.setVisibility(View.VISIBLE);
+            mTvMessageName.setText(tip.getName());
+            mTvMessageContent.setText(tip.getContent());
+            Glide.with(getActivity()).load(tip.getItempic()).into(mMessageAvatar);
+        }
     }
 
     @Override

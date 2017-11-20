@@ -17,8 +17,8 @@ import com.starnet.cqj.taobaoke.model.Banner;
 import com.starnet.cqj.taobaoke.model.HotItem;
 import com.starnet.cqj.taobaoke.presenter.IHotPresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.HotPresenterImpl;
-import com.starnet.cqj.taobaoke.view.activity.HotDetailActivity;
-import com.starnet.cqj.taobaoke.view.activity.QuestionDetailActivity;
+import com.starnet.cqj.taobaoke.remote.Constant;
+import com.starnet.cqj.taobaoke.view.activity.WebViewActivity;
 import com.starnet.cqj.taobaoke.view.adapter.LinearLayoutManagerWrapper;
 import com.starnet.cqj.taobaoke.view.adapter.MyViewPagerAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
@@ -88,7 +88,7 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
                 .subscribe(new Consumer<Article>() {
                     @Override
                     public void accept(Article article) throws Exception {
-                        HotDetailActivity.start(getActivity(), article);
+                        WebViewActivity.start(getActivity(), Constant.HOT_DETAIL_PREFIX + article.getId());
                     }
                 });
     }
@@ -137,7 +137,7 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    QuestionDetailActivity.start(getActivity(), banner.getId());
+                    WebViewActivity.start(getActivity(), Constant.HOT_DETAIL_PREFIX + banner.getId());
                 }
             });
             viewList.add(imageView);

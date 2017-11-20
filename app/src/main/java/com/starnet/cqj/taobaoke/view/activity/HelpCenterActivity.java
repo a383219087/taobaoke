@@ -15,6 +15,7 @@ import com.starnet.cqj.taobaoke.model.Article;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.ResultWithBanner;
+import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.adapter.LinearLayoutManagerWrapper;
 import com.starnet.cqj.taobaoke.view.adapter.MyViewPagerAdapter;
@@ -95,7 +96,7 @@ public class HelpCenterActivity extends BaseActivity {
                 .subscribe(new Consumer<Article>() {
                     @Override
                     public void accept(Article helpArticle) throws Exception {
-                        QuestionDetailActivity.start(HelpCenterActivity.this, helpArticle.getId());
+                        WebViewActivity.start(HelpCenterActivity.this, Constant.HELP_DETAIL_PREFIX+helpArticle.getId());
                     }
                 });
     }
@@ -208,7 +209,7 @@ public class HelpCenterActivity extends BaseActivity {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    QuestionDetailActivity.start(HelpCenterActivity.this, banner.getId());
+                    WebViewActivity.start(HelpCenterActivity.this, Constant.HELP_DETAIL_PREFIX + banner.getId());
                 }
             });
             viewList.add(imageView);
