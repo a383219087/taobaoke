@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -96,6 +97,10 @@ public class IntegralProductDetailActivity extends BaseActivity implements Integ
                 AddressListActivity.start(this);
                 break;
             case R.id.ll_more:
+                mLlMore.setVisibility(View.GONE);
+                ViewGroup.LayoutParams layoutParams = mTvProductDetail.getLayoutParams();
+                layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                mTvProductDetail.setLayoutParams(layoutParams);
                 break;
             case R.id.btn_exchange:
                 if (mProduct == null) {
@@ -133,6 +138,6 @@ public class IntegralProductDetailActivity extends BaseActivity implements Integ
 
     @Override
     public void onExchange() {
-
+        toast("兑换成功");
     }
 }

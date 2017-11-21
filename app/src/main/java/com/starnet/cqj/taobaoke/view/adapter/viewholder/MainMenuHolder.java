@@ -28,7 +28,7 @@ public class MainMenuHolder extends BaseHolder<MainMenu> {
     }
 
     @Override
-    public void bind(List<MainMenu> data, int position, IParamContainer container, PublishSubject<MainMenu> itemClick) {
+    public void bind(List<MainMenu> data, int position, IParamContainer container, final PublishSubject<MainMenu> itemClick) {
         final MainMenu mainMenu = data.get(position);
         if (mainMenu != null) {
             Glide
@@ -39,7 +39,7 @@ public class MainMenuHolder extends BaseHolder<MainMenu> {
             mItemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    itemClick.onNext(mainMenu);
                 }
             });
         }

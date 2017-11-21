@@ -42,6 +42,7 @@ public class ProductListActivity extends BaseActivity implements IProductListPre
 
 
     public static final String KEY_SEARCH_TYPE = "search_type";
+    public static final String KEY_MAIN_MENU = "main_menu";
     @BindView(R.id.btn_search)
     Button mBtnSearch;
     @BindView(R.id.edt_search)
@@ -96,7 +97,17 @@ public class ProductListActivity extends BaseActivity implements IProductListPre
         mRvProduct.addItemDecoration(new RecyclerSpaceDecoration(getResources().getDimensionPixelOffset(R.dimen.product_item_padding)));
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_product, ProductHolder.class);
         mRvProduct.setAdapter(mAdapter);
-        SearchType searchType = (SearchType) getIntent().getSerializableExtra(KEY_SEARCH_TYPE);
+        SearchType searchType = null;
+        try {
+            searchType = (SearchType) getIntent().getSerializableExtra(KEY_SEARCH_TYPE);
+        } catch (Exception ignored) {
+        }
+        try {
+            MainMenu menu = (MainMenu) getIntent().getSerializableExtra(KEY_MAIN_MENU);
+            cateId = String.valueOf(menu.getId());
+            mProductExpandTab.setTitle(menu.getName(), 0);
+        } catch (Exception ignored) {
+        }
         mPresenter = new ProductListPresenterImpl(this, searchType);
         get();
         mPresenter.getTip();
@@ -112,8 +123,11 @@ public class ProductListActivity extends BaseActivity implements IProductListPre
                     public void accept(MainMenu mainMenu) throws Exception {
                         mProductExpandTab.onPressBack();
                         mProductExpandTab.setTitle(mainMenu.getName(), 0);
-                        cateId = String.valueOf(mainMenu.getId());
-                        get();
+                        String s = String.valueOf(mainMenu.getId());
+                        if (!cateId.equals(s)) {
+                            cateId = s;
+                            get();
+                        }
                     }
                 });
         mSortView.getObservable()
@@ -123,8 +137,11 @@ public class ProductListActivity extends BaseActivity implements IProductListPre
                     public void accept(ProductSort productSort) throws Exception {
                         mProductExpandTab.onPressBack();
                         mProductExpandTab.setTitle(productSort.getName(), 1);
-                        typeName = productSort.getId();
-                        get();
+                        String id = productSort.getId();
+                        if (!typeName.equals(id)) {
+                            typeName = id;
+                            get();
+                        }
                     }
                 });
         mBetweenView.getObservable()
@@ -156,13 +173,17 @@ public class ProductListActivity extends BaseActivity implements IProductListPre
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
             RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-            if (layoutManager instanceof LinearLayoutManager) {
-                int lastPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
-                if (mHasMore && lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
-                    mPage++;
-                    if (mPresenter != null) {
-                        mPresenter.getData(mPage, mEdtSearch.getText().toString(), typeName, minFee, maxFee, cateId);
-                    }
+            int lastPosition = 0;
+            if (layoutManager instanceof GridLayoutManager) {
+                //通过LayoutManager找到当前显示的最后的item的position
+                lastPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
+            } else if (layoutManager instanceof LinearLayoutManager) {
+                lastPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+            }
+            if (mHasMore && lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
+                mPage++;
+                if (mPresenter != null) {
+                    mPresenter.getData(mPage, mEdtSearch.getText().toString(), typeName, minFee, maxFee, cateId);
                 }
             }
         }
@@ -237,6 +258,12 @@ public class ProductListActivity extends BaseActivity implements IProductListPre
     public static void start(Context context, SearchType searchType) {
         Intent starter = new Intent(context, ProductListActivity.class);
         starter.putExtra(KEY_SEARCH_TYPE, searchType);
+        context.startActivity(starter);
+    }
+
+    public static void start(Context context, MainMenu menu) {
+        Intent starter = new Intent(context, ProductListActivity.class);
+        starter.putExtra(KEY_MAIN_MENU, menu);
         context.startActivity(starter);
     }
 

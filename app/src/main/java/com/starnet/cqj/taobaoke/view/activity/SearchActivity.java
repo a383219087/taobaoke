@@ -24,6 +24,7 @@ import com.starnet.cqj.taobaoke.view.adapter.RecyclerSpaceDecoration;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.ProductHolder;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.SearchHistoryHolder;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,6 +32,7 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 
 public class SearchActivity extends BaseActivity implements ISearchPresenter.IView {
@@ -69,6 +71,30 @@ public class SearchActivity extends BaseActivity implements ISearchPresenter.IVi
 
     }
 
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+        mAdapter.itemClickObserve()
+                .compose(this.<Product>bindToLifecycle())
+                .subscribe(new Consumer<Product>() {
+                    @Override
+                    public void accept(Product product) throws Exception {
+                        String url = product.getUrl();
+                        url = URLDecoder.decode(url);
+                        WebViewActivity.start(SearchActivity.this, url);
+                    }
+                });
+        mHistoryAdapter.itemClickObserve()
+                .compose(this.<String>bindToLifecycle())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        mEdtSearch.setText(s);
+                        get();
+                    }
+                });
+    }
+
     private void initHistoryList() {
         mPreference = getSharedPreferences(Constant.COMMON_PREFERENCE_NAME, Context.MODE_PRIVATE);
         mSet = mPreference.getStringSet(KEY_SEARCH_HISTORY, new HashSet<String>());
@@ -87,12 +113,11 @@ public class SearchActivity extends BaseActivity implements ISearchPresenter.IVi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_search:
-                mSearch = mEdtSearch.getText().toString().trim();
-                if (!TextUtils.isEmpty(mSearch)) {
+                get();
+                if (!TextUtils.isEmpty(mSearch) && !mSet.contains(mSearch)) {
                     mSet.add(mSearch);
                     applyHistory();
                 }
-                mPresenter.search(mSearch);
                 break;
             case R.id.tv_history_clear:
                 mSet.clear();
@@ -100,6 +125,12 @@ public class SearchActivity extends BaseActivity implements ISearchPresenter.IVi
                 break;
         }
     }
+
+    private void get() {
+        mSearch = mEdtSearch.getText().toString().trim();
+        mPresenter.search(mSearch);
+    }
+
 
     private void applyHistory() {
         SharedPreferences.Editor edit = mPreference.edit();

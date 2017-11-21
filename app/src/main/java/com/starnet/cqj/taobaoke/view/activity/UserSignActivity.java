@@ -2,6 +2,7 @@ package com.starnet.cqj.taobaoke.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
@@ -63,6 +64,7 @@ public class UserSignActivity extends BaseActivity {
                         if ("200".equals(resultWrapperJsonCommon.getCode())) {
                             mSignCalendar.addMarks(resultWrapperJsonCommon.getData().getList());
                             mTvContinuity.setText("连续签到" + resultWrapperJsonCommon.getData().getCount() + "天");
+                            mTvRemark.setText(Html.fromHtml(resultWrapperJsonCommon.getData().getSignRemark()));
                         } else {
                             toast(resultWrapperJsonCommon.getMessage());
                         }

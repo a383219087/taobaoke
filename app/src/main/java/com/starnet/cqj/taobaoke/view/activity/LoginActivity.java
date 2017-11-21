@@ -1,8 +1,10 @@
 package com.starnet.cqj.taobaoke.view.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.StringRes;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,7 +20,6 @@ import com.starnet.cqj.taobaoke.presenter.ILoginPresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.LoginPresenterImpl;
 import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
-import com.umeng.socialize.Config;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -44,6 +45,8 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
     @BindView(R.id.pwd_clear)
     ImageView mIvPwdClear;
 
+    private ProgressDialog mProgressDialog;
+
     private ILoginPresenter mPresenter;
     private SharedPreferences mSharedPreferences;
     private WechatUser mWechatUser;
@@ -67,7 +70,8 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
                 }
             }, 100);
         }
-        Config.DEBUG = true;
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("登录中……");
     }
 
     @Override
@@ -125,8 +129,9 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
                     toast("请输入密码");
                     return;
                 }
+                mProgressDialog.show();
                 String regId = JPushInterface.getRegistrationID(this);
-                mPresenter.login(mobile, pwd,regId);
+                mPresenter.login(mobile, pwd, regId);
                 break;
             case R.id.forgetpwd:
                 ForgetPwdActivity.start(this);
@@ -137,6 +142,7 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
             case R.id.wechat_login:
             case R.id.iv_wechat_login:
             case R.id.tv_wechat_login:
+                mProgressDialog.show();
                 UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
                     @Override
                     public void onStart(SHARE_MEDIA share_media) {
@@ -153,7 +159,7 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
                         mWechatUser.setNickname(map.get("name"));
                         mWechatUser.setUnionId(map.get("unionid"));
                         String regId = JPushInterface.getRegistrationID(LoginActivity.this);
-                        mPresenter.wechatLogin(mWechatUser.getOpenid(),regId);
+                        mPresenter.wechatLogin(mWechatUser.getOpenid(), regId);
                     }
 
                     @Override
@@ -176,6 +182,7 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
 
     @Override
     public void onLoginSuccess(User user) {
+        mProgressDialog.dismiss();
         toast("登录成功");
         ((BaseApplication) getApplication()).token = Constant.HEADER_PREFIX + user.getToken();
         SharedPreferences.Editor edit = mSharedPreferences.edit();
@@ -187,6 +194,23 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
 
     @Override
     public void noBind() {
+        mProgressDialog.dismiss();
         BindActivity.start(this, mWechatUser);
+    }
+
+    @Override
+    public void toast(String res) {
+        super.toast(res);
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void toast(@StringRes int res) {
+        super.toast(res);
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
     }
 }

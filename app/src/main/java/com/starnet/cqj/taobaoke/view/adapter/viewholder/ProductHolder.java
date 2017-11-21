@@ -38,8 +38,8 @@ public class ProductHolder extends BaseHolder<Product> {
     }
 
     @Override
-    public void bind(List<Product> data, int position, IParamContainer container, PublishSubject<Product> itemClick) {
-        Product product = data.get(position);
+    public void bind(List<Product> data, int position, IParamContainer container, final PublishSubject<Product> itemClick) {
+        final Product product = data.get(position);
         if (product != null) {
             Glide.with(mItemView.getContext())
                     .load(product.getItempic())
@@ -53,7 +53,7 @@ public class ProductHolder extends BaseHolder<Product> {
             mItemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    itemClick.onNext(product);
                 }
             });
         }

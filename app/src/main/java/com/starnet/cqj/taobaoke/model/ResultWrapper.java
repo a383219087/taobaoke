@@ -19,8 +19,19 @@ public class ResultWrapper<T> {
     @SerializedName("count")
     private String count;
 
+    @SerializedName("desc")
+    private String signRemark;
+
     @SerializedName("all_score")
     private String allScore;
+
+    public String getSignRemark() {
+        return signRemark;
+    }
+
+    public void setSignRemark(String signRemark) {
+        this.signRemark = signRemark;
+    }
 
     public String getAllScore() {
         return allScore;

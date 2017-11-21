@@ -4,21 +4,36 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.starnet.cqj.taobaoke.R;
+import com.starnet.cqj.taobaoke.utils.RxBus;
+import com.starnet.cqj.taobaoke.utils.event.ToHomePageEvent;
 import com.starnet.cqj.taobaoke.view.fragment.ActionFragment;
 import com.starnet.cqj.taobaoke.view.fragment.HomePageFragment;
 import com.starnet.cqj.taobaoke.view.fragment.HotFragment;
 import com.starnet.cqj.taobaoke.view.fragment.MineFragment;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseActivity {
 
     @BindView(R.id.rg)
     RadioGroup mRg;
+    @BindView(R.id.rb_home)
+    RadioButton mRbHome;
+    @BindView(R.id.rb_action)
+    RadioButton mRbAction;
+    @BindView(R.id.rb_hot)
+    RadioButton mRbHot;
+    @BindView(R.id.rb_mine)
+    RadioButton mRbMine;
     private HomePageFragment mHomePageFragment;
     private ActionFragment mActionFragment;
     private HotFragment mHotFragment;
@@ -32,6 +47,15 @@ public class MainActivity extends BaseActivity {
         mHotFragment = HotFragment.newInstance();
         mMineFragment = MineFragment.newInstance();
         startFragmentAdd(mHomePageFragment);
+        RxBus.getInstance().observer(ToHomePageEvent.class)
+                .compose(this.<ToHomePageEvent>bindToLifecycle())
+                .subscribe(new Consumer<ToHomePageEvent>() {
+                    @Override
+                    public void accept(ToHomePageEvent toHomePageEvent) throws Exception {
+                        startFragmentAdd(mHomePageFragment);
+                        mRbHome.setChecked(true);
+                    }
+                });
     }
 
     @Override
@@ -50,6 +74,7 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+
     }
 
     // fragment的切换
@@ -81,6 +106,39 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
+    @Override
+    public void onBackPressed() {
+        showExitDialog();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            showExitDialog();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void showExitDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("提示")
+                .setMessage("确认要退出程序吗？")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        alertDialog.show();
+    }
 
     public static void start(Context context) {
         Intent starter = new Intent(context, MainActivity.class);
@@ -92,4 +150,5 @@ public class MainActivity extends BaseActivity {
         starter.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(starter);
     }
+
 }

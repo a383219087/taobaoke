@@ -48,7 +48,7 @@ public class ProductListPresenterImpl extends BasePresenterImpl implements IProd
                 .subscribe(new Consumer<JsonCommon<ResultWrapper<Product>>>() {
                     @Override
                     public void accept(JsonCommon<ResultWrapper<Product>> resultWrapperJsonCommon) throws Exception {
-                        if(isValidResult(resultWrapperJsonCommon,mViewCallback)){
+                        if (isValidResult(resultWrapperJsonCommon, mViewCallback)) {
                             mViewCallback.setResult(resultWrapperJsonCommon.getData().getList());
                         }
                     }
@@ -59,6 +59,7 @@ public class ProductListPresenterImpl extends BasePresenterImpl implements IProd
                     }
                 });
     }
+
     @Override
     public void getTip() {
         Observable.interval(100, Constant.MAIN_TIP_GET_INTERVAL, TimeUnit.MILLISECONDS)
@@ -95,6 +96,9 @@ public class ProductListPresenterImpl extends BasePresenterImpl implements IProd
     }
 
     private Observable<JsonCommon<ResultWrapper<Product>>> getProvider(int page, String key, String typeName, String minFee, String maxFee, String cateId) {
+        if (mSearchType == null) {
+            return RemoteDataSourceBase.INSTANCE.getSearchService().site(key, typeName, minFee, maxFee, cateId);
+        }
         switch (mSearchType) {
             case SITE:
                 return RemoteDataSourceBase.INSTANCE.getSearchService().site(key, typeName, minFee, maxFee, cateId);
@@ -107,7 +111,7 @@ public class ProductListPresenterImpl extends BasePresenterImpl implements IProd
             case PPQ:
                 return RemoteDataSourceBase.INSTANCE.getSearchService().ppq(page, typeName, minFee, maxFee, cateId);
             case VIDEO:
-                return RemoteDataSourceBase.INSTANCE.getHomePageService().getLookBuy(page,typeName,minFee,maxFee);
+                return RemoteDataSourceBase.INSTANCE.getHomePageService().getLookBuy(page, typeName, minFee, maxFee);
             default:
                 return RemoteDataSourceBase.INSTANCE.getSearchService().site(key, typeName, minFee, maxFee, cateId);
         }

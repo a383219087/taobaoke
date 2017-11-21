@@ -26,7 +26,14 @@ public class SearchHistoryHolder extends BaseHolder<String> {
     }
 
     @Override
-    public void bind(List<String> data, int position, IParamContainer container, PublishSubject<String> itemClick) {
-        mItemText.setText(data.get(position));
+    public void bind(List<String> data, int position, IParamContainer container, final PublishSubject<String> itemClick) {
+        final String text = data.get(position);
+        mItemText.setText(text);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClick.onNext(text);
+            }
+        });
     }
 }

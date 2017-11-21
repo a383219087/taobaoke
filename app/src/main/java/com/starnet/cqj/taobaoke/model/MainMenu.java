@@ -1,10 +1,12 @@
 package com.starnet.cqj.taobaoke.model;
 
+import java.io.Serializable;
+
 /**
  * Created by mini on 17/11/4.
  */
 
-public class MainMenu {
+public class MainMenu implements Serializable{
 
     private int id;
 

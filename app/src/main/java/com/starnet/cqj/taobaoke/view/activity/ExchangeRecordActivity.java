@@ -4,6 +4,7 @@ package com.starnet.cqj.taobaoke.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -60,7 +61,7 @@ public class ExchangeRecordActivity extends BaseActivity {
                     public void accept(JsonCommon<List<ExchangeRecord>> listJsonCommon) throws Exception {
                         mSrRefresh.setRefreshing(false);
                         if ("200".equals(listJsonCommon.getCode())) {
-                            hasMore = listJsonCommon.getData()==null || listJsonCommon.getData().isEmpty();
+                            hasMore = listJsonCommon.getData() == null || listJsonCommon.getData().isEmpty();
                             if (mPage == 0) {
                                 mAdapter.setAll(listJsonCommon.getData());
                             } else {
@@ -83,12 +84,16 @@ public class ExchangeRecordActivity extends BaseActivity {
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
             RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-            if (layoutManager instanceof LinearLayoutManager) {
-                int lastPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
-                if (hasMore && lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
-                    mPage++;
-                    getData();
-                }
+            int lastPosition = 0;
+            if (layoutManager instanceof GridLayoutManager) {
+                //通过LayoutManager找到当前显示的最后的item的position
+                lastPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
+            } else if (layoutManager instanceof LinearLayoutManager) {
+                lastPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+            }
+            if (hasMore && lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
+                mPage++;
+                getData();
             }
         }
     };

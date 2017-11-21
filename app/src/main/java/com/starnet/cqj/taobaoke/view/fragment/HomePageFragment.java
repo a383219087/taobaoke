@@ -146,6 +146,14 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
                 }
             }
         });
+        mMenuAdapter.itemClickObserve()
+                .compose(this.<MainMenu>bindToLifecycle())
+                .subscribe(new Consumer<MainMenu>() {
+                    @Override
+                    public void accept(MainMenu mainMenu) throws Exception {
+                        ProductListActivity.start(getActivity(), mainMenu);
+                    }
+                });
 
         mLookBuyAdapter.itemClickObserve()
                 .compose(this.<Product>bindToLifecycle())

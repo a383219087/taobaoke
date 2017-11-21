@@ -1,5 +1,6 @@
 package com.starnet.cqj.taobaoke.remote.i;
 
+import com.starnet.cqj.taobaoke.model.Action;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.SignResult;
@@ -20,6 +21,9 @@ public interface IActionService {
 
     @POST("/signList")
     Observable<JsonCommon<ResultWrapper<String>>> signList(@Header("Authorization") String header);
+
+    @POST("/active")
+    Observable<JsonCommon<Action>> active();
 
 
 }
