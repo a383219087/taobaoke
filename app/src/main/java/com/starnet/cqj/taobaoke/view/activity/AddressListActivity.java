@@ -115,11 +115,13 @@ public class AddressListActivity extends BaseActivity implements IAddressListPre
 
     @Override
     public void onDelete(Address address) {
+        toast("删除成功");
         refresh();
     }
 
     @Override
     public void onEditDefault() {
+        toast("修改成功");
         refresh();
     }
 

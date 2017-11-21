@@ -63,7 +63,7 @@ public class RecyclerBaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerVi
     }
 
     public void setAll(List<T> datas) {
-        if (datas == null || datas.isEmpty()) {
+        if (datas == null) {
             return;
         }
         mDataList.clear();

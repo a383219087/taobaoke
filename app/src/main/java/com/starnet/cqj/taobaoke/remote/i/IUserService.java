@@ -42,10 +42,10 @@ public interface IUserService {
     Observable<JsonCommon<ResultWrapper<Address>>> getAddress(@Header("Authorization") String header);
 
     @POST("/delAddr")
-    Observable<JsonCommon<List<String>>> deleteAddress(@Header("Authorization") String header, @Query("id") int id);
+    Observable<JsonCommon<Object>> deleteAddress(@Header("Authorization") String header, @Query("id") int id);
 
     @POST("/saveAddress")
-    Observable<JsonCommon<List<String>>> saveAddress(@Header("Authorization") String header,
+    Observable<JsonCommon<Object>> saveAddress(@Header("Authorization") String header,
                                                      @Query("id") int id,
                                                      @Query("area") String area,
                                                      @Query("address") String address,
@@ -54,7 +54,7 @@ public interface IUserService {
                                                      @Query("name") String name
     );
 
-    @POST("/integralOder")
+    @POST("/integralOrder")
     Observable<JsonCommon<Object>> integralOrder(@Header("Authorization") String header,
                                                  @Query("score") String score,
                                                  @Query("address") String address,

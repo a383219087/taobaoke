@@ -142,14 +142,14 @@ public class AddAddressPresenterImpl extends BasePresenterImpl implements IAddAd
                 .saveAddress(token, id, address.getArea(), address.getAddress(), isDefault, address.getPhone(), address.getName())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<JsonCommon<List<String>>>() {
+                .subscribe(new Observer<JsonCommon<Object>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(JsonCommon<List<String>> value) {
+                    public void onNext(JsonCommon<Object> value) {
                         if (isValidResult(value, mViewCallback)) {
                             mViewCallback.onAddAddress();
                         }
