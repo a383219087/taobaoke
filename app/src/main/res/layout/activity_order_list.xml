@@ -10,7 +10,6 @@
     <include layout="@layout/title_layout"/>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/main_gray"
@@ -23,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@color/transparent"
+            android:background="?android:attr/selectableItemBackground"
             android:padding="10dp"
             android:text="搜索"
             android:textColor="@color/textblack"
