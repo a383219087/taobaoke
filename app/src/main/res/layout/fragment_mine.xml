@@ -204,7 +204,7 @@
                     android:layout_margin="12dp"
                     android:background="@drawable/circle_btn_selector"
                     android:id="@+id/btn_to_money"
-                    android:text="提现"
+                    android:text="详情"
                     android:textColor="@color/mine_btn_color"
                     android:textSize="14sp"/>
 

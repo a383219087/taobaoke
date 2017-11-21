@@ -2,6 +2,7 @@ package com.starnet.cqj.taobaoke.presenter.impl;
 
 import com.starnet.cqj.taobaoke.model.CNCBKUser;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.User;
 import com.starnet.cqj.taobaoke.presenter.BasePresenterImpl;
 import com.starnet.cqj.taobaoke.presenter.IWithdrawalsPresenter;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
@@ -20,6 +21,37 @@ public class WithdrawalsPresenterImpl extends BasePresenterImpl implements IWith
 
     public WithdrawalsPresenterImpl(IView viewCallback) {
         mViewCallback = viewCallback;
+    }
+
+    @Override
+    public void getScore(String header) {
+        RemoteDataSourceBase.INSTANCE.getUserService()
+                .person(header)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<JsonCommon<User>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mCompositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(JsonCommon<User> value) {
+                        if (isValidResult(value, mViewCallback)) {
+                            mViewCallback.setScore(String.valueOf(value.getData().getCredit1()));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override

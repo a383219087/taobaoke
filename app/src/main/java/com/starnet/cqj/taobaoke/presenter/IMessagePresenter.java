@@ -14,10 +14,14 @@ public interface IMessagePresenter extends BasePresenter {
 
     void deleteMessage(String header,String id);
 
+    void allRead(String header);
+
     interface IView extends BasePresenter.IView{
         void setMessageList(List<Message> messageList);
 
         void onDelete();
+
+        void onAllRead();
 
     }
 }

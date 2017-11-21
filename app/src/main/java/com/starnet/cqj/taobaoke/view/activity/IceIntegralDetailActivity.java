@@ -12,9 +12,6 @@ import com.starnet.cqj.taobaoke.view.BaseApplication;
 
 import io.reactivex.Observable;
 
-/**
- * Created by mini on 17/11/19.
- */
 
 public class IceIntegralDetailActivity extends ReCheckIntegralDetailActivity {
 

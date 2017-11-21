@@ -58,11 +58,12 @@ public class SortView extends RelativeLayout implements ViewBaseAction {
     private void setData() {
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_sort, SortHolder.class);
         String[] sortArray = mContext.getResources().getStringArray(R.array.product_sort_array);
+        String[] sortIdArray = mContext.getResources().getStringArray(R.array.product_sort_id_array);
         List<ProductSort> productSorts = new ArrayList<>();
         for (int i = 0; i < sortArray.length; i++) {
             ProductSort sort = new ProductSort();
             sort.setName(sortArray[i]);
-            sort.setId(i + 1);
+            sort.setId(sortIdArray[i]);
             if (i == 0) {
                 sort.setChecked(true);
                 mOldCheckOsort = sort;

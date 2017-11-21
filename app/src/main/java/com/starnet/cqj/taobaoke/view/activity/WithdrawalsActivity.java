@@ -24,7 +24,6 @@ import butterknife.OnClick;
 public class WithdrawalsActivity extends BaseActivity implements IWithdrawalsPresenter.IView {
 
 
-    public static final String KEY_SCORE = "score";
     @BindView(R.id.icon)
     ImageView mIcon;
     @BindView(R.id.tv_score)
@@ -66,11 +65,9 @@ public class WithdrawalsActivity extends BaseActivity implements IWithdrawalsPre
         String tip2 = "<font color='#999999'>3.</font><font color='#6c75f8'>账号绑定错误，</font>" +
                 "<font color='#999999'>请联系客服修改后提现</font>";
         mTvTip3.setText(Html.fromHtml(tip2));
-
-        String score = getIntent().getStringExtra(KEY_SCORE);
-        mTvScore.setText(String.format("￥%s", score));
         mPresenter = new WithdrawalsPresenterImpl(this);
         mPresenter.getBindUser(((BaseApplication) getApplication()).token);
+        mPresenter.getScore(((BaseApplication) getApplication()).token);
     }
 
 
@@ -137,6 +134,11 @@ public class WithdrawalsActivity extends BaseActivity implements IWithdrawalsPre
     }
 
     @Override
+    public void setScore(String score) {
+        mTvScore.setText(String.format("￥%s", score));
+    }
+
+    @Override
     public void onGetBindUser(CNCBKUser user) {
         if (user == null || (TextUtils.isEmpty(user.getName()) && TextUtils.isEmpty(user.getPhone()))) {
             mLlAddAccount.setClickable(true);
@@ -154,12 +156,12 @@ public class WithdrawalsActivity extends BaseActivity implements IWithdrawalsPre
     public void onCash() {
         toast("提取成功");
         mEdtWithdrawalsIntegral.setText("");
+        mPresenter.getScore(((BaseApplication) getApplication()).token);
     }
 
 
-    public static void start(Context context, String score) {
+    public static void start(Context context) {
         Intent starter = new Intent(context, WithdrawalsActivity.class);
-        starter.putExtra(KEY_SCORE, score);
         context.startActivity(starter);
     }
 

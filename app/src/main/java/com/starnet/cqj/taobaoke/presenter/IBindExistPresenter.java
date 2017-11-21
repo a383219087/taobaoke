@@ -11,7 +11,7 @@ public interface IBindExistPresenter extends BasePresenter {
 
     void getCode(String mobile);
 
-    void bind(WechatUser user);
+    void bind(WechatUser user,String regId);
 
     interface IView extends BasePresenter.IView{
         void onGetCode();

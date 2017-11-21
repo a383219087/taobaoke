@@ -35,5 +35,19 @@ public interface ISearchService {
      * @return
      */
     @POST("/site")
-    Observable<JsonCommon<ResultWrapper<Product>>> site(@Query("keywords") String key, @Query("typename") String typename, @Query("minfee") String minfee, @Query("maxfee") String maxfee);
+    Observable<JsonCommon<ResultWrapper<Product>>> site(@Query("keywords") String key, @Query("typename") String typename, @Query("minfee") String minfee, @Query("maxfee") String maxfee,@Query("cate_id")String cateId);
+
+
+    @POST("/jhs")
+    Observable<JsonCommon<ResultWrapper<Product>>> jhs(@Query("page") int page, @Query("typename") String typename, @Query("minfee") String minfee, @Query("maxfee") String maxfee,@Query("cate_id") String cateId);
+
+    @POST("/tqg")
+    Observable<JsonCommon<ResultWrapper<Product>>> tqg(@Query("page") int page, @Query("typename") String typename, @Query("minfee") String minfee, @Query("maxfee") String maxfee,@Query("cate_id") String cateId);
+
+    @POST("/today")
+    Observable<JsonCommon<ResultWrapper<Product>>> today(@Query("page") int page, @Query("typename") String typename, @Query("minfee") String minfee, @Query("maxfee") String maxfee,@Query("cate_id") String cateId);
+
+    @POST("/ppq")
+    Observable<JsonCommon<ResultWrapper<Product>>> ppq(@Query("page") int page, @Query("typename") String typename, @Query("minfee") String minfee, @Query("maxfee") String maxfee,@Query("cate_id") String cateId);
+
 }

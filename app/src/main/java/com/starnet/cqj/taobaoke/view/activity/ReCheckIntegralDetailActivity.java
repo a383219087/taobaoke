@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
@@ -17,7 +16,6 @@ import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.IntegralDetailHolder;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -30,8 +28,6 @@ import io.reactivex.schedulers.Schedulers;
 public class ReCheckIntegralDetailActivity extends BaseActivity {
 
 
-    @BindView(R.id.title_rightbutton)
-    Button mTitleRightbutton;
     @BindView(R.id.tv_integral)
     TextView mTvIntegral;
     @BindView(R.id.tv_remark)
@@ -86,10 +82,6 @@ public class ReCheckIntegralDetailActivity extends BaseActivity {
     protected Observable<JsonCommon<ResultWrapper<IntegralDetail>>> getDetailObservable() {
         return RemoteDataSourceBase.INSTANCE.getUserService()
                 .djsCncbk(((BaseApplication) getApplication()).token, mPage);
-    }
-
-    @OnClick(R.id.title_rightbutton)
-    public void onViewClicked() {
     }
 
     public static void start(Context context) {

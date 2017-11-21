@@ -12,6 +12,7 @@ import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.IntegralProduct;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.ResultWrapper;
+import com.starnet.cqj.taobaoke.model.User;
 import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
@@ -60,7 +61,7 @@ public class IntegralStoreActivity extends BaseActivity {
                 .subscribe(new Consumer<IntegralProduct>() {
                     @Override
                     public void accept(IntegralProduct product) throws Exception {
-                        IntegralProductDetailActivity.start(IntegralStoreActivity.this,product);
+                        IntegralProductDetailActivity.start(IntegralStoreActivity.this, product);
                     }
                 });
     }
@@ -74,10 +75,39 @@ public class IntegralStoreActivity extends BaseActivity {
                 .subscribe(new Consumer<JsonCommon<ResultWrapper<IntegralProduct>>>() {
                     @Override
                     public void accept(JsonCommon<ResultWrapper<IntegralProduct>> productResultJsonCommon) throws Exception {
-                        if("200".equals(productResultJsonCommon.getCode())){
+                        if ("200".equals(productResultJsonCommon.getCode())) {
                             mAdapter.setAll(productResultJsonCommon.getData().getList());
-                        }else{
+                        } else {
                             toast(productResultJsonCommon.getMessage());
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        throwable.printStackTrace();
+                    }
+                });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getScore();
+    }
+
+    private void getScore() {
+        RemoteDataSourceBase.INSTANCE.getUserService()
+                .person(((BaseApplication) getApplication()).token)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .compose(this.<JsonCommon<User>>bindToLifecycle())
+                .subscribe(new Consumer<JsonCommon<User>>() {
+                    @Override
+                    public void accept(JsonCommon<User> userJsonCommon) throws Exception {
+                        if ("200".equals(userJsonCommon.getCode())) {
+                            mTvMyIntegral.setText(String.valueOf(userJsonCommon.getData().getCredit1()));
+                        } else {
+                            toast(userJsonCommon.getMessage());
                         }
                     }
                 }, new Consumer<Throwable>() {

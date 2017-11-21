@@ -2,8 +2,11 @@ package com.starnet.cqj.taobaoke.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -11,8 +14,6 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.starnet.cqj.taobaoke.R;
-
-import java.net.URLDecoder;
 
 import butterknife.BindView;
 
@@ -44,12 +45,24 @@ public class WebViewActivity extends BaseActivity {
             //覆写shouldOverrideUrlLoading实现内部显示网页
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
+                WebView.HitTestResult hitTestResult = view.getHitTestResult();
+                //hitTestResult==null解决重定向问题
+                if (!TextUtils.isEmpty(url) && hitTestResult == null) {
+                    view.loadUrl(url);
+                    return true;
+                }
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+            public void onPageFinished(WebView view, String url) {
+                CookieManager cookieManager = CookieManager.getInstance();
+                String CookieStr = cookieManager.getCookie(url);
+                if (CookieStr != null) {
+                    Log.i("cookie", CookieStr);
+                }
+                super.onPageFinished(view, url);
             }
         });
-        WebSettings seting = mWebView.getSettings();
-        seting.setJavaScriptEnabled(true);//设置webview支持javascript脚本
+        initWebViewSettings();
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -62,10 +75,34 @@ public class WebViewActivity extends BaseActivity {
                 }
 
             }
+
         });
 
     }
 
+    private void initWebViewSettings(){
+        // 设置可以访问文件
+        mWebView.getSettings().setAllowFileAccess(true);
+        //如果访问的页面中有Javascript，则webview必须设置支持Javascript
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        mWebView.getSettings().setAllowFileAccess(true);
+        mWebView.getSettings().setAppCacheEnabled(true);
+        mWebView.getSettings().setDomStorageEnabled(true);
+        mWebView.getSettings().setDatabaseEnabled(true);
+    }
+
+//    private void syncCookie(Context context, String url){
+//        try{
+//            CookieSyncManager.createInstance(context);
+//            CookieManager cookieManager = CookieManager.getInstance();
+//            cookieManager.setAcceptCookie(true);
+//            cookieManager.removeSessionCookie();//移除
+//            cookieManager.setCookie(url, cookies);//cookies是在HttpClient中获得的cookie
+//            CookieSyncManager.getInstance().sync();
+//        }catch(Exception ignored){
+//        }
+//    }
 
     //设置返回键动作（防止按返回键直接退出程序)
     @Override

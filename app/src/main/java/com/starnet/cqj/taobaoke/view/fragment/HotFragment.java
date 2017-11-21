@@ -51,7 +51,9 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
 
     private IHotPresenter mPresenter;
     private RecyclerBaseAdapter<Article, HotArticleHolder> mAdapter;
-    private int mPage;
+    private int mPage = 1;
+    private boolean mHasMore;
+    private String mItemId;
 
     public static HotFragment newInstance() {
 
@@ -91,6 +93,24 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
                         WebViewActivity.start(getActivity(), Constant.HOT_DETAIL_PREFIX + article.getId());
                     }
                 });
+        mTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mItemId = (String) tab.getTag();
+                mPage = 1;
+                mPresenter.getList(mItemId);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -100,9 +120,10 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
             RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
             if (layoutManager instanceof LinearLayoutManager) {
                 int lastPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
-//                if (hasMore && lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
-//
-//                }
+                if (mHasMore && lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
+                    mPage++;
+                    mPresenter.getMoreList(mPage, mItemId);
+                }
             }
         }
     };
@@ -119,7 +140,8 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
             tab.setTag(hotItem.getId());
             mTabs.addTab(tab);
             if (i == 0) {
-                mPresenter.getList(hotItem.getId());
+                mItemId = hotItem.getId();
+                mPresenter.getList(mItemId);
             }
         }
     }
@@ -149,7 +171,14 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
 
     @Override
     public void setArticleList(List<Article> articleList) {
-        mAdapter.setAll(articleList);
+        if (mPage == 1) {
+            mAdapter.setAll(articleList);
+        } else {
+            if (articleList == null || articleList.isEmpty()) {
+                mHasMore = false;
+            }
+            mAdapter.addAll(articleList);
+        }
     }
 
     @Override

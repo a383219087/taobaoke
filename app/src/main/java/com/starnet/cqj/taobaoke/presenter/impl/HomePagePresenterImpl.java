@@ -64,7 +64,7 @@ public class HomePagePresenterImpl extends BasePresenterImpl implements IHomePag
     @Override
     public void getLookBuy() {
         RemoteDataSourceBase.INSTANCE.getHomePageService()
-                .getLookBuy(1)
+                .getLookBuy(1,"","","")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Consumer<Disposable>() {

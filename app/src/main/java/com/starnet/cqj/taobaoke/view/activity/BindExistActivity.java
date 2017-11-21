@@ -19,6 +19,7 @@ import com.starnet.cqj.taobaoke.view.widget.ButtonCountDown;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 
 public class BindExistActivity extends BaseActivity implements IBindExistPresenter.IView {
@@ -78,7 +79,8 @@ public class BindExistActivity extends BaseActivity implements IBindExistPresent
                 }
                 mWechatUser.setMobile(phone);
                 mWechatUser.setCode(code);
-                mPresenter.bind(mWechatUser);
+                String regId = JPushInterface.getRegistrationID(this);
+                mPresenter.bind(mWechatUser,regId);
                 break;
         }
     }

@@ -6,6 +6,7 @@
               android:layout_height="200dp">
 
     <LinearLayout
+        android:id="@+id/ll_tqg"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -36,6 +37,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_jhs"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:orientation="horizontal">
@@ -67,6 +69,7 @@
             android:orientation="horizontal">
             
             <LinearLayout
+                android:id="@+id/ll_ppq"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -89,6 +92,7 @@
             <View style="@style/column_line"/>
 
             <LinearLayout
+                android:id="@+id/ll_bmqd"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"

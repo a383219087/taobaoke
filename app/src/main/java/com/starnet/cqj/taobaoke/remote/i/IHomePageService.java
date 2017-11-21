@@ -23,7 +23,7 @@ public interface IHomePageService {
     Observable<JsonCommon<List<MainMenu>>> getCategory();
 
     @POST("/video")
-    Observable<JsonCommon<ResultWrapper<Product>>> getLookBuy(@Query("page") int page);
+    Observable<JsonCommon<ResultWrapper<Product>>> getLookBuy(@Query("page") int page,@Query("typename") String typeName,@Query("minfee") String minFee,@Query("maxfee") String maxFee);
 
     @POST("/pop")
     Observable<JsonCommon<ResultWrapper<Product>>> getRecommend(@Query("page") int page);

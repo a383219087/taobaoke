@@ -11,6 +11,8 @@ import com.starnet.cqj.taobaoke.presenter.IRegisterPresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.BindNewPresenterImpl;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class BindNewActivity extends RegisterActivity {
 
     public static final String KEY_WECHAT_USER = "wechat_user";
@@ -25,7 +27,8 @@ public class BindNewActivity extends RegisterActivity {
 
     @Override
     protected IRegisterPresenter getPresenter() {
-        return new BindNewPresenterImpl(this, mUser);
+        String regId = JPushInterface.getRegistrationID(this);
+        return new BindNewPresenterImpl(this, mUser, regId);
     }
 
     @Override

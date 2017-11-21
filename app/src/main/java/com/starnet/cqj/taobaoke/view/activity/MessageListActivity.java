@@ -59,7 +59,7 @@ public class MessageListActivity extends BaseActivity implements IMessagePresent
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.getMessageList(((BaseApplication) getApplication()).token);
+        get();
     }
 
     @Override
@@ -105,7 +105,7 @@ public class MessageListActivity extends BaseActivity implements IMessagePresent
 
     @OnClick(R.id.title_rightbutton)
     void onClick(View view) {
-
+        mPresenter.allRead(((BaseApplication) getApplication()).token);
     }
 
     @Override
@@ -115,6 +115,15 @@ public class MessageListActivity extends BaseActivity implements IMessagePresent
 
     @Override
     public void onDelete() {
+        get();
+    }
+
+    @Override
+    public void onAllRead() {
+        get();
+    }
+
+    private void get() {
         mPresenter.getMessageList(((BaseApplication) getApplication()).token);
     }
 

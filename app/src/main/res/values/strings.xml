@@ -110,10 +110,16 @@
         <item>其它</item>
     </string-array>
     <string-array name="product_sort_array">
-        <item>默认排序</item>
-        <item>销量最高</item>
-        <item>优惠程度</item>
-        <item>价格最低</item>
+        <item>综合搜索</item>
+        <item>销量排序</item>
+        <item>优惠排序</item>
+        <item>价格排序</item>
+    </string-array>
+    <string-array name="product_sort_id_array">
+        <item>moren</item>
+        <item>ishot</item>
+        <item>ishit</item>
+        <item>isfee</item>
     </string-array>
     <string name="action_title">活动</string>
     <string name="register_title">注册</string>
@@ -138,5 +144,6 @@
     <string name="my_medal_title">我的勋章</string>
     <string name="my_order_title">我的订单</string>
     <string name="ice_integral_title">冻结白积分</string>
+    <string name="use_integral_title">可提现白积分</string>
     <string name="recheck_integral_title">待确认白积分</string>
 </resources>

@@ -6,15 +6,15 @@ package com.starnet.cqj.taobaoke.model;
 
 public class ProductSort {
 
-    private int id;
+    private String id;
     private String name;
     private boolean isChecked;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -45,6 +45,6 @@ public class ProductSort {
 
     @Override
     public int hashCode() {
-        return id + name.hashCode();
+        return id.hashCode() + name.hashCode();
     }
 }

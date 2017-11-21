@@ -22,7 +22,7 @@ import com.starnet.cqj.taobaoke.view.activity.MedalListActivity;
 import com.starnet.cqj.taobaoke.view.activity.OrderListActivity;
 import com.starnet.cqj.taobaoke.view.activity.PersonActivity;
 import com.starnet.cqj.taobaoke.view.activity.ReCheckIntegralDetailActivity;
-import com.starnet.cqj.taobaoke.view.activity.WithdrawalsActivity;
+import com.starnet.cqj.taobaoke.view.activity.UseIntegralDetailActivity;
 import com.starnet.cqj.taobaoke.view.widget.SharePopupWindow;
 
 import butterknife.BindView;
@@ -104,7 +104,7 @@ public class MineFragment extends BaseFragment {
                 ReCheckIntegralDetailActivity.start(getActivity());
                 break;
             case R.id.btn_to_money:
-                WithdrawalsActivity.start(getActivity(), mTvToMoney.getText().toString());
+                UseIntegralDetailActivity.start(getActivity());
                 break;
             case R.id.ll_order:
                 OrderListActivity.start(getActivity());

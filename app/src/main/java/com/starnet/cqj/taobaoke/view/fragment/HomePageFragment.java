@@ -20,11 +20,13 @@ import com.starnet.cqj.taobaoke.model.BuyTip;
 import com.starnet.cqj.taobaoke.model.HomePageBanner;
 import com.starnet.cqj.taobaoke.model.MainMenu;
 import com.starnet.cqj.taobaoke.model.Product;
+import com.starnet.cqj.taobaoke.model.SearchType;
 import com.starnet.cqj.taobaoke.presenter.IHomePagePresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.HomePagePresenterImpl;
 import com.starnet.cqj.taobaoke.view.activity.HelpCenterActivity;
 import com.starnet.cqj.taobaoke.view.activity.MessageListActivity;
 import com.starnet.cqj.taobaoke.view.activity.ProductListActivity;
+import com.starnet.cqj.taobaoke.view.activity.SearchActivity;
 import com.starnet.cqj.taobaoke.view.activity.WebViewActivity;
 import com.starnet.cqj.taobaoke.view.adapter.LinearLayoutManagerWrapper;
 import com.starnet.cqj.taobaoke.view.adapter.MyViewPagerAdapter;
@@ -71,8 +73,6 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
     AutoScrollViewPager mMainMediumBanner;
     @BindView(R.id.forestall_link)
     ImageView mForestallLink;
-    @BindView(R.id.discounts_link)
-    ImageView mDiscountsLink;
     @BindView(R.id.brand_link)
     ImageView mBrandLink;
     @BindView(R.id.must_buy_link)
@@ -182,13 +182,12 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
 
     @OnClick(R.id.home_search_edit)
     void toSearch() {
-
+        SearchActivity.start(getActivity());
     }
 
     @OnClick(R.id.look_buy_more)
     public void onViewClicked() {
-
-        ProductListActivity.start(getActivity());
+        ProductListActivity.start(getActivity(), SearchType.VIDEO);
     }
 
     @Override
@@ -257,6 +256,24 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
         }
     }
 
+    @OnClick({R.id.ll_tqg, R.id.ll_jhs, R.id.ll_ppq, R.id.ll_bmqd})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_tqg:
+                ProductListActivity.start(getActivity(), SearchType.TQG);
+                break;
+            case R.id.ll_jhs:
+                ProductListActivity.start(getActivity(), SearchType.JHS);
+                break;
+            case R.id.ll_ppq:
+                ProductListActivity.start(getActivity(), SearchType.PPQ);
+                break;
+            case R.id.ll_bmqd:
+                ProductListActivity.start(getActivity(), SearchType.BMQD);
+                break;
+        }
+    }
+
     @Override
     public void toast(String res) {
         Toast.makeText(getActivity(), res, Toast.LENGTH_SHORT).show();
@@ -266,5 +283,4 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
     public void toast(@StringRes int res) {
         Toast.makeText(getActivity(), res, Toast.LENGTH_SHORT).show();
     }
-
 }

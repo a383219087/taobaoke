@@ -63,9 +63,9 @@ public class BindExistPresenterImpl extends BasePresenterImpl implements IBindEx
     }
 
     @Override
-    public void bind(WechatUser user) {
+    public void bind(WechatUser user,String regId) {
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .bindUser(user.getMobile(),user.getOpenid(),
+                .bindUser(regId,user.getMobile(),user.getOpenid(),
                         user.getNickname(),user.getPassword(),
                         user.getPassword_confirm(),user.getAvatar(),
                         user.getUnionId(),user.getGender(),

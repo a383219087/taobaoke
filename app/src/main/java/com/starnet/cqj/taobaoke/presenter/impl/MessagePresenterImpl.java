@@ -77,6 +77,33 @@ public class MessagePresenterImpl extends BasePresenterImpl implements IMessageP
     }
 
     @Override
+    public void allRead(String header) {
+        RemoteDataSourceBase.INSTANCE.getUserService()
+                .msgRead(header)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        mCompositeDisposable.add(disposable);
+                    }
+                })
+                .subscribe(new Consumer<JsonCommon<Object>>() {
+                    @Override
+                    public void accept(JsonCommon<Object> objectJsonCommon) throws Exception {
+                        if (isValidResult(objectJsonCommon, mViewCallback)) {
+                            mViewCallback.onAllRead();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        throwable.printStackTrace();
+                    }
+                });
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
     }

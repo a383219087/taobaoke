@@ -75,7 +75,7 @@ public interface IUserService {
     Observable<JsonCommon<Object>> cashCNCBK(@Header("Authorization") String header, @Query("score") String score);
 
     @POST("/bindUser")
-    Observable<JsonCommon<User>> bindUser(@Query("mobile") String mobile, @Query("openid") String openid,
+    Observable<JsonCommon<User>> bindUser(@Query("reg_id") String regId,@Query("mobile") String mobile, @Query("openid") String openid,
                                           @Query("nickname") String nickName,
                                           @Query("password") String password,
                                           @Query("password_confirm") String passwordConfirm,
@@ -101,8 +101,21 @@ public interface IUserService {
     @POST("/djsCncbk")
     Observable<JsonCommon<ResultWrapper<IntegralDetail>>> djsCncbk(@Header("Authorization") String header, @Query("page") int page);
 
+
+    @POST("/djsCncbk")
+    Observable<JsonCommon<ResultWrapper<IntegralDetail>>> djsCncbk(@Header("Authorization") String header, @Query("page") int page, @Query("year") int year, @Query("month") int month);
+
     @POST("/djCncbk")
     Observable<JsonCommon<ResultWrapper<IntegralDetail>>> djCncbk(@Header("Authorization") String header, @Query("page") int page);
+
+    @POST("/djCncbk")
+    Observable<JsonCommon<ResultWrapper<IntegralDetail>>> djCncbk(@Header("Authorization") String header, @Query("page") int page, @Query("year") int year, @Query("month") int month);
+
+    @POST("/bCncbk")
+    Observable<JsonCommon<ResultWrapper<IntegralDetail>>> bCncbk(@Header("Authorization") String header, @Query("page") int page);
+
+    @POST("/bCncbk")
+    Observable<JsonCommon<ResultWrapper<IntegralDetail>>> bCncbk(@Header("Authorization") String header, @Query("page") int page, @Query("year") int year, @Query("month") int month);
 
     @POST("/sysmsg")
     Observable<JsonCommon<List<Message>>> sysmsg(@Header("Authorization") String header);
@@ -114,4 +127,14 @@ public interface IUserService {
     Observable<JsonCommon<Object>> delMsg(@Header("Authorization") String header, @Query("id") String id);
 
 
+    @POST("/read")
+    Observable<JsonCommon<Object>> msgRead(@Header("Authorization") String header);
+
+
+    @POST("/modify")
+    Observable<JsonCommon<Object>> modify(@Header("Authorization") String header, @Query("nickname") String nickname);
+
+
+    @POST("/logout")
+    Observable<JsonCommon<Object>> logout(@Header("Authorization") String header);
 }

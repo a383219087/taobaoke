@@ -19,17 +19,19 @@ public class BindNewPresenterImpl extends RegisterPresenterImpl {
 
     private IView mViewCallback;
     private WechatUser mUser;
+    private String mRegId;
 
-    public BindNewPresenterImpl(IView viewCallback,WechatUser user) {
+    public BindNewPresenterImpl(IView viewCallback,WechatUser user,String regId) {
         super(viewCallback);
         mViewCallback = viewCallback;
         mUser = user;
+        mRegId = regId;
     }
 
     @Override
     public void register(String mobile, String pwd, String nickName, String code) {
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .bindUser(mobile,mUser.getOpenid(),mUser.getNickname(),
+                .bindUser(mRegId,mobile,mUser.getOpenid(),mUser.getNickname(),
                         pwd,pwd,mUser.getAvatar(),mUser.getUnionId(),
                         mUser.getGender(),code,"1")
                 .subscribeOn(Schedulers.io())
