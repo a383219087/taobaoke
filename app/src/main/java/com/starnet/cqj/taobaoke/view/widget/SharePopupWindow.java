@@ -11,17 +11,28 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.starnet.cqj.taobaoke.R;
+import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.ShareContent;
+import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
+import com.starnet.cqj.taobaoke.view.BaseApplication;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class SharePopupWindow extends PopupWindow {
 
     private Context mContext;
+    private ShareContent mShareContent;
 
     public SharePopupWindow(Context context) {
         super(context);
@@ -35,6 +46,35 @@ public class SharePopupWindow extends PopupWindow {
         setOutsideTouchable(true);
 
         setOnDismissListener(mOnDismissListener);
+        getShareData();
+    }
+
+    private void getShareData(){
+        if (mContext instanceof RxAppCompatActivity) {
+            RxAppCompatActivity activity = (RxAppCompatActivity) mContext;
+            RemoteDataSourceBase.INSTANCE.getUserService()
+                    .share(((BaseApplication) activity.getApplication()).token)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .compose(activity.<JsonCommon<ShareContent>>bindToLifecycle())
+                    .subscribe(new Consumer<JsonCommon<ShareContent>>() {
+                        @Override
+                        public void accept(JsonCommon<ShareContent> shareContentJsonCommon) throws Exception {
+                            if("200".equals(shareContentJsonCommon.getCode())){
+                                mShareContent = shareContentJsonCommon.getData();
+                            }else{
+                                Toast.makeText(mContext, shareContentJsonCommon.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            throwable.printStackTrace();
+                            Toast.makeText(mContext, "网络错误", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+        }
     }
 
     private OnDismissListener mOnDismissListener = new OnDismissListener() {
@@ -64,16 +104,16 @@ public class SharePopupWindow extends PopupWindow {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_share_wechat:
-                share(SHARE_MEDIA.WEIXIN,"你好在");
+                share(SHARE_MEDIA.WEIXIN);
                 break;
             case R.id.tv_share_wechat_moments:
-                share(SHARE_MEDIA.WEIXIN_CIRCLE,"你好在");
+                share(SHARE_MEDIA.WEIXIN_CIRCLE);
                 break;
             case R.id.tv_share_qq:
-                share(SHARE_MEDIA.QQ,"你好在");
+                share(SHARE_MEDIA.QQ);
                 break;
             case R.id.tv_share_qq_zone:
-                share(SHARE_MEDIA.QZONE,"你好在");
+                share(SHARE_MEDIA.QZONE);
                 break;
             case R.id.btn_share_cancel:
                 dismiss();
@@ -81,14 +121,16 @@ public class SharePopupWindow extends PopupWindow {
         }
     }
 
-    private void share(SHARE_MEDIA media,String content) {
+    private void share(SHARE_MEDIA media) {
         if (!(mContext instanceof Activity)) {
             return;
         }
+        UMImage umImage = new UMImage(mContext,R.drawable.main_icon);
+        UMWeb web = new UMWeb(mShareContent.getUrl(),mShareContent.getContent(),"",umImage);
         Activity activity = (Activity) mContext;
         new ShareAction(activity)
                 .setPlatform(media)//传入平台
-                .withText(content)//分享内容
+                .withMedia(web)
                 .setCallback(shareListener)//回调监听器
                 .share();
     }

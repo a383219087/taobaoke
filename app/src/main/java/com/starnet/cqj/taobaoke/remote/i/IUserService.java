@@ -9,6 +9,7 @@ import com.starnet.cqj.taobaoke.model.Medal;
 import com.starnet.cqj.taobaoke.model.Message;
 import com.starnet.cqj.taobaoke.model.Order;
 import com.starnet.cqj.taobaoke.model.ResultWrapper;
+import com.starnet.cqj.taobaoke.model.ShareContent;
 import com.starnet.cqj.taobaoke.model.User;
 
 import java.util.List;
@@ -137,4 +138,8 @@ public interface IUserService {
 
     @POST("/logout")
     Observable<JsonCommon<Object>> logout(@Header("Authorization") String header);
+
+
+    @POST("/share")
+    Observable<JsonCommon<ShareContent>> share(@Header("Authorization") String header);
 }
