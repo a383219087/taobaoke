@@ -1,5 +1,7 @@
 package com.starnet.cqj.taobaoke.presenter.impl;
 
+import android.util.Log;
+
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.BuyTip;
 import com.starnet.cqj.taobaoke.model.HomePageBanner;
@@ -135,6 +137,7 @@ public class HomePagePresenterImpl extends BasePresenterImpl implements IHomePag
                 .subscribe(new Consumer<JsonCommon<HomePageBanner>>() {
                     @Override
                     public void accept(JsonCommon<HomePageBanner> homePageBannerJsonCommon) throws Exception {
+                        Log.e(TAG, "accept: getBanner");
                         if (homePageBannerJsonCommon.getCode().equals("200")) {
                             mViewCallback.setBanner(homePageBannerJsonCommon.getData());
                         } else {

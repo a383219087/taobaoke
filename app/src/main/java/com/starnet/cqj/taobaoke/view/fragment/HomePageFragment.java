@@ -82,6 +82,7 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
         mRecommendAdapter = new RecyclerBaseAdapter<>(mHomeTopView, R.layout.item_product, ProductHolder.class);
         mRvGoodsRecommend.setAdapter(mRecommendAdapter);
         mHomeTopView.getData();
+        mSrRefresh.setColorSchemeResources(R.color.main_color);
     }
 
 

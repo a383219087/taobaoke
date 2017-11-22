@@ -70,8 +70,9 @@ public class RecyclerBaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerVi
         if (datas == null || datas.isEmpty()) {
             return;
         }
+        int positionStart = getItemCount();
         mDataList.addAll(datas);
-        notifyDataSetChanged();
+        notifyItemRangeInserted(positionStart,datas.size());
     }
 
     public void setAll(List<T> datas) {

@@ -47,23 +47,27 @@ public class ProductHolder extends BaseHolder<Product> {
 
     @Override
     public void bind(List<Product> data, int position, IParamContainer container, final PublishSubject<Product> itemClick) {
-        final Product product = data.get(position);
-        if (product != null && mTvDiscounts != null) {
-            Glide.with(mItemView.getContext())
-                    .load(product.getItempic())
-                    .into(mIvProduct);
-            mTvDiscounts.setText(product.getCoupon_fee());
-            mTvAward.setText(product.getScore());
-            mTvTitle.setText(product.getTitle());
-            mTvOriginPrice.setText(product.getOrigin_price());
-            mTvPrice.setText(product.getPrice());
-            mTvSellCount.setText(String.valueOf(product.getSell()));
-            mItemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    itemClick.onNext(product);
-                }
-            });
+        try {
+            final Product product = data.get(position);
+            if (product != null && mTvDiscounts != null) {
+                Glide.with(mItemView.getContext())
+                        .load(product.getItempic())
+                        .into(mIvProduct);
+                mTvDiscounts.setText(product.getCoupon_fee());
+                mTvAward.setText(product.getScore());
+                mTvTitle.setText(product.getTitle());
+                mTvOriginPrice.setText(product.getOrigin_price());
+                mTvPrice.setText(product.getPrice());
+                mTvSellCount.setText(String.valueOf(product.getSell()));
+                mItemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        itemClick.onNext(product);
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -255,6 +255,13 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
     @Override
     public void setCategoryList(List<MainMenu> mainMenuList) {
         mMenuAdapter.setAll(mainMenuList);
+        mHomePagePresenter.getLookBuy();
+    }
+
+    @Override
+    public void setLookBuy(List<Product> productList) {
+        mLookBuyAdapter.setAll(productList);
+        mCallback.refreshDone(true);
         mHomePagePresenter.getTip();
     }
 
@@ -266,13 +273,6 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
             mTvMessageContent.setText(tip.getContent());
             Glide.with(getContext()).load(tip.getItempic()).into(mMessageAvatar);
         }
-        mHomePagePresenter.getLookBuy();
-    }
-
-    @Override
-    public void setLookBuy(List<Product> productList) {
-        mLookBuyAdapter.setAll(productList);
-        mCallback.refreshDone(true);
     }
 
     @Override
