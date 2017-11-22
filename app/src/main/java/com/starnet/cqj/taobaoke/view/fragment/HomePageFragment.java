@@ -211,5 +211,8 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
         if (mRvGoodsRecommend != null) {
             mRvGoodsRecommend.removeOnScrollListener(mHelper.getOnScrollListener());
         }
+        if (mHomeTopView != null) {
+            mHomeTopView.onDestroy();
+        }
     }
 }

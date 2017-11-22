@@ -280,6 +280,12 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
 
     }
 
+    public void onDestroy(){
+        if (mHomePagePresenter != null) {
+            mHomePagePresenter.onDestroy();
+        }
+    }
+
     public interface Callback{
         void refreshDone(boolean success);
 
