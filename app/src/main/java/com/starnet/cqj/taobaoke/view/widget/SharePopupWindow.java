@@ -44,7 +44,7 @@ public class SharePopupWindow extends PopupWindow {
         ButterKnife.bind(this, view);
         setBackgroundDrawable(new BitmapDrawable());
         setOutsideTouchable(true);
-
+        setFocusable(true);
         setOnDismissListener(mOnDismissListener);
         getShareData();
     }

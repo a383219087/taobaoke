@@ -7,41 +7,36 @@
 
     <include layout="@layout/title_layout"/>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager
+            android:id="@+id/hot_auto_banner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="150dp"/>
 
-            <com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager
-                android:id="@+id/hot_auto_banner"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"/>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/main_gray"
+            app:tabIndicatorColor="@color/main_color"
+            app:tabIndicatorHeight="4dp"
+            app:tabMode="scrollable"
+            app:tabPaddingEnd="30dp"
+            app:tabPaddingStart="30dp"
+            app:tabSelectedTextColor="@color/main_color"
+            app:tabTextColor="@color/textblack">
+        </android.support.design.widget.TabLayout>
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@color/main_gray"
-                app:tabIndicatorColor="@color/main_color"
-                app:tabIndicatorHeight="4dp"
-                app:tabMode="scrollable"
-                app:tabPaddingEnd="30dp"
-                app:tabPaddingStart="30dp"
-                app:tabSelectedTextColor="@color/main_color"
-                app:tabTextColor="@color/textblack">
-            </android.support.design.widget.TabLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_hot_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_hot_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </ScrollView>
 
 </LinearLayout>
