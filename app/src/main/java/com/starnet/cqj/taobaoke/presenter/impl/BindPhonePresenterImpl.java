@@ -26,14 +26,14 @@ public class BindPhonePresenterImpl extends BasePresenterImpl implements IBindPh
                 .sendSMS(mobile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<JsonCommon<List<String>>>() {
+                .subscribe(new Observer<JsonCommon<Object>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(JsonCommon<List<String>> value) {
+                    public void onNext(JsonCommon<Object> value) {
                         if (isValidResult(value,mViewCallback)) {
                             mViewCallback.onGetCode();
                             mViewCallback.toast("验证码已下发到您手机号");

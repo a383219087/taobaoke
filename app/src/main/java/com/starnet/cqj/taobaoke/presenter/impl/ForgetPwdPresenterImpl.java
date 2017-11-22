@@ -5,8 +5,6 @@ import com.starnet.cqj.taobaoke.presenter.BasePresenterImpl;
 import com.starnet.cqj.taobaoke.presenter.IForgetPwdPresenter;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 
-import java.util.List;
-
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -27,14 +25,14 @@ public class ForgetPwdPresenterImpl extends BasePresenterImpl implements IForget
                 .sendSMS(mobile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<JsonCommon<List<String>>>() {
+                .subscribe(new Observer<JsonCommon<Object>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(JsonCommon<List<String>> value) {
+                    public void onNext(JsonCommon<Object> value) {
                         String code = value.getCode();
                         if ("200".equals(code)) {
                             mViewCallback.onGetCode();
@@ -62,14 +60,14 @@ public class ForgetPwdPresenterImpl extends BasePresenterImpl implements IForget
                 .resetPwd(mobile, pwd, pwdAgain, code)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<JsonCommon<List<String>>>() {
+                .subscribe(new Observer<JsonCommon<Object>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(JsonCommon<List<String>> value) {
+                    public void onNext(JsonCommon<Object> value) {
                         String code = value.getCode();
                         if ("200".equals(code)) {
                             mViewCallback.onResetSuccess();

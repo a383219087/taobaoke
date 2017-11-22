@@ -26,14 +26,14 @@ import retrofit2.http.Query;
 public interface IUserService {
 
     @POST("/register")
-    Observable<JsonCommon<List<String>>> register(@Query("mobile") String mobile, @Query("password") String password, @Query("password_confirm") String confirmPwd, @Query("nickname") String nickname, @Query("code") String code);
+    Observable<JsonCommon<Object>> register(@Query("mobile") String mobile, @Query("password") String password, @Query("password_confirm") String confirmPwd, @Query("nickname") String nickname, @Query("code") String code);
 
     @POST("/login")
     Observable<JsonCommon<User>> login(@Query("mobile") String mobile, @Query("password") String password, @Query("reg_id") String regId, @Query("is_wechat") String isWechat, @Query("openid") String openid);
 
 
     @POST("/resetPass")
-    Observable<JsonCommon<List<String>>> resetPwd(@Query("mobile") String mobile, @Query("password") String password, @Query("password_confirm") String pwdAgain, @Query("code") String code);
+    Observable<JsonCommon<Object>> resetPwd(@Query("mobile") String mobile, @Query("password") String password, @Query("password_confirm") String pwdAgain, @Query("code") String code);
 
     @POST("/person")
     Observable<JsonCommon<User>> person(@Header("Authorization") String header);
