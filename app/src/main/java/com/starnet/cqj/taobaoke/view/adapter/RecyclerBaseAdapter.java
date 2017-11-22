@@ -1,6 +1,7 @@
 package com.starnet.cqj.taobaoke.view.adapter;
 
 import android.support.annotation.LayoutRes;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,10 @@ import io.reactivex.subjects.PublishSubject;
 public class RecyclerBaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerView.Adapter<VH>
         implements IParamContainer {
 
+    public static final int TYPE_HEADER = 0;
+    public static final int TYPE_NORMAL = 1;
+
+    private View mHeaderView;
     @LayoutRes
     private int mLayoutId;
     private Class<VH> mClazz;
@@ -34,12 +39,19 @@ public class RecyclerBaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerVi
         mDataList = new ArrayList<>();
     }
 
+    public RecyclerBaseAdapter(View headerView, @LayoutRes int layoutId, Class<VH> clazz) {
+        mHeaderView = headerView;
+        mLayoutId = layoutId;
+        mClazz = clazz;
+        mDataList = new ArrayList<>();
+    }
+
     public void add(T data) {
         if (data == null) {
             return;
         }
         mDataList.add(data);
-        notifyItemInserted(mDataList.size() + 1);
+        notifyItemInserted(getItemCount() + 1);
     }
 
     public void insert(T data) {
@@ -51,7 +63,7 @@ public class RecyclerBaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerVi
         } else {
             mDataList.set(0, data);
         }
-        notifyItemInserted(0);
+        notifyItemInserted(mHeaderView == null ? 0 : 1);
     }
 
     public void addAll(List<T> datas) {
@@ -80,7 +92,7 @@ public class RecyclerBaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerVi
     }
 
     public void remove(int position) {
-        if (position < 0 || position >= mDataList.size()) {
+        if (position < 0 || position >= getItemCount()) {
             return;
         }
         mDataList.remove(position);
@@ -110,8 +122,20 @@ public class RecyclerBaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerVi
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (mHeaderView == null) return TYPE_NORMAL;
+        if (position == 0) return TYPE_HEADER;
+        return TYPE_NORMAL;
+    }
+
+    @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(mLayoutId, parent, false);
+        View view;
+        if (mHeaderView != null && viewType == TYPE_HEADER) {
+            view = mHeaderView;
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(mLayoutId, parent, false);
+        }
         VH vh = null;
         try {
             Constructor<VH> csr = mClazz.getConstructor(View.class);  //调用有参构造
@@ -129,13 +153,43 @@ public class RecyclerBaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerVi
     }
 
     @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+        final RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+        if (layoutManager instanceof GridLayoutManager) {
+            final GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+            final int originSpanCount = gridLayoutManager.getSpanCount();
+
+            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    int viewType = getItemViewType(position);
+                    if (viewType == TYPE_HEADER) {
+                        return originSpanCount;
+                    }
+                    return 1;
+                }
+            });
+            gridLayoutManager.setSpanCount(gridLayoutManager.getSpanCount());
+        }
+    }
+
+    @Override
     public void onBindViewHolder(VH holder, int position) {
-        holder.bind(mDataList, position, this, mItemClick);
+        if (getItemViewType(position) == TYPE_HEADER) return;
+        final int pos = getRealPosition(holder);
+        holder.bind(mDataList, pos, this, mItemClick);
+    }
+
+    private int getRealPosition(RecyclerView.ViewHolder holder) {
+        int position = holder.getLayoutPosition();
+        return mHeaderView == null ? position : position - 1;
     }
 
     @Override
     public int getItemCount() {
-        return mDataList.size();
+        return mHeaderView == null ? mDataList.size() : mDataList.size() + 1;
     }
 
     private final HashMap<String, Object> paramContainerMap = new HashMap<>();

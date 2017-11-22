@@ -18,6 +18,7 @@
             android:layout_height="25dp"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
+            android:focusableInTouchMode="true"
             android:background="@color/transparent"
             android:src="@drawable/help_icon"/>
 
@@ -52,165 +53,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_goods_recommend"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager
-                    android:id="@+id/main_auto_banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"/>
-
-                <RadioGroup
-                    android:id="@+id/home_tab_rg"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@color/main_tab_color"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/home_tab_rb1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/main_tab_left_selector"
-                        android:button="@null"
-                        android:checked="true"
-                        android:gravity="center"
-                        android:text="网上购物"
-                        android:textColor="@color/main_bottom_text_color"
-                        android:textSize="15sp"/>
-
-                    <RadioButton
-                        android:id="@+id/home_tab_rb2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/main_tab_right_selector"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="淘好货"
-                        android:textColor="@color/main_bottom_text_color"
-                        android:textSize="15sp"/>
-
-                </RadioGroup>
-
-                <LinearLayout
-                    android:id="@+id/main_ll_message"
-                    android:layout_width="match_parent"
-                    android:layout_height="25dp"
-                    android:layout_marginBottom="@dimen/default_padding"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="@dimen/default_padding"
-                    android:background="@drawable/tip_message_bg"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/message_avatar"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_marginLeft="@dimen/default_padding"
-                        android:src="@drawable/default_avatar"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/default_padding"
-                        android:text="[抢]"
-                        android:textColor="@color/textblack"
-                        android:textSize="9sp"/>
-
-                    <TextView
-                        android:id="@+id/tv_message_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textblack"
-                        android:textSize="9sp"/>
-
-                    <TextView
-                        android:id="@+id/tv_message_content"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/default_padding"
-                        android:textColor="@color/textblack"
-                        android:textSize="9sp"/>
-                    <!--<TextView-->
-                    <!--android:id="@+id/tv_message_price"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="100.00"-->
-                    <!--android:textColor="@color/message_price_text_color"-->
-                    <!--android:textSize="9sp"/>-->
-
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="元"-->
-                    <!--android:textColor="@color/textblack"-->
-                    <!--android:textSize="9sp"/>-->
-
-                    <!--<TextView-->
-                    <!--android:id="@+id/tv_message_time"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="2017年11月9日 16:27:37"-->
-                    <!--android:textColor="@color/textblack"-->
-                    <!--android:layout_marginLeft="@dimen/default_padding"-->
-                    <!--android:textSize="9sp"/>-->
-
-                </LinearLayout>
-
-                <include
-                    layout="@layout/view_un_development"
-                    android:visibility="gone"/>
-
-                <LinearLayout
-                    android:id="@+id/main_ll_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_main_menu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/default_padding"
-                        android:layout_marginRight="@dimen/default_padding"
-                        />
-
-                    <com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager
-                        android:id="@+id/main_medium_banner"
-                        android:layout_width="match_parent"
-                        android:layout_height="110dp"
-                        android:layout_margin="@dimen/default_padding"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp"
-                        android:background="@color/main_gray"/>
-
-                    <include layout="@layout/view_homepage_medium"/>
-
-                    <include layout="@layout/view_look_buy"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp"
-                        android:background="@color/main_gray"/>
-
-                    <include layout="@layout/view_hot_goods_recommend"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-        </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

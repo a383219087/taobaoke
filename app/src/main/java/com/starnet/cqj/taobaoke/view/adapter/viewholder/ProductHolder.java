@@ -1,5 +1,6 @@
 package com.starnet.cqj.taobaoke.view.adapter.viewholder;
 
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,18 +19,25 @@ import io.reactivex.subjects.PublishSubject;
 
 public class ProductHolder extends BaseHolder<Product> {
 
+    @Nullable
     @BindView(R.id.tv_discounts)
     TextView mTvDiscounts;
+    @Nullable
     @BindView(R.id.tv_title)
     TextView mTvTitle;
+    @Nullable
     @BindView(R.id.tv_origin_price)
     TextView mTvOriginPrice;
+    @Nullable
     @BindView(R.id.tv_sell_count)
     TextView mTvSellCount;
+    @Nullable
     @BindView(R.id.tv_price)
     TextView mTvPrice;
+    @Nullable
     @BindView(R.id.tv_award)
     TextView mTvAward;
+    @Nullable
     @BindView(R.id.iv_product)
     ImageView mIvProduct;
 
@@ -40,7 +48,7 @@ public class ProductHolder extends BaseHolder<Product> {
     @Override
     public void bind(List<Product> data, int position, IParamContainer container, final PublishSubject<Product> itemClick) {
         final Product product = data.get(position);
-        if (product != null) {
+        if (product != null && mTvDiscounts != null) {
             Glide.with(mItemView.getContext())
                     .load(product.getItempic())
                     .into(mIvProduct);
