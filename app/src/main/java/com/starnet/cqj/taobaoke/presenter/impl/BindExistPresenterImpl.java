@@ -33,14 +33,14 @@ public class BindExistPresenterImpl extends BasePresenterImpl implements IBindEx
                 .sendSMS(mobile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<JsonCommon<List<String>>>() {
+                .subscribe(new Observer<JsonCommon<Object>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(JsonCommon<List<String>> value) {
+                    public void onNext(JsonCommon<Object> value) {
                         String code = value.getCode();
                         if ("200".equals(code)) {
                             mViewCallback.onGetCode();
