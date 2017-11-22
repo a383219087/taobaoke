@@ -1,10 +1,13 @@
 package com.starnet.cqj.taobaoke.view.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,7 +16,6 @@ import com.bumptech.glide.Glide;
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.User;
-import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.activity.IceIntegralDetailActivity;
@@ -52,7 +54,10 @@ public class MineFragment extends BaseFragment {
     TextView mTvRecheck;
     @BindView(R.id.tv_to_money)
     TextView mTvToMoney;
+    @BindView(R.id.btn_logout)
+    Button mBtnLogout;
     private User mUser;
+    private BaseApplication mApplication;
 
     public MineFragment() {
         //empty
@@ -78,18 +83,38 @@ public class MineFragment extends BaseFragment {
         mCvOne.setCardElevation(8);
         mCvTwo.setCardElevation(8);
         mCvThree.setCardElevation(8);
+        mApplication = (BaseApplication) getActivity().getApplication();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getData();
+        refresh();
+    }
+
+    private void refresh() {
+        if (mApplication.getToken(false) != null) {
+            mBtnLogout.setVisibility(View.VISIBLE);
+            getData();
+        } else {
+            mBtnLogout.setVisibility(View.GONE);
+            mTvToMoney.setText("0");
+            mTvPhone.setText("");
+            mTvName.setText("请登录");
+            mTvIce.setText("0");
+            mTvRecheck.setText("0");
+            mIvAvatar.setImageResource(R.drawable.default_avatar);
+        }
     }
 
     @OnClick({R.id.ib_setting, R.id.iv_avatar,
             R.id.btn_ice, R.id.btn_recheck, R.id.btn_to_money,
-            R.id.ll_order, R.id.ll_integral, R.id.ll_medal, R.id.ll_share})
+            R.id.ll_order, R.id.ll_integral, R.id.ll_medal, R.id.ll_share,
+            R.id.btn_logout})
     public void onViewClicked(View view) {
+        if (mApplication.getToken() == null) {
+            return;
+        }
         switch (view.getId()) {
             case R.id.ib_setting:
                 if (mUser == null) {
@@ -119,11 +144,51 @@ public class MineFragment extends BaseFragment {
                 SharePopupWindow sharePopupWindow = new SharePopupWindow(getActivity());
                 sharePopupWindow.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
+            case R.id.btn_logout:
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                        .setTitle("提示")
+                        .setMessage("确认退出登录吗？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                RemoteDataSourceBase.INSTANCE.getUserService()
+                                        .logout(mApplication.getToken())
+                                        .compose(MineFragment.this.<JsonCommon<Object>>bindToLifecycle())
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Consumer<JsonCommon<Object>>() {
+                                            @Override
+                                            public void accept(JsonCommon<Object> objectJsonCommon) throws Exception {
+                                                if ("200".equals(objectJsonCommon.getCode())) {
+                                                    mApplication.setToken("");
+                                                    refresh();
+                                                } else {
+                                                    toast(objectJsonCommon.getMessage());
+                                                }
+                                            }
+                                        }, new Consumer<Throwable>() {
+                                            @Override
+                                            public void accept(Throwable throwable) throws Exception {
+                                                throwable.printStackTrace();
+                                            }
+                                        });
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create();
+                alertDialog.show();
+                break;
         }
     }
 
     private void getData() {
-        String token = Constant.HEADER_PREFIX + ((BaseApplication) getActivity().getApplication()).token;
+        String token = mApplication.getToken();
         RemoteDataSourceBase.INSTANCE.getUserService()
                 .person(token)
                 .subscribeOn(Schedulers.io())

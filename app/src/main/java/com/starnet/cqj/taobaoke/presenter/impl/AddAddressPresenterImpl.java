@@ -4,6 +4,7 @@ import android.app.Application;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.Address;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.city.AreaBean;
@@ -16,7 +17,6 @@ import com.starnet.cqj.taobaoke.presenter.IAddAddressPresenter;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -115,7 +115,8 @@ public class AddAddressPresenterImpl extends BasePresenterImpl implements IAddAd
 
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
+                        mViewCallback.toast(R.string.net_error);
                     }
 
                     @Override
@@ -158,6 +159,7 @@ public class AddAddressPresenterImpl extends BasePresenterImpl implements IAddAd
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        mViewCallback.toast(R.string.net_error);
                     }
 
                     @Override

@@ -34,8 +34,8 @@ public class BindNewActivity extends RegisterActivity {
     @Override
     public void onRegisterSuccess(User user) {
         if (user != null) {
-            ((BaseApplication) getApplication()).token = user.getToken();
-            MainActivity.startTop(this);
+            ((BaseApplication) getApplication()).setToken(user.getToken());
+            MainActivity.start(this);
         }
         super.onRegisterSuccess(user);
     }

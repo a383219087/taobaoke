@@ -54,7 +54,7 @@ public class BindPhoneActivity extends BaseActivity implements IBindPhonePresent
                     toast("请输入验证码");
                     return;
                 }
-                mPresenter.bind(((BaseApplication) getApplication()).token,phone,code);
+                mPresenter.bind(((BaseApplication) getApplication()).getToken(),phone,code);
                 break;
         }
     }

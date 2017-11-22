@@ -58,7 +58,7 @@ public class AddressListActivity extends BaseActivity implements IAddressListPre
 
     private void refresh() {
         if (mPresenter != null) {
-            mPresenter.getAddress(((BaseApplication) getApplication()).token);
+            mPresenter.getAddress(((BaseApplication) getApplication()).getToken());
         }
     }
 
@@ -76,7 +76,7 @@ public class AddressListActivity extends BaseActivity implements IAddressListPre
                             AddAddressActivity.startForResult(AddressListActivity.this, address, REQUEST_CODE);
                         } else if (address.isEditDefault()) {
                             address.setIsDefault("1");
-                            mPresenter.editDefault(((BaseApplication) getApplication()).token, address);
+                            mPresenter.editDefault(((BaseApplication) getApplication()).getToken(), address);
                         }
                     }
                 });
@@ -96,7 +96,7 @@ public class AddressListActivity extends BaseActivity implements IAddressListPre
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-                        mPresenter.deleteAddress(((BaseApplication) getApplication()).token, address);
+                        mPresenter.deleteAddress(((BaseApplication) getApplication()).getToken(), address);
                     }
                 })
                 .create();

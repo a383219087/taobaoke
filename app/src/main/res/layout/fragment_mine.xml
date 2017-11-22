@@ -5,366 +5,389 @@
               android:background="@color/white"
               android:orientation="vertical">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:background="@drawable/mine_top_bg"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/ib_setting"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/transparent"
-            android:src="@drawable/mine_setting"/>
-
-        <ImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:layout_gravity="center"
-            android:src="@drawable/default_avatar"/>
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="14dp"
-            android:background="@drawable/mine_text_bg"
-            android:gravity="center"
-            android:paddingLeft="45dp"
-            android:paddingRight="45dp"
-            android:textColor="@color/white"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/tv_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/default_padding"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="12sp"/>
+            android:orientation="vertical">
 
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="@drawable/mine_top_bg"
+                android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/main_gray"
-        android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/ib_setting"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/transparent"
+                    android:src="@drawable/mine_setting"/>
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_one"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_weight="1"
-            android:background="@color/white">
+                <ImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/default_avatar"/>
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/mine_text_bg"
+                    android:gravity="center"
+                    android:paddingLeft="45dp"
+                    android:paddingRight="45dp"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"/>
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:background="@color/main_gray"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_ice"
-                    android:layout_width="wrap_content"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_one"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="@color/textblack"
-                    android:textSize="23sp"/>
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:background="@color/white">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center"
-                    android:text="冻结白积分"
-                    android:textColor="@color/gray"
-                    android:textSize="11sp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/btn_ice"
-                    android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/tv_ice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/textblack"
+                            android:textSize="23sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center"
+                            android:text="冻结白积分"
+                            android:textColor="@color/gray"
+                            android:textSize="11sp"/>
+
+                        <TextView
+                            android:id="@+id/btn_ice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:background="@drawable/circle_btn_selector"
+                            android:text="详情"
+                            android:textColor="@color/mine_btn_color"
+                            android:textSize="14sp"/>
+
+                    </LinearLayout>
+
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_two"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/circle_btn_selector"
-                    android:text="详情"
-                    android:textColor="@color/mine_btn_color"
-                    android:textSize="14sp"/>
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:background="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_recheck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/textblack"
+                            android:textSize="23sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center"
+                            android:text="待确认白积分"
+                            android:textColor="@color/gray"
+                            android:textSize="11sp"/>
+
+                        <TextView
+                            android:id="@+id/btn_recheck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:background="@drawable/circle_btn_selector"
+                            android:text="详情"
+                            android:textColor="@color/mine_btn_color"
+                            android:textSize="14sp"/>
+
+                    </LinearLayout>
+
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_three"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:background="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_to_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/textblack"
+                            android:textSize="23sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center"
+                            android:text="可提现白积分"
+                            android:textColor="@color/gray"
+                            android:textSize="11sp"/>
+
+                        <TextView
+                            android:id="@+id/btn_to_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:background="@drawable/circle_btn_selector"
+                            android:text="详情"
+                            android:textColor="@color/mine_btn_color"
+                            android:textSize="14sp"/>
+
+                    </LinearLayout>
+
+
+                </android.support.v7.widget.CardView>
 
             </LinearLayout>
-
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_two"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_weight="1"
-            android:background="@color/white">
 
             <LinearLayout
+                android:id="@+id/ll_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/mine_order_icon"/>
 
                 <TextView
-                    android:id="@+id/tv_recheck"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:gravity="center"
-                    android:text="0"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="订单管理"
                     android:textColor="@color/textblack"
-                    android:textSize="23sp"/>
+                    android:textSize="15sp"/>
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center"
-                    android:text="待确认白积分"
-                    android:textColor="@color/gray"
-                    android:textSize="11sp"/>
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:src="@drawable/right_arrow_icon"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/circle_btn_selector"
-                    android:text="详情"
-                    android:id="@+id/btn_recheck"
-                    android:textColor="@color/mine_btn_color"
-                    android:textSize="14sp"/>
 
             </LinearLayout>
 
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_three"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_weight="1"
-            android:background="@color/white">
+            <View
+                style="@style/row_line"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
 
             <LinearLayout
+                android:id="@+id/ll_integral"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/mine_integral_icon"/>
 
                 <TextView
-                    android:id="@+id/tv_to_money"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:gravity="center"
-                    android:text="0"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="积分商城"
                     android:textColor="@color/textblack"
-                    android:textSize="23sp"/>
+                    android:textSize="15sp"/>
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center"
-                    android:text="可提现白积分"
-                    android:textColor="@color/gray"
-                    android:textSize="11sp"/>
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:src="@drawable/right_arrow_icon"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/circle_btn_selector"
-                    android:id="@+id/btn_to_money"
-                    android:text="详情"
-                    android:textColor="@color/mine_btn_color"
-                    android:textSize="14sp"/>
 
             </LinearLayout>
 
+            <View
+                style="@style/row_line"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
 
-        </android.support.v7.widget.CardView>
+            <LinearLayout
+                android:id="@+id/ll_medal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp">
 
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/mine_medal"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="16dp"
-        android:id="@+id/ll_order"
-        android:background="?android:selectableItemBackground"
-        android:paddingTop="16dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="我的勋章"
+                    android:textColor="@color/textblack"
+                    android:textSize="15sp"/>
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/mine_order_icon"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:text="订单管理"
-            android:textColor="@color/textblack"
-            android:textSize="15sp"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/default_padding"
-            android:src="@drawable/right_arrow_icon"/>
-
-
-    </LinearLayout>
-
-    <View
-        style="@style/row_line"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="16dp"
-        android:id="@+id/ll_integral"
-        android:background="?android:selectableItemBackground"
-        android:paddingTop="16dp">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/mine_integral_icon"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:text="积分商城"
-            android:textColor="@color/textblack"
-            android:textSize="15sp"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/default_padding"
-            android:src="@drawable/right_arrow_icon"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:src="@drawable/right_arrow_icon"/>
 
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <View
-        style="@style/row_line"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
+            <View
+                style="@style/row_line"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/ll_medal"
-        android:background="?android:selectableItemBackground"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp">
+            <LinearLayout
+                android:id="@+id/ll_share"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/mine_medal"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/mine_share_friend"/>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:text="我的勋章"
-            android:textColor="@color/textblack"
-            android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="邀请好友"
+                    android:textColor="@color/textblack"
+                    android:textSize="15sp"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/default_padding"
-            android:src="@drawable/right_arrow_icon"/>
-
-
-    </LinearLayout>
-
-    <View
-        style="@style/row_line"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/ll_share"
-        android:background="?android:selectableItemBackground"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/mine_share_friend"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:text="邀请好友"
-            android:textColor="@color/textblack"
-            android:textSize="15sp"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/default_padding"
-            android:src="@drawable/right_arrow_icon"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:src="@drawable/right_arrow_icon"/>
 
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <View
-        style="@style/row_line"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
+            <View
+                style="@style/row_line"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/shape_button"
+                android:text="退出登录"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
 </LinearLayout>

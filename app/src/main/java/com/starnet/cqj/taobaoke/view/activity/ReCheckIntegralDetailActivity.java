@@ -81,7 +81,7 @@ public class ReCheckIntegralDetailActivity extends BaseActivity {
 
     protected Observable<JsonCommon<ResultWrapper<IntegralDetail>>> getDetailObservable() {
         return RemoteDataSourceBase.INSTANCE.getUserService()
-                .djsCncbk(((BaseApplication) getApplication()).token, mPage);
+                .djsCncbk(((BaseApplication) getApplication()).getToken(), mPage);
     }
 
     public static void start(Context context) {

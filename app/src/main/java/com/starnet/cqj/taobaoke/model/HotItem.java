@@ -7,7 +7,7 @@ package com.starnet.cqj.taobaoke.model;
 public class HotItem {
 
     private String id;
-    private String name;
+    private String item;
 
     public String getId() {
         return id;
@@ -18,10 +18,10 @@ public class HotItem {
     }
 
     public String getName() {
-        return name;
+        return item;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.item = name;
     }
 }

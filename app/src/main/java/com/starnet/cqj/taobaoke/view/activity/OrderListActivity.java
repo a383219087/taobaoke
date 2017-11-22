@@ -58,7 +58,7 @@ public class OrderListActivity extends BaseActivity {
 
     private void getData() {
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .getOrder(((BaseApplication) getApplication()).token, mEdtSearch.getText().toString())
+                .getOrder(((BaseApplication) getApplication()).getToken(), mEdtSearch.getText().toString())
                 .compose(this.<JsonCommon<ResultWrapper<Order>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -115,7 +115,7 @@ public class OrderListActivity extends BaseActivity {
                     return;
                 }
                 RemoteDataSourceBase.INSTANCE.getUserService()
-                        .bindOrder(((BaseApplication) getApplication()).token, orderId)
+                        .bindOrder(((BaseApplication) getApplication()).getToken(), orderId)
                         .compose(OrderListActivity.this.<JsonCommon<Object>>bindToLifecycle())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())

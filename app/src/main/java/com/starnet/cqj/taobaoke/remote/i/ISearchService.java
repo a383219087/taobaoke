@@ -35,7 +35,7 @@ public interface ISearchService {
      * @return
      */
     @POST("/site")
-    Observable<JsonCommon<ResultWrapper<Product>>> site(@Query("keywords") String key, @Query("typename") String typename, @Query("minfee") String minfee, @Query("maxfee") String maxfee,@Query("cate_id")String cateId);
+    Observable<JsonCommon<ResultWrapper<Product>>> site(@Query("page") int page,@Query("keywords") String key, @Query("typename") String typename, @Query("minfee") String minfee, @Query("maxfee") String maxfee,@Query("cate_id")String cateId);
 
 
     @POST("/jhs")

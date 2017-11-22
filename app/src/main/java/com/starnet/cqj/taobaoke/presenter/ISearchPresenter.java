@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ISearchPresenter extends BasePresenter{
 
-    void search(String search);
+    void search(int page,String search);
 
     void superSearch(String key);
 

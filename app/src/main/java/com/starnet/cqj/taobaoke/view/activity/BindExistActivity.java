@@ -92,8 +92,8 @@ public class BindExistActivity extends BaseActivity implements IBindExistPresent
 
     @Override
     public void onBind(User user) {
-        ((BaseApplication) getApplication()).token = user.getToken();
-        MainActivity.startTop(this);
+        ((BaseApplication) getApplication()).setToken(user.getToken());
+        MainActivity.start(this);
     }
 
     @Override

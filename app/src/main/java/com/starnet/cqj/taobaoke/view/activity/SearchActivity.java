@@ -23,6 +23,7 @@ import com.starnet.cqj.taobaoke.view.adapter.RecyclerItemDecoration;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerSpaceDecoration;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.ProductHolder;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.SearchHistoryHolder;
+import com.starnet.cqj.taobaoke.view.widget.RecyclerViewLoadMoreHelper;
 
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class SearchActivity extends BaseActivity implements ISearchPresenter.IVi
     private RecyclerBaseAdapter<String, SearchHistoryHolder> mHistoryAdapter;
     private Set<String> mSet;
     private String mSearch;
+    private RecyclerViewLoadMoreHelper mHelper;
 
     @Override
     protected int getContentView() {
@@ -61,6 +63,7 @@ public class SearchActivity extends BaseActivity implements ISearchPresenter.IVi
 
     @Override
     protected void init() {
+        mHelper = new RecyclerViewLoadMoreHelper();
         initHistoryList();
         mLlHistory.setVisibility(View.VISIBLE);
         mPresenter = new SearchPresenterImpl(this);
@@ -68,6 +71,7 @@ public class SearchActivity extends BaseActivity implements ISearchPresenter.IVi
         mRvSearchResult.addItemDecoration(new RecyclerSpaceDecoration(getResources().getDimensionPixelOffset(R.dimen.product_item_padding)));
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_product, ProductHolder.class);
         mRvSearchResult.setAdapter(mAdapter);
+        mRvSearchResult.addOnScrollListener(mHelper.getOnScrollListener());
 
     }
 
@@ -90,9 +94,16 @@ public class SearchActivity extends BaseActivity implements ISearchPresenter.IVi
                     @Override
                     public void accept(String s) throws Exception {
                         mEdtSearch.setText(s);
+                        mHelper.resetPage();
                         get();
                     }
                 });
+        mHelper.setLoadMoreCallback(new RecyclerViewLoadMoreHelper.LoadMoreCallback() {
+            @Override
+            public void loadMore() {
+                get();
+            }
+        });
     }
 
     private void initHistoryList() {
@@ -113,6 +124,7 @@ public class SearchActivity extends BaseActivity implements ISearchPresenter.IVi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_search:
+                mHelper.resetPage();
                 get();
                 if (!TextUtils.isEmpty(mSearch) && !mSet.contains(mSearch)) {
                     mSet.add(mSearch);
@@ -128,7 +140,7 @@ public class SearchActivity extends BaseActivity implements ISearchPresenter.IVi
 
     private void get() {
         mSearch = mEdtSearch.getText().toString().trim();
-        mPresenter.search(mSearch);
+        mPresenter.search(mHelper.getPage(),mSearch);
     }
 
 
@@ -141,13 +153,18 @@ public class SearchActivity extends BaseActivity implements ISearchPresenter.IVi
     @Override
     public void searchResult(List<Product> productList) {
         mLlHistory.setVisibility(View.GONE);
-        if (productList == null || productList.isEmpty()) {
-            mLlEmpty.setVisibility(View.VISIBLE);
-            mAdapter.removeAll();
-            showToSuperSearch(mSearch);
-        } else {
-            mLlEmpty.setVisibility(View.GONE);
-            mAdapter.setAll(productList);
+        if(mHelper.isFirstPage()) {
+            if (productList == null || productList.isEmpty()) {
+                mLlEmpty.setVisibility(View.VISIBLE);
+                mAdapter.removeAll();
+                showToSuperSearch(mSearch);
+            } else {
+                mLlEmpty.setVisibility(View.GONE);
+                mAdapter.setAll(productList);
+            }
+        }else{
+            mHelper.setNoMore(productList == null || productList.isEmpty());
+            mAdapter.addAll(productList);
         }
     }
 

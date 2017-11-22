@@ -68,7 +68,7 @@ public class IntegralStoreActivity extends BaseActivity {
 
     private void getData() {
         RemoteDataSourceBase.INSTANCE.getIntegralService()
-                .integral(Constant.HEADER_PREFIX + ((BaseApplication) getApplication()).token)
+                .integral(Constant.HEADER_PREFIX + ((BaseApplication) getApplication()).getToken())
                 .compose(this.<JsonCommon<ResultWrapper<IntegralProduct>>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -97,7 +97,7 @@ public class IntegralStoreActivity extends BaseActivity {
 
     private void getScore() {
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .person(((BaseApplication) getApplication()).token)
+                .person(((BaseApplication) getApplication()).getToken())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .compose(this.<JsonCommon<User>>bindToLifecycle())

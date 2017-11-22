@@ -23,7 +23,6 @@ import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseActivity {
-
     @BindView(R.id.rg)
     RadioGroup mRg;
     @BindView(R.id.rb_home)
@@ -142,12 +141,6 @@ public class MainActivity extends BaseActivity {
 
     public static void start(Context context) {
         Intent starter = new Intent(context, MainActivity.class);
-        context.startActivity(starter);
-    }
-
-    public static void startTop(Context context) {
-        Intent starter = new Intent(context, MainActivity.class);
-        starter.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(starter);
     }
 

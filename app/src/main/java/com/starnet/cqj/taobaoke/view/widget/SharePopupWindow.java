@@ -53,7 +53,7 @@ public class SharePopupWindow extends PopupWindow {
         if (mContext instanceof RxAppCompatActivity) {
             RxAppCompatActivity activity = (RxAppCompatActivity) mContext;
             RemoteDataSourceBase.INSTANCE.getUserService()
-                    .share(((BaseApplication) activity.getApplication()).token)
+                    .share(((BaseApplication) activity.getApplication()).getToken())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .compose(activity.<JsonCommon<ShareContent>>bindToLifecycle())

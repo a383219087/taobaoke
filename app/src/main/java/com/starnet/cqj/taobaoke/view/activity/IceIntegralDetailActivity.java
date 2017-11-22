@@ -17,7 +17,7 @@ public class IceIntegralDetailActivity extends ReCheckIntegralDetailActivity {
 
     @Override
     protected Observable<JsonCommon<ResultWrapper<IntegralDetail>>> getDetailObservable() {
-        return RemoteDataSourceBase.INSTANCE.getUserService().djCncbk(((BaseApplication) getApplication()).token,mPage);
+        return RemoteDataSourceBase.INSTANCE.getUserService().djCncbk(((BaseApplication) getApplication()).getToken(),mPage);
     }
 
 

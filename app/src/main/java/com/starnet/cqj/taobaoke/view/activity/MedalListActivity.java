@@ -85,7 +85,7 @@ public class MedalListActivity extends BaseActivity {
 
     private void getData() {
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .getMedals(((BaseApplication) getApplication()).token, mType)
+                .getMedals(((BaseApplication) getApplication()).getToken(), mType)
                 .compose(this.<JsonCommon<List<Medal>>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

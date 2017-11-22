@@ -123,7 +123,7 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressPrese
                 mAddress.setArea(area);
                 mAddress.setAddress(detailAddress);
                 mAddress.setIsDefault(mCbDefaultAddress.isChecked() ? "1" : "0");
-                mPresenter.addAddress(((BaseApplication) getApplication()).token, mAddress);
+                mPresenter.addAddress(((BaseApplication) getApplication()).getToken(), mAddress);
                 break;
         }
     }

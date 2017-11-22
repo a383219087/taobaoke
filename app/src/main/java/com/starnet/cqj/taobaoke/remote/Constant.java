@@ -19,4 +19,10 @@ public class Constant {
     public static final String HOT_DETAIL_PREFIX ="http://api.bfija.cn/hot/hotD/";
 
     public static final int MAIN_TIP_GET_INTERVAL = 15000;
+
+    public static final String KEY_TOKEN = "token";
+    public static final String KEY_TOKEN_DATE ="token_save_date";
+
+    public static final int TOKEN_REFRESH_DAY = 10;
+    public static final int BANNER_AUTO_TIME = 5000;
 }

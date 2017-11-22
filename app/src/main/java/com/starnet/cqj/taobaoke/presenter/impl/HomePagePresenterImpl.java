@@ -1,5 +1,6 @@
 package com.starnet.cqj.taobaoke.presenter.impl;
 
+import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.BuyTip;
 import com.starnet.cqj.taobaoke.model.HomePageBanner;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
@@ -91,9 +92,9 @@ public class HomePagePresenterImpl extends BasePresenterImpl implements IHomePag
     }
 
     @Override
-    public void getRecommend() {
+    public void getRecommend(int page) {
         RemoteDataSourceBase.INSTANCE.getHomePageService()
-                .getRecommend(1)
+                .getRecommend(page)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Consumer<Disposable>() {
@@ -144,6 +145,7 @@ public class HomePagePresenterImpl extends BasePresenterImpl implements IHomePag
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         throwable.printStackTrace();
+                        mViewCallback.toast(R.string.net_error);
                     }
                 });
     }

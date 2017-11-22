@@ -4,7 +4,6 @@ package com.starnet.cqj.taobaoke.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -16,6 +15,7 @@ import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerItemDecoration;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.ExchangeRecordHolder;
+import com.starnet.cqj.taobaoke.view.widget.RecyclerViewLoadMoreHelper;
 
 import java.util.List;
 
@@ -32,8 +32,7 @@ public class ExchangeRecordActivity extends BaseActivity {
     @BindView(R.id.sr_refresh)
     SwipeRefreshLayout mSrRefresh;
     private RecyclerBaseAdapter<ExchangeRecord, ExchangeRecordHolder> mAdapter;
-    private int mPage;
-    private boolean hasMore;
+    private RecyclerViewLoadMoreHelper mHelper;
 
     @Override
     protected int getContentView() {
@@ -47,12 +46,19 @@ public class ExchangeRecordActivity extends BaseActivity {
         mRvRecord.addItemDecoration(new RecyclerItemDecoration());
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_record, ExchangeRecordHolder.class);
         mRvRecord.setAdapter(mAdapter);
+        mHelper = new RecyclerViewLoadMoreHelper();
+        mHelper.setLoadMoreCallback(new RecyclerViewLoadMoreHelper.LoadMoreCallback() {
+            @Override
+            public void loadMore() {
+                getData();
+            }
+        });
 
     }
 
     private void getData() {
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .integralRecord(((BaseApplication) getApplication()).token, mPage)
+                .integralRecord(((BaseApplication) getApplication()).getToken(), mHelper.getPage())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .compose(this.<JsonCommon<List<ExchangeRecord>>>bindToLifecycle())
@@ -60,9 +66,10 @@ public class ExchangeRecordActivity extends BaseActivity {
                     @Override
                     public void accept(JsonCommon<List<ExchangeRecord>> listJsonCommon) throws Exception {
                         mSrRefresh.setRefreshing(false);
+                        mHelper.setLoading(false);
                         if ("200".equals(listJsonCommon.getCode())) {
-                            hasMore = listJsonCommon.getData() == null || listJsonCommon.getData().isEmpty();
-                            if (mPage == 0) {
+                            mHelper.setNoMore(listJsonCommon.getData() == null || listJsonCommon.getData().isEmpty());
+                            if (mHelper.isFirstPage()) {
                                 mAdapter.setAll(listJsonCommon.getData());
                             } else {
                                 mAdapter.addAll(listJsonCommon.getData());
@@ -79,25 +86,6 @@ public class ExchangeRecordActivity extends BaseActivity {
                 });
     }
 
-    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-            int lastPosition = 0;
-            if (layoutManager instanceof GridLayoutManager) {
-                //通过LayoutManager找到当前显示的最后的item的position
-                lastPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
-            } else if (layoutManager instanceof LinearLayoutManager) {
-                lastPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
-            }
-            if (hasMore && lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
-                mPage++;
-                getData();
-            }
-        }
-    };
-
 
     @Override
     protected void initEvent() {
@@ -105,19 +93,18 @@ public class ExchangeRecordActivity extends BaseActivity {
         mSrRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPage = 0;
+                mHelper.resetPage();
                 getData();
             }
         });
 
 
-        mRvRecord.addOnScrollListener(mOnScrollListener);
+        mRvRecord.addOnScrollListener(mHelper.getOnScrollListener());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mRvRecord.removeOnScrollListener(mOnScrollListener);
     }
 
     public static void start(Context context) {

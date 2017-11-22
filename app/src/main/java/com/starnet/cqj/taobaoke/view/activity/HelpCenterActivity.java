@@ -2,7 +2,6 @@ package com.starnet.cqj.taobaoke.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,11 +9,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.starnet.cqj.taobaoke.R;
-import com.starnet.cqj.taobaoke.model.Banner;
 import com.starnet.cqj.taobaoke.model.Article;
+import com.starnet.cqj.taobaoke.model.Banner;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
-import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.ResultWithBanner;
+import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.adapter.LinearLayoutManagerWrapper;
@@ -23,6 +22,7 @@ import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerItemDecoration;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.QuestionListHolder;
 import com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager;
+import com.starnet.cqj.taobaoke.view.widget.RecyclerViewLoadMoreHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +68,7 @@ public class HelpCenterActivity extends BaseActivity {
 
     private RecyclerBaseAdapter<Article, QuestionListHolder> mAdapter;
     private int mType;
-    private int mPage;
+    private RecyclerViewLoadMoreHelper mHelper;
 
     @Override
     protected void init() {
@@ -79,6 +79,7 @@ public class HelpCenterActivity extends BaseActivity {
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_question, QuestionListHolder.class);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new RecyclerItemDecoration());
+        mHelper = new RecyclerViewLoadMoreHelper();
         initData();
     }
 
@@ -90,32 +91,23 @@ public class HelpCenterActivity extends BaseActivity {
     @Override
     protected void initEvent() {
         super.initEvent();
-        mRecyclerView.addOnScrollListener(mOnScrollListener);
+        mRecyclerView.addOnScrollListener(mHelper.getOnScrollListener());
         mAdapter.itemClickObserve()
                 .compose(this.<Article>bindToLifecycle())
                 .subscribe(new Consumer<Article>() {
                     @Override
                     public void accept(Article helpArticle) throws Exception {
-                        WebViewActivity.start(HelpCenterActivity.this, Constant.HELP_DETAIL_PREFIX+helpArticle.getId());
+                        WebViewActivity.start(HelpCenterActivity.this, Constant.HELP_DETAIL_PREFIX + helpArticle.getId());
                     }
                 });
+        mHelper.setLoadMoreCallback(new RecyclerViewLoadMoreHelper.LoadMoreCallback() {
+            @Override
+            public void loadMore() {
+                getDataWithPage(mHelper.getPage(), mType);
+            }
+        });
     }
 
-    private boolean hasMore;
-    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-            if (layoutManager instanceof LinearLayoutManager) {
-                int lastPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
-                if (hasMore && lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
-                    mPage++;
-                    getDataWithPage(mPage, mType);
-                }
-            }
-        }
-    };
 
 
     private void clearAllColor() {
@@ -174,6 +166,7 @@ public class HelpCenterActivity extends BaseActivity {
     }
 
     private void initData() {
+        mHelper.resetPage();
         RemoteDataSourceBase.INSTANCE.getCommonService()
                 .getHelpList(mType)
                 .compose(this.<JsonCommon<ResultWithBanner<Article>>>bindToLifecycle())
@@ -215,7 +208,7 @@ public class HelpCenterActivity extends BaseActivity {
             viewList.add(imageView);
         }
         mVpBanner.setAdapter(new MyViewPagerAdapter(viewList));
-        mVpBanner.startAutoScroll();
+        mVpBanner.startAutoScroll(Constant.BANNER_AUTO_TIME);
 
     }
 
@@ -230,7 +223,7 @@ public class HelpCenterActivity extends BaseActivity {
                     public void accept(JsonCommon<ResultWrapper<Article>> listJsonCommon) throws Exception {
                         if ("200".equals(listJsonCommon.getCode())) {
                             List<Article> list = listJsonCommon.getData().getList();
-                            hasMore = list == null || list.isEmpty();
+                            mHelper.setNoMore(list == null || list.isEmpty());
                             mAdapter.addAll(list);
                         } else {
                             toast(listJsonCommon.getMessage());
@@ -247,7 +240,6 @@ public class HelpCenterActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mRecyclerView.removeOnScrollListener(mOnScrollListener);
         if (mVpBanner != null) {
             mVpBanner.stopAutoScroll();
         }

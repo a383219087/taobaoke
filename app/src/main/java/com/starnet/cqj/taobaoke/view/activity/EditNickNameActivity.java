@@ -58,7 +58,7 @@ public class EditNickNameActivity extends BaseActivity {
             return;
         }
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .modify(((BaseApplication) getApplication()).token, nickName)
+                .modify(((BaseApplication) getApplication()).getToken(), nickName)
                 .compose(this.<JsonCommon<Object>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

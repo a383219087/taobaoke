@@ -97,11 +97,11 @@ public class ProductListPresenterImpl extends BasePresenterImpl implements IProd
 
     private Observable<JsonCommon<ResultWrapper<Product>>> getProvider(int page, String key, String typeName, String minFee, String maxFee, String cateId) {
         if (mSearchType == null) {
-            return RemoteDataSourceBase.INSTANCE.getSearchService().site(key, typeName, minFee, maxFee, cateId);
+            return RemoteDataSourceBase.INSTANCE.getSearchService().site(page, key, typeName, minFee, maxFee, cateId);
         }
         switch (mSearchType) {
             case SITE:
-                return RemoteDataSourceBase.INSTANCE.getSearchService().site(key, typeName, minFee, maxFee, cateId);
+                return RemoteDataSourceBase.INSTANCE.getSearchService().site(page, key, typeName, minFee, maxFee, cateId);
             case JHS:
                 return RemoteDataSourceBase.INSTANCE.getSearchService().jhs(page, typeName, minFee, maxFee, cateId);
             case TQG:
@@ -113,7 +113,7 @@ public class ProductListPresenterImpl extends BasePresenterImpl implements IProd
             case VIDEO:
                 return RemoteDataSourceBase.INSTANCE.getHomePageService().getLookBuy(page, typeName, minFee, maxFee);
             default:
-                return RemoteDataSourceBase.INSTANCE.getSearchService().site(key, typeName, minFee, maxFee, cateId);
+                return RemoteDataSourceBase.INSTANCE.getSearchService().site(page, key, typeName, minFee, maxFee, cateId);
         }
     }
 

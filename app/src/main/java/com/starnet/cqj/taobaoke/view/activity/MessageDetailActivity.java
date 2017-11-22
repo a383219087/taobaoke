@@ -33,7 +33,7 @@ public class MessageDetailActivity extends BaseActivity implements IMessageDetai
         setTitleName(R.string.message_detail_title);
         String id = getIntent().getStringExtra(KEY_ID);
         mPresenter = new MessageDetailPresenterImpl(this);
-        mPresenter.getMessage(((BaseApplication) getApplication()).token, id);
+        mPresenter.getMessage(((BaseApplication) getApplication()).getToken(), id);
     }
 
     @Override

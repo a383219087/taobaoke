@@ -54,7 +54,7 @@ public class UserSignActivity extends BaseActivity {
 
     private void getData() {
         RemoteDataSourceBase.INSTANCE.getActionService()
-                .signList(((BaseApplication) getApplication()).token)
+                .signList(((BaseApplication) getApplication()).getToken())
                 .compose(this.<JsonCommon<ResultWrapper<String>>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -80,7 +80,7 @@ public class UserSignActivity extends BaseActivity {
     @OnClick(R.id.btn_sign)
     public void onViewClicked() {
         RemoteDataSourceBase.INSTANCE.getActionService()
-                .signIn(((BaseApplication) getApplication()).token)
+                .signIn(((BaseApplication) getApplication()).getToken())
                 .compose(this.<JsonCommon<SignResult>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

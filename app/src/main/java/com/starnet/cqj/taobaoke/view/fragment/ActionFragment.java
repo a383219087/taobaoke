@@ -13,6 +13,7 @@ import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.utils.RxBus;
 import com.starnet.cqj.taobaoke.utils.event.ToHomePageEvent;
+import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.activity.UserSignActivity;
 import com.starnet.cqj.taobaoke.view.widget.SharePopupWindow;
 
@@ -90,9 +91,15 @@ public class ActionFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_action_sign:
+                if (((BaseApplication) getActivity().getApplication()).getToken() == null) {
+                    return;
+                }
                 UserSignActivity.start(getActivity());
                 break;
             case R.id.action_share:
+                if (((BaseApplication) getActivity().getApplication()).getToken() == null) {
+                    return;
+                }
                 SharePopupWindow sharePopupWindow = new SharePopupWindow(getActivity());
                 sharePopupWindow.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;

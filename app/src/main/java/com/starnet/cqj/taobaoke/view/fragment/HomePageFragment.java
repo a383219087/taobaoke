@@ -3,6 +3,7 @@ package com.starnet.cqj.taobaoke.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,8 @@ import com.starnet.cqj.taobaoke.model.Product;
 import com.starnet.cqj.taobaoke.model.SearchType;
 import com.starnet.cqj.taobaoke.presenter.IHomePagePresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.HomePagePresenterImpl;
+import com.starnet.cqj.taobaoke.remote.Constant;
+import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.activity.HelpCenterActivity;
 import com.starnet.cqj.taobaoke.view.activity.MessageListActivity;
 import com.starnet.cqj.taobaoke.view.activity.ProductListActivity;
@@ -59,8 +62,6 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
     TextView mTvMessageName;
     @BindView(R.id.tv_message_content)
     TextView mTvMessageContent;
-    //    @BindView(R.id.tv_message_time)
-//    TextView mTvMessageTime;
     @BindView(R.id.main_ll_message)
     LinearLayout mMainLlMessage;
     @BindView(R.id.tab_other)
@@ -85,6 +86,9 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
     TextView mLookBuyMore;
     @BindView(R.id.home_tab_rg)
     RadioGroup mHomeTabRg;
+    @BindView(R.id.sr_refresh)
+    SwipeRefreshLayout mSrRefresh;
+
 
     private RecyclerBaseAdapter<MainMenu, MainMenuHolder> mMenuAdapter;
     private IHomePagePresenter mHomePagePresenter;
@@ -112,17 +116,14 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
     }
 
     private void init() {
-        mHomePagePresenter.getTip();
         mHomePagePresenter.getBanner();
         mLookBuyAdapter = new RecyclerBaseAdapter<>(R.layout.item_look_buy, LookBuyHolder.class);
         mLookBuyRv.setLayoutManager(new LinearLayoutManagerWrapper(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         mLookBuyRv.setAdapter(mLookBuyAdapter);
-        mHomePagePresenter.getLookBuy();
         mRvGoodsRecommend.setLayoutManager(new NoScrollGridLayoutManager(getActivity(), 2));
         mRvGoodsRecommend.addItemDecoration(new RecyclerSpaceDecoration(getActivity().getResources().getDimensionPixelOffset(R.dimen.product_item_padding)));
         mRecommendAdapter = new RecyclerBaseAdapter<>(R.layout.item_product, ProductHolder.class);
         mRvGoodsRecommend.setAdapter(mRecommendAdapter);
-        mHomePagePresenter.getRecommend();
     }
 
     private void initMenu() {
@@ -130,7 +131,6 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
         mRvMainMenu.setLayoutManager(layoutManager);
         mMenuAdapter = new RecyclerBaseAdapter<>(R.layout.item_main_menu, MainMenuHolder.class);
         mRvMainMenu.setAdapter(mMenuAdapter);
-        mHomePagePresenter.getCategory();
     }
 
     private void initEvent() {
@@ -175,7 +175,13 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
                         WebViewActivity.start(getActivity(), url);
                     }
                 });
-
+        mSrRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSrRefresh.setRefreshing(true);
+                mHomePagePresenter.getBanner();
+            }
+        });
     }
 
     @OnClick(R.id.homepage_help)
@@ -185,6 +191,9 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
 
     @OnClick(R.id.homepage_message)
     void toMessage() {
+        if (((BaseApplication) getActivity().getApplication()).getToken() == null) {
+            return;
+        }
         MessageListActivity.start(getActivity());
     }
 
@@ -201,16 +210,19 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
     @Override
     public void setCategoryList(List<MainMenu> mainMenuList) {
         mMenuAdapter.setAll(mainMenuList);
+        mHomePagePresenter.getTip();
     }
 
     @Override
     public void setLookBuy(List<Product> productList) {
         mLookBuyAdapter.setAll(productList);
+        mHomePagePresenter.getRecommend(1);
     }
 
     @Override
     public void setRecommend(List<Product> productList) {
         mRecommendAdapter.setAll(productList);
+        mSrRefresh.setRefreshing(false);
     }
 
     @Override
@@ -232,7 +244,7 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
         }
         MyViewPagerAdapter adapter = new MyViewPagerAdapter(viewList);
         mMainAutoBanner.setAdapter(adapter);
-        mMainAutoBanner.startAutoScroll(2000);
+        mMainAutoBanner.startAutoScroll(Constant.BANNER_AUTO_TIME);
 
         List<View> viewList2 = new ArrayList<>();
         List<Banner> bannerMid = banner.getMid();
@@ -251,7 +263,8 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
         }
         MyViewPagerAdapter adapter2 = new MyViewPagerAdapter(viewList2);
         mMainMediumBanner.setAdapter(adapter2);
-        mMainMediumBanner.startAutoScroll(2000);
+        mMainMediumBanner.startAutoScroll(Constant.BANNER_AUTO_TIME);
+        mHomePagePresenter.getCategory();
     }
 
     @Override
@@ -262,6 +275,7 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
             mTvMessageContent.setText(tip.getContent());
             Glide.with(getActivity()).load(tip.getItempic()).into(mMessageAvatar);
         }
+        mHomePagePresenter.getLookBuy();
     }
 
     @OnClick({R.id.ll_tqg, R.id.ll_jhs, R.id.ll_ppq, R.id.ll_bmqd})
@@ -284,11 +298,25 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
 
     @Override
     public void toast(String res) {
+        if (mSrRefresh != null) {
+            mSrRefresh.setRefreshing(false);
+        }
         Toast.makeText(getActivity(), res, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void toast(@StringRes int res) {
+        if (mSrRefresh != null) {
+            mSrRefresh.setRefreshing(false);
+        }
         Toast.makeText(getActivity(), res, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mHomePagePresenter != null) {
+            mHomePagePresenter.onDestroy();
+        }
     }
 }

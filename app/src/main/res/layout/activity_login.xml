@@ -102,7 +102,6 @@
                     android:padding="8dp"
                     android:singleLine="true"
                     android:textColorHint="@color/gray"
-                    android:text="1111"
                     android:textSize="16sp"/>
 
                 <ImageView

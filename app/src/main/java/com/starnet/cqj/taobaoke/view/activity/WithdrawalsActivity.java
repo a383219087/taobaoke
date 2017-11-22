@@ -66,8 +66,8 @@ public class WithdrawalsActivity extends BaseActivity implements IWithdrawalsPre
                 "<font color='#999999'>请联系客服修改后提现</font>";
         mTvTip3.setText(Html.fromHtml(tip2));
         mPresenter = new WithdrawalsPresenterImpl(this);
-        mPresenter.getBindUser(((BaseApplication) getApplication()).token);
-        mPresenter.getScore(((BaseApplication) getApplication()).token);
+        mPresenter.getBindUser(((BaseApplication) getApplication()).getToken());
+        mPresenter.getScore(((BaseApplication) getApplication()).getToken());
     }
 
 
@@ -106,7 +106,7 @@ public class WithdrawalsActivity extends BaseActivity implements IWithdrawalsPre
                     }, 50);
                     return;
                 }
-                mPresenter.bindUser(((BaseApplication) getApplication()).token, userName, phone);
+                mPresenter.bindUser(((BaseApplication) getApplication()).getToken(), userName, phone);
                 break;
             case R.id.btn_withdrawals:
                 String score = mEdtWithdrawalsIntegral.getText().toString();
@@ -120,7 +120,7 @@ public class WithdrawalsActivity extends BaseActivity implements IWithdrawalsPre
                     }, 50);
                     return;
                 }
-                mPresenter.cashCNCBK(((BaseApplication) getApplication()).token, score);
+                mPresenter.cashCNCBK(((BaseApplication) getApplication()).getToken(), score);
                 break;
         }
     }
@@ -156,7 +156,7 @@ public class WithdrawalsActivity extends BaseActivity implements IWithdrawalsPre
     public void onCash() {
         toast("提取成功");
         mEdtWithdrawalsIntegral.setText("");
-        mPresenter.getScore(((BaseApplication) getApplication()).token);
+        mPresenter.getScore(((BaseApplication) getApplication()).getToken());
     }
 
 

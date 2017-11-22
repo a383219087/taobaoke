@@ -142,4 +142,7 @@ public interface IUserService {
 
     @POST("/share")
     Observable<JsonCommon<ShareContent>> share(@Header("Authorization") String header);
+
+    @POST("/refreshToken")
+    Observable<JsonCommon<User>> refreshToken(@Query("reg_id") String regId);
 }

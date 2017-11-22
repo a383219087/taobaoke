@@ -17,7 +17,7 @@ public interface IHomePagePresenter extends BasePresenter{
 
     void getLookBuy();
 
-    void getRecommend();
+    void getRecommend(int page);
 
     void getBanner();
 

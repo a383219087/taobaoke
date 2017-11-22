@@ -1,5 +1,6 @@
 package com.starnet.cqj.taobaoke.presenter.impl;
 
+import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.Product;
 import com.starnet.cqj.taobaoke.model.ResultWrapper;
@@ -29,9 +30,9 @@ public class SearchPresenterImpl extends BasePresenterImpl implements ISearchPre
     }
 
     @Override
-    public void search(String search) {
+    public void search(int page,String search) {
         RemoteDataSourceBase.INSTANCE.getSearchService()
-                .site(search,"moren","","","")
+                .site(page,search,"moren","","","")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .compose(mActivity.<JsonCommon<ResultWrapper<Product>>>bindToLifecycle())
@@ -46,6 +47,7 @@ public class SearchPresenterImpl extends BasePresenterImpl implements ISearchPre
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         throwable.printStackTrace();
+                        mViewCallback.toast(R.string.net_error);
                     }
                 });
     }
@@ -68,6 +70,7 @@ public class SearchPresenterImpl extends BasePresenterImpl implements ISearchPre
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         throwable.printStackTrace();
+                        mViewCallback.toast(R.string.net_error);
                     }
                 });
     }

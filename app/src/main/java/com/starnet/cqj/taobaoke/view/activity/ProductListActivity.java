@@ -3,7 +3,6 @@ package com.starnet.cqj.taobaoke.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,6 +24,7 @@ import com.starnet.cqj.taobaoke.presenter.impl.ProductListPresenterImpl;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerSpaceDecoration;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.ProductHolder;
+import com.starnet.cqj.taobaoke.view.widget.RecyclerViewLoadMoreHelper;
 import com.starnet.cqj.taobaoke.view.widget.expandtabview.ClassifyView;
 import com.starnet.cqj.taobaoke.view.widget.expandtabview.ExpandTabView;
 import com.starnet.cqj.taobaoke.view.widget.expandtabview.PriceBetweenView;
@@ -71,8 +71,7 @@ public class ProductListActivity extends BaseActivity implements IProductListPre
     private String minFee = "";
     private RecyclerBaseAdapter<Product, ProductHolder> mAdapter;
     private IProductListPresenter mPresenter;
-    private boolean mHasMore;
-    private int mPage = 1;
+    private RecyclerViewLoadMoreHelper mHelper;
 
     @Override
     protected int getContentView() {
@@ -108,6 +107,7 @@ public class ProductListActivity extends BaseActivity implements IProductListPre
             mProductExpandTab.setTitle(menu.getName(), 0);
         } catch (Exception ignored) {
         }
+        mHelper = new RecyclerViewLoadMoreHelper();
         mPresenter = new ProductListPresenterImpl(this, searchType);
         get();
         mPresenter.getTip();
@@ -165,29 +165,16 @@ public class ProductListActivity extends BaseActivity implements IProductListPre
                         WebViewActivity.start(ProductListActivity.this, url);
                     }
                 });
-        mRvProduct.addOnScrollListener(mOnScrollListener);
-    }
-
-    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-            int lastPosition = 0;
-            if (layoutManager instanceof GridLayoutManager) {
-                //通过LayoutManager找到当前显示的最后的item的position
-                lastPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
-            } else if (layoutManager instanceof LinearLayoutManager) {
-                lastPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
-            }
-            if (mHasMore && lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
-                mPage++;
+        mRvProduct.addOnScrollListener(mHelper.getOnScrollListener());
+        mHelper.setLoadMoreCallback(new RecyclerViewLoadMoreHelper.LoadMoreCallback() {
+            @Override
+            public void loadMore() {
                 if (mPresenter != null) {
-                    mPresenter.getData(mPage, mEdtSearch.getText().toString(), typeName, minFee, maxFee, cateId);
+                    mPresenter.getData(mHelper.getPage(), mEdtSearch.getText().toString(), typeName, minFee, maxFee, cateId);
                 }
             }
-        }
-    };
+        });
+    }
 
     @OnClick({R.id.btn_search, R.id.btn_back_top})
     public void onViewClicked(View view) {
@@ -202,9 +189,9 @@ public class ProductListActivity extends BaseActivity implements IProductListPre
     }
 
     private void get() {
-        mPage = 1;
+        mHelper.resetPage();
         if (mPresenter != null) {
-            mPresenter.getData(mPage, mEdtSearch.getText().toString(), typeName, minFee, maxFee, cateId);
+            mPresenter.getData(mHelper.getPage(), mEdtSearch.getText().toString(), typeName, minFee, maxFee, cateId);
         }
     }
 
@@ -220,6 +207,7 @@ public class ProductListActivity extends BaseActivity implements IProductListPre
         if (mPresenter != null) {
             mPresenter.onDestroy();
         }
+        mRvProduct.removeOnScrollListener(mHelper.getOnScrollListener());
     }
 
     @Override
@@ -231,12 +219,11 @@ public class ProductListActivity extends BaseActivity implements IProductListPre
 
     @Override
     public void setResult(List<Product> productList) {
-        if (mPage == 1) {
+        mHelper.setLoading(false);
+        mHelper.setNoMore(productList == null || productList.isEmpty());
+        if (mHelper.isFirstPage()) {
             mAdapter.setAll(productList);
         } else {
-            if (productList == null || productList.isEmpty()) {
-                mHasMore = false;
-            }
             mAdapter.addAll(productList);
         }
     }

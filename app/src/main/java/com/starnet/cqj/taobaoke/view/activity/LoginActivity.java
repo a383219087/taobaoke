@@ -184,11 +184,10 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
     public void onLoginSuccess(User user) {
         mProgressDialog.dismiss();
         toast("登录成功");
-        ((BaseApplication) getApplication()).token = Constant.HEADER_PREFIX + user.getToken();
+        ((BaseApplication) getApplication()).setToken(user.getToken());
         SharedPreferences.Editor edit = mSharedPreferences.edit();
         edit.putString(KEY_ACCOUNT, mEdtAccount.getText().toString());
         edit.apply();
-        MainActivity.start(this);
         finish();
     }
 
@@ -212,5 +211,11 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
+    }
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, LoginActivity.class);
+        starter.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(starter);
     }
 }

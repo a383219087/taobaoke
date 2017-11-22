@@ -82,7 +82,7 @@ public class IntegralProductDetailActivity extends BaseActivity implements Integ
     }
 
     private void getAddress() {
-        mPresenter.getAddress(((BaseApplication) getApplication()).token);
+        mPresenter.getAddress(((BaseApplication) getApplication()).getToken());
     }
 
 
@@ -110,7 +110,7 @@ public class IntegralProductDetailActivity extends BaseActivity implements Integ
                     toast("请设置默认地址");
                     return;
                 }
-                mPresenter.exchange(((BaseApplication) getApplication()).token, mProduct.getScore(), mTvReceiveAddress.getText().toString(),
+                mPresenter.exchange(((BaseApplication) getApplication()).getToken(), mProduct.getScore(), mTvReceiveAddress.getText().toString(),
                         mTvReceivePhone.getText().toString(), mProduct.getId(), mTvReceiveName.getText().toString());
                 break;
         }

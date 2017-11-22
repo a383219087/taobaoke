@@ -146,4 +146,5 @@
     <string name="ice_integral_title">冻结白积分</string>
     <string name="use_integral_title">可提现白积分</string>
     <string name="recheck_integral_title">待确认白积分</string>
+    <string name="net_error">网络错误</string>
 </resources>

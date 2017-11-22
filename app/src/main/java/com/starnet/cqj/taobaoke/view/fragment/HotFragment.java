@@ -3,7 +3,6 @@ package com.starnet.cqj.taobaoke.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,16 +24,13 @@ import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerItemDecoration;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.HotArticleHolder;
 import com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager;
+import com.starnet.cqj.taobaoke.view.widget.RecyclerViewLoadMoreHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
-
-/**
- * Created by Administrator on 2017/11/03.
- */
 
 public class HotFragment extends BaseFragment implements IHotPresenter.IView {
 
@@ -51,9 +47,8 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
 
     private IHotPresenter mPresenter;
     private RecyclerBaseAdapter<Article, HotArticleHolder> mAdapter;
-    private int mPage = 1;
-    private boolean mHasMore;
     private String mItemId;
+    private RecyclerViewLoadMoreHelper mHelper;
 
     public static HotFragment newInstance() {
 
@@ -78,13 +73,14 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
         mRvHotList.addItemDecoration(new RecyclerItemDecoration());
         mRvHotList.setLayoutManager(new LinearLayoutManagerWrapper(getActivity()));
         mRvHotList.setAdapter(mAdapter);
+        mHelper = new RecyclerViewLoadMoreHelper();
         mPresenter = new HotPresenterImpl(this);
         mPresenter.getItem();
         initEvent();
     }
 
     private void initEvent() {
-        mRvHotList.addOnScrollListener(mOnScrollListener);
+        mRvHotList.addOnScrollListener(mHelper.getOnScrollListener());
         mAdapter.itemClickObserve()
                 .compose(this.<Article>bindToLifecycle())
                 .subscribe(new Consumer<Article>() {
@@ -97,7 +93,7 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mItemId = (String) tab.getTag();
-                mPage = 1;
+                mHelper.resetPage();
                 mPresenter.getList(mItemId);
             }
 
@@ -111,22 +107,13 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
 
             }
         });
-    }
-
-    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-            if (layoutManager instanceof LinearLayoutManager) {
-                int lastPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
-                if (mHasMore && lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
-                    mPage++;
-                    mPresenter.getMoreList(mPage, mItemId);
-                }
+        mHelper.setLoadMoreCallback(new RecyclerViewLoadMoreHelper.LoadMoreCallback() {
+            @Override
+            public void loadMore() {
+                mPresenter.getMoreList(mHelper.getPage(), mItemId);
             }
-        }
-    };
+        });
+    }
 
     @Override
     public void onGetItem(List<HotItem> hotItemList) {
@@ -165,18 +152,16 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
             viewList.add(imageView);
         }
         mHotAutoBanner.setAdapter(new MyViewPagerAdapter(viewList));
-        mHotAutoBanner.startAutoScroll();
+        mHotAutoBanner.startAutoScroll(Constant.BANNER_AUTO_TIME);
 
     }
 
     @Override
     public void setArticleList(List<Article> articleList) {
-        if (mPage == 1) {
+        if (mHelper.isFirstPage()) {
             mAdapter.setAll(articleList);
         } else {
-            if (articleList == null || articleList.isEmpty()) {
-                mHasMore = false;
-            }
+            mHelper.setNoMore(articleList == null || articleList.isEmpty());
             mAdapter.addAll(articleList);
         }
     }

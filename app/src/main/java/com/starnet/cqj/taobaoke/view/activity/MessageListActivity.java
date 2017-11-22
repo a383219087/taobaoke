@@ -83,7 +83,7 @@ public class MessageListActivity extends BaseActivity implements IMessagePresent
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             dialogInterface.dismiss();
-                                            mPresenter.deleteMessage(((BaseApplication) getApplication()).token, message.getId());
+                                            mPresenter.deleteMessage(((BaseApplication) getApplication()).getToken(), message.getId());
                                             message.setDelete(false);
                                         }
                                     })
@@ -105,7 +105,7 @@ public class MessageListActivity extends BaseActivity implements IMessagePresent
 
     @OnClick(R.id.title_rightbutton)
     void onClick(View view) {
-        mPresenter.allRead(((BaseApplication) getApplication()).token);
+        mPresenter.allRead(((BaseApplication) getApplication()).getToken());
     }
 
     @Override
@@ -124,7 +124,7 @@ public class MessageListActivity extends BaseActivity implements IMessagePresent
     }
 
     private void get() {
-        mPresenter.getMessageList(((BaseApplication) getApplication()).token);
+        mPresenter.getMessageList(((BaseApplication) getApplication()).getToken());
     }
 
     @Override
