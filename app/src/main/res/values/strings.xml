@@ -147,4 +147,5 @@
     <string name="use_integral_title">可提现白积分</string>
     <string name="recheck_integral_title">待确认白积分</string>
     <string name="net_error">网络错误</string>
+    <string name="login_title">登录</string>
 </resources>

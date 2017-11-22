@@ -54,6 +54,7 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
 
     @Override
     protected void init() {
+        setTitleName(R.string.login_title);
         if (mIvTitleBack != null) {
             mIvTitleBack.setVisibility(View.GONE);
         }
