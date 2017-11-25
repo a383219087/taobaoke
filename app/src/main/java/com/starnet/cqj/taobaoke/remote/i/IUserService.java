@@ -11,6 +11,7 @@ import com.starnet.cqj.taobaoke.model.Order;
 import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.ShareContent;
 import com.starnet.cqj.taobaoke.model.User;
+import com.starnet.cqj.taobaoke.model.WithdrawalsRecord;
 
 import java.util.List;
 
@@ -151,4 +152,8 @@ public interface IUserService {
     Observable<JsonCommon<Object>> modifyPass(@Header("Authorization") String header,@Query("old_pass") String oldPass,
                                                @Query("new_pass") String newPass,
                                                @Query("confirm_pass") String confirmPass);
+
+
+    @POST("/cashLog")
+    Observable<JsonCommon<ResultWrapper<WithdrawalsRecord>>> cashLog(@Header("Authorization") String header, @Query("page") int page);
 }
