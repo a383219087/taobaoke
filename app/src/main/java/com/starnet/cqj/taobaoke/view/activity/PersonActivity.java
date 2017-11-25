@@ -46,7 +46,7 @@ public class PersonActivity extends BaseActivity {
         mTvPhone.setText(user.getMobile());
     }
 
-    @OnClick({R.id.ll_change_nick, R.id.ll_change_phone})
+    @OnClick({R.id.ll_change_nick, R.id.ll_change_phone, R.id.ll_edit_pwd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_change_nick:
@@ -54,6 +54,9 @@ public class PersonActivity extends BaseActivity {
                 break;
             case R.id.ll_change_phone:
                 BindPhoneActivity.start(this, REQUEST_CODE);
+                break;
+            case R.id.ll_edit_pwd:
+                EditPwdActivity.start(this);
                 break;
         }
     }

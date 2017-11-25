@@ -145,4 +145,10 @@ public interface IUserService {
 
     @POST("/refreshToken")
     Observable<JsonCommon<User>> refreshToken(@Query("reg_id") String regId);
+
+
+    @POST("/modifyPass")
+    Observable<JsonCommon<Object>> modifyPass(@Header("Authorization") String header,@Query("old_pass") String oldPass,
+                                               @Query("new_pass") String newPass,
+                                               @Query("confirm_pass") String confirmPass);
 }

@@ -20,9 +20,9 @@ public class BindNewActivity extends RegisterActivity {
 
     @Override
     protected void init() {
+        mUser = (WechatUser) getIntent().getSerializableExtra(KEY_WECHAT_USER);
         super.init();
         mLlNickName.setVisibility(View.GONE);
-        mUser = (WechatUser) getIntent().getSerializableExtra(KEY_WECHAT_USER);
     }
 
     @Override

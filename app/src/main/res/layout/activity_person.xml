@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:background="@color/main_gray"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/main_gray"
+              android:orientation="vertical">
 
     <include layout="@layout/title_layout"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="10dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <View style="@style/row_line"/>
 
@@ -20,21 +20,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:padding="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="头像"
                 android:textColor="@color/textblack"
-                android:textSize="16sp"
-                android:text="头像"/>
+                android:textSize="16sp"/>
 
             <ImageView
+                android:id="@+id/iv_avatar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/iv_avatar"
                 android:src="@drawable/default_avatar"/>
 
             <ImageView
@@ -49,29 +49,30 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_change_nick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="10dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <View style="@style/row_line"/>
 
         <LinearLayout
+            android:id="@+id/ll_change_nick"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:padding="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="昵称"
                 android:textColor="@color/textblack"
-                android:textSize="16sp"
-                android:text="昵称"/>
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/tv_nick_name"
@@ -93,29 +94,30 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_change_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="10dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <View style="@style/row_line"/>
 
         <LinearLayout
+            android:id="@+id/ll_change_phone"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:padding="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="绑定手机号"
                 android:textColor="@color/textblack"
-                android:textSize="16sp"
-                android:text="绑定手机号"/>
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/tv_phone"
@@ -134,6 +136,45 @@
         </LinearLayout>
 
         <View style="@style/row_line"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <View style="@style/row_line"/>
+
+        <LinearLayout
+            android:id="@+id/ll_edit_pwd"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="修改密码"
+                android:textColor="@color/textblack"
+                android:textSize="16sp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/right_arrow_icon"/>
+
+        </LinearLayout>
+
+        <View style="@style/row_line"/>
+
     </LinearLayout>
 
 </LinearLayout>

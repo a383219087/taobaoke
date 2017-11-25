@@ -25,6 +25,7 @@ import com.starnet.cqj.taobaoke.view.activity.OrderListActivity;
 import com.starnet.cqj.taobaoke.view.activity.PersonActivity;
 import com.starnet.cqj.taobaoke.view.activity.ReCheckIntegralDetailActivity;
 import com.starnet.cqj.taobaoke.view.activity.UseIntegralDetailActivity;
+import com.starnet.cqj.taobaoke.view.activity.WithdrawalsActivity;
 import com.starnet.cqj.taobaoke.view.widget.SharePopupWindow;
 
 import butterknife.BindView;
@@ -110,7 +111,8 @@ public class MineFragment extends BaseFragment {
     @OnClick({R.id.ib_setting, R.id.iv_avatar,
             R.id.btn_ice, R.id.btn_recheck, R.id.btn_to_money,
             R.id.ll_order, R.id.ll_integral, R.id.ll_medal, R.id.ll_share,
-            R.id.btn_logout})
+            R.id.btn_logout,
+            R.id.ll_bind_cncbk})
     public void onViewClicked(View view) {
         if (mApplication.getToken() == null) {
             return;
@@ -183,6 +185,9 @@ public class MineFragment extends BaseFragment {
                         })
                         .create();
                 alertDialog.show();
+                break;
+            case R.id.ll_bind_cncbk:
+                WithdrawalsActivity.start(getActivity());
                 break;
         }
     }
