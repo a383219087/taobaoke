@@ -164,6 +164,8 @@ public class WithdrawalsHeaderView extends LinearLayout implements IWithdrawalsP
             mLlAddAccount.setClickable(true);
             mTvArrow.setVisibility(View.VISIBLE);
             mTvUserName.setText(R.string.cncbk_user_name);
+            mTvArrow.setSelected(true);
+            mLlBind.setVisibility(View.VISIBLE);
         } else {
             mLlBind.setVisibility(View.GONE);
             mLlAddAccount.setClickable(false);
