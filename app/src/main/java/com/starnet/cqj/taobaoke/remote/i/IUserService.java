@@ -91,6 +91,9 @@ public interface IUserService {
     @POST("/bindPhone")
     Observable<JsonCommon<Object>> bindPhone(@Header("Authorization") String header, @Query("phone") String phone, @Query("code") String code);
 
+    @POST("/isRegister")
+    Observable<JsonCommon<Object>> isRegister(@Query("mobile") String phone);
+
     @POST("/medals")
     Observable<JsonCommon<List<Medal>>> getMedals(@Header("Authorization") String header, @Query("type") int type);
 

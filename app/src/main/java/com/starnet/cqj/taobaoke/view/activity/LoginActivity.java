@@ -55,10 +55,6 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter.IView
     @Override
     protected void init() {
         setTitleName(R.string.login_title);
-        if (mIvTitleBack != null) {
-            mIvTitleBack.setVisibility(View.GONE);
-        }
-        setTitleName(R.string.app_name);
         mPresenter = new LoginPresenterImpl(this);
         mSharedPreferences = getSharedPreferences(Constant.COMMON_PREFERENCE_NAME, Context.MODE_PRIVATE);
         String account = mSharedPreferences.getString(KEY_ACCOUNT, "");

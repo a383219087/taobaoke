@@ -7,8 +7,6 @@ import com.starnet.cqj.taobaoke.presenter.BasePresenterImpl;
 import com.starnet.cqj.taobaoke.presenter.IBindExistPresenter;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 
-import java.util.List;
-
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -25,6 +23,39 @@ public class BindExistPresenterImpl extends BasePresenterImpl implements IBindEx
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void checkAccount(final String mobile) {
+        RemoteDataSourceBase.INSTANCE.getUserService()
+                .isRegister(mobile)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<JsonCommon<Object>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mCompositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(JsonCommon<Object> value) {
+                        if (isValidResult(value,mViewCallback)) {
+                            getCode(mobile);
+                        } else {
+                            mViewCallback.toast(value.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override

@@ -8,6 +8,8 @@ import com.starnet.cqj.taobaoke.model.User;
 
 public interface IRegisterPresenter extends BasePresenter {
 
+    void checkAccount(String mobile);
+
     void sendSMS(String mobile);
 
     void register(String mobile, String pwd, String nickName,String code);

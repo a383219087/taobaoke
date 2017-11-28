@@ -69,7 +69,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
             case R.id.regist_get_code:
                 String mobile = mRegistUsername.getText().toString();
                 if (StringUtils.isPhone(mobile)) {
-                    mRegisterPresenter.sendSMS(mobile);
+                    mRegisterPresenter.checkAccount(mobile);
                 } else {
                     toast("请输入正确的电话号码");
                 }

@@ -62,7 +62,7 @@ public class BindExistActivity extends BaseActivity implements IBindExistPresent
                     toast("请输入已有账号（手机号）");
                     return;
                 }
-                mPresenter.getCode(phone);
+                mPresenter.checkAccount(phone);
                 break;
             case R.id.user_agreement:
                 UserAgreementActivity.start(this);
@@ -100,6 +100,9 @@ public class BindExistActivity extends BaseActivity implements IBindExistPresent
     protected void onDestroy() {
         super.onDestroy();
         mBtnGetcode.stop();
+        if (mPresenter != null) {
+            mPresenter.onDestroy();
+        }
     }
 
     public static void start(Context context, WechatUser user) {
