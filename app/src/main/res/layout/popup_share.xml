@@ -1,64 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:src="@drawable/share_intro_icon"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:padding="16dp"
         android:background="@drawable/shape_radius_white"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/tv_share_wechat"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/wechat_icon"
+            android:layout_weight="1"
             android:drawablePadding="@dimen/default_padding"
+            android:drawableTop="@drawable/wechat_icon"
             android:gravity="center"
+            android:text="微信好友"
             android:textColor="@color/textblack"
-            android:textSize="12sp"
-            android:text="微信好友"/>
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/tv_share_wechat_moments"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/wechat_moments_icon"
+            android:layout_weight="1"
             android:drawablePadding="@dimen/default_padding"
+            android:drawableTop="@drawable/wechat_moments_icon"
             android:gravity="center"
+            android:text="朋友圈"
             android:textColor="@color/textblack"
-            android:textSize="12sp"
-            android:text="朋友圈"/>
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/tv_share_qq"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/qq_icon"
+            android:layout_weight="1"
             android:drawablePadding="@dimen/default_padding"
+            android:drawableTop="@drawable/qq_icon"
             android:gravity="center"
+            android:text="QQ"
             android:textColor="@color/textblack"
-            android:textSize="12sp"
-            android:text="QQ"/>
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/tv_share_qq_zone"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/qq_zone_icon"
+            android:layout_weight="1"
             android:drawablePadding="@dimen/default_padding"
+            android:drawableTop="@drawable/qq_zone_icon"
             android:gravity="center"
-            android:textSize="12sp"
+            android:text="QQ空间"
             android:textColor="@color/textblack"
-            android:text="QQ空间"/>
+            android:textSize="12sp"/>
 
     </LinearLayout>
 
@@ -66,8 +79,8 @@
         android:id="@+id/btn_share_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:background="@drawable/shape_radius_white"
-        android:text="取消"
-        android:layout_margin="16dp"/>
+        android:text="取消"/>
 
 </LinearLayout>

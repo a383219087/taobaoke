@@ -1,12 +1,17 @@
 package com.starnet.cqj.taobaoke.presenter;
 
+import android.app.Application;
+
 import com.starnet.cqj.taobaoke.model.User;
+import com.starnet.cqj.taobaoke.model.city.CityResult;
 
 /**
  * Created by mini on 17/11/4.
  */
 
 public interface IRegisterPresenter extends BasePresenter {
+
+    void initCity(Application application);
 
     void sendSMS(String mobile);
 
@@ -15,6 +20,8 @@ public interface IRegisterPresenter extends BasePresenter {
 //    void verifyCode(String mobile,String code);
 
     interface IView extends BasePresenter.IView {
+
+        void onInitCity(CityResult result);
 
         void onGetCode();
 

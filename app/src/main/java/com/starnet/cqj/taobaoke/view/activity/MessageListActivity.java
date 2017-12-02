@@ -103,10 +103,18 @@ public class MessageListActivity extends BaseActivity implements IMessagePresent
                 });
     }
 
-    @OnClick(R.id.title_rightbutton)
-    void onClick(View view) {
-        mPresenter.allRead(((BaseApplication) getApplication()).getToken());
+    @OnClick({R.id.title_rightbutton, R.id.ll_customer_service})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.title_rightbutton:
+                mPresenter.allRead(((BaseApplication) getApplication()).getToken());
+                break;
+            case R.id.ll_customer_service:
+                //TODO goto huanxin
+                break;
+        }
     }
+
 
     @Override
     public void setMessageList(List<Message> messageList) {

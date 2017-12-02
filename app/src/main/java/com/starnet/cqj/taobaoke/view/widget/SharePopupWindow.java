@@ -15,6 +15,7 @@ import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.ShareContent;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
+import com.starnet.cqj.taobaoke.view.activity.GetIntegralDialogActivity;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
@@ -151,7 +152,7 @@ public class SharePopupWindow extends PopupWindow {
          */
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            Toast.makeText(mContext,"分享成功",Toast.LENGTH_LONG).show();
+            GetIntegralDialogActivity.start(mContext);
             dismiss();
         }
 

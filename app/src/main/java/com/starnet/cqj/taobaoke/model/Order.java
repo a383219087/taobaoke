@@ -21,8 +21,19 @@ public class Order {
     @SerializedName("credit")
     private String credit;
 
+    @SerializedName("is_share")
+    private String isShare;
+
     @SerializedName("sub_list")
     private List<SubOrder> subList;
+
+    public String getIsShare() {
+        return isShare;
+    }
+
+    public void setIsShare(String isShare) {
+        this.isShare = isShare;
+    }
 
     public String getOrderId() {
         return orderId;

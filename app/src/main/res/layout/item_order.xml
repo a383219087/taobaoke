@@ -8,8 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:gravity="center_vertical"
         android:background="@color/white"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
@@ -32,33 +32,50 @@
 
 
         <TextView
-            android:id="@+id/tv_status"
+            android:id="@+id/tv_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="订单付款"
-            android:textColor="@color/textblack"
+            android:background="@drawable/share_btn_selector"
+            android:text="分享"
+            android:textColor="@color/order_share_btn_text_color"
             android:textSize="13sp"/>
 
 
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:background="@color/white"
         android:id="@+id/rv_sub_order"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:gravity="center_vertical"
-        android:background="@color/white"
-        android:orientation="horizontal"
         android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单付款"
+            android:textColor="@color/main_color"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:text="+"
+            android:textColor="@color/textblack"
+            android:textSize="13sp"/>
 
         <TextView
             android:id="@+id/tv_score"

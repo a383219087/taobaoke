@@ -42,12 +42,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
-/**
- * Created by Administrator on 2017/11/22.
- */
 
 public class HomeTopView extends LinearLayout implements IHomePagePresenter.IView{
     @BindView(R.id.main_auto_banner)
@@ -78,6 +76,7 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
     private IHomePagePresenter mHomePagePresenter;
     private RecyclerBaseAdapter<Product, LookBuyHolder> mLookBuyAdapter;
     private Callback mCallback;
+    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     public HomeTopView(Context context) {
         super(context);
@@ -128,7 +127,7 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
-
+                        mCompositeDisposable.add(disposable);
                     }
                 })
                 .subscribe(new Consumer<MainMenu>() {
@@ -142,7 +141,7 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
-
+                        mCompositeDisposable.add(disposable);
                     }
                 })
                 .subscribe(new Consumer<Product>() {
@@ -284,6 +283,7 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
         if (mHomePagePresenter != null) {
             mHomePagePresenter.onDestroy();
         }
+        mCompositeDisposable.dispose();
     }
 
     public interface Callback{

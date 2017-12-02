@@ -47,6 +47,5 @@ public class MedalDetailActivity extends BaseActivity {
         Intent starter = new Intent(context, MedalDetailActivity.class);
         starter.putExtra(KEY_MEDAL, medal);
         context.startActivity(starter);
-        context.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }

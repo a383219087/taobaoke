@@ -1,6 +1,8 @@
 package com.starnet.cqj.taobaoke.view.adapter.viewholder;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,6 +13,7 @@ import com.starnet.cqj.taobaoke.view.adapter.BaseHolder;
 import com.starnet.cqj.taobaoke.view.adapter.IParamContainer;
 import com.starnet.cqj.taobaoke.view.adapter.LinearLayoutManagerWrapper;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
+import com.starnet.cqj.taobaoke.view.widget.SharePopupWindow;
 
 import java.util.List;
 
@@ -31,6 +34,8 @@ public class OrderHolder extends BaseHolder<Order> {
     TextView mTvScore;
     @BindView(R.id.tv_price)
     TextView mTvPrice;
+    @BindView(R.id.tv_share)
+    TextView mTvShare;
     private final RecyclerBaseAdapter<SubOrder, SubOrderHolder> mAdapter;
 
     public OrderHolder(View itemView) {
@@ -58,6 +63,23 @@ public class OrderHolder extends BaseHolder<Order> {
                 }
             }
             mTvPrice.setText(String.valueOf(price));
+            if ("1".equals(order.getIsShare())) {
+                mTvShare.setSelected(true);
+                mTvShare.setText("已分享");
+                mTvShare.setClickable(false);
+            } else {
+                mTvShare.setSelected(false);
+                mTvShare.setText("分享");
+                mTvShare.setClickable(true);
+            }
+            mTvShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharePopupWindow sharePopupWindow = new SharePopupWindow(itemView.getContext());
+                    Activity activity = (Activity) itemView.getContext();
+                    sharePopupWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+                }
+            });
         }
     }
 }

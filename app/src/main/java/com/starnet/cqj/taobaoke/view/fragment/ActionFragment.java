@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
@@ -28,14 +29,16 @@ public class ActionFragment extends BaseFragment {
     ImageView mTitleBack;
     @BindView(R.id.title_name)
     TextView mTitleName;
-    @BindView(R.id.tv_action_name)
-    TextView mTvActionName;
-    @BindView(R.id.tv_start_time)
-    TextView mTvStartTime;
-    @BindView(R.id.tv_end_time)
-    TextView mTvEndTime;
-    @BindView(R.id.tv_action_msg)
-    TextView mTvActionMsg;
+    @BindView(R.id.tv_action_title)
+    TextView mTvActionTitle;
+    @BindView(R.id.tv_action_start_time)
+    TextView mTvActionStartTime;
+    @BindView(R.id.tv_action_end_time)
+    TextView mTvActionEndTime;
+    @BindView(R.id.pb_action)
+    ProgressBar mPbAction;
+    @BindView(R.id.tv_action_condition)
+    TextView mTvActionCondition;
 
     public ActionFragment() {
         // Required empty public constructor
@@ -71,10 +74,10 @@ public class ActionFragment extends BaseFragment {
                     @Override
                     public void accept(JsonCommon<Action> actionJsonCommon) throws Exception {
                         if ("200".equals(actionJsonCommon.getCode())) {
-                            mTvActionName.setText(actionJsonCommon.getData().getName());
-                            mTvStartTime.setText(actionJsonCommon.getData().getStime());
-                            mTvEndTime.setText(actionJsonCommon.getData().getEtime());
-                            mTvActionMsg.setText(actionJsonCommon.getData().getMsg());
+                            mTvActionTitle.setText(actionJsonCommon.getData().getName());
+                            mTvActionStartTime.setText(actionJsonCommon.getData().getStime());
+                            mTvActionEndTime.setText(actionJsonCommon.getData().getEtime());
+                            mTvActionCondition.setText(actionJsonCommon.getData().getMsg());
                         } else {
                             toast(actionJsonCommon.getMessage());
                         }
@@ -87,7 +90,7 @@ public class ActionFragment extends BaseFragment {
                 });
     }
 
-    @OnClick({R.id.ll_action_sign, R.id.action_share, R.id.action_buy})
+    @OnClick({R.id.ll_action_sign, R.id.action_share, R.id.btn_action_buy})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_action_sign:
@@ -103,9 +106,10 @@ public class ActionFragment extends BaseFragment {
                 SharePopupWindow sharePopupWindow = new SharePopupWindow(getActivity());
                 sharePopupWindow.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
-            case R.id.action_buy:
+            case R.id.btn_action_buy:
                 RxBus.getInstance().send(new ToHomePageEvent());
                 break;
         }
     }
+
 }

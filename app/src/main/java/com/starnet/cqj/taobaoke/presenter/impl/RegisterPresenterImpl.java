@@ -1,11 +1,14 @@
 package com.starnet.cqj.taobaoke.presenter.impl;
 
+import android.app.Application;
+
+import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.city.CityResult;
 import com.starnet.cqj.taobaoke.presenter.BasePresenterImpl;
 import com.starnet.cqj.taobaoke.presenter.IRegisterPresenter;
+import com.starnet.cqj.taobaoke.remote.CityData;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
-
-import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -21,6 +24,35 @@ public class RegisterPresenterImpl extends BasePresenterImpl implements IRegiste
     }
 
     private static final String TAG = "RegisterPresenterImpl";
+
+    @Override
+    public void initCity(Application application) {
+        CityData.getCity(application)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<CityResult>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(CityResult value) {
+                        mViewCallback.onInitCity(value);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        mViewCallback.toast(R.string.net_error);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 
     @Override
     public void sendSMS(String mobile) {

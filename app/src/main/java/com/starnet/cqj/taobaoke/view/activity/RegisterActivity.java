@@ -8,10 +8,13 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.OptionsPickerView;
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.User;
+import com.starnet.cqj.taobaoke.model.city.CityResult;
 import com.starnet.cqj.taobaoke.presenter.IRegisterPresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.RegisterPresenterImpl;
 import com.starnet.cqj.taobaoke.utils.StringUtils;
@@ -39,13 +42,18 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
     EditText mEdtNickName;
     @BindView(R.id.ll_nick_name)
     LinearLayout mLlNickName;
+    @BindView(R.id.tv_address)
+    TextView mTvAddress;
 
     private IRegisterPresenter mRegisterPresenter;
+    private OptionsPickerView pvOptions;//地址选择器
 
     @Override
     protected void init() {
         setTitleName(R.string.register_title);
         mRegisterPresenter = getPresenter();
+        pvOptions = new OptionsPickerView(this);
+        mRegisterPresenter.initCity(getApplication());
     }
 
     protected IRegisterPresenter getPresenter() {
@@ -63,7 +71,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
     }
 
 
-    @OnClick({R.id.regist_get_code, R.id.user_agreement, R.id.regist_commit})
+    @OnClick({R.id.regist_get_code, R.id.user_agreement, R.id.regist_commit, R.id.ll_choose_area})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.regist_get_code:
@@ -79,6 +87,9 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
                 break;
             case R.id.regist_commit:
                 register();
+                break;
+            case R.id.ll_choose_area:
+                pvOptions.show();
                 break;
         }
     }
@@ -137,6 +148,26 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
     }
 
     @Override
+    public void onInitCity(final CityResult result) {
+        pvOptions.setPicker(result.Provincestr, result.Citystr, true);
+        pvOptions.setTitle("选择城市");
+        //设置是否循环滚动
+        pvOptions.setCyclic(false, false, false);
+        //设置默认选中的三级项目
+        //监听确定选择按钮
+        pvOptions.setSelectOptions(0, 0);
+        pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                //返回的分别是三个级别的选中位置
+                String tx = result.options1Items.get(options1).getPro_name() + ","
+                        + result.options2Items.get(options1).get(option2).getName();
+                mTvAddress.setText(tx);
+            }
+        });
+    }
+
+    @Override
     public void onGetCode() {
         mRegistGetCode.start();
     }
@@ -155,4 +186,5 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
             mRegistGetCode.stop();
         }
     }
+
 }

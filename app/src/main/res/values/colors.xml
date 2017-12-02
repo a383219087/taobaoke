@@ -73,4 +73,5 @@
     <color name="search_bg">#f8f8f8</color>
     <color name="message_price_text_color">#ed6b46</color>
     <color name="medal_normal_color">#dcdcdc</color>
+    <color name="progress_color">#50cecd</color>
 </resources>
