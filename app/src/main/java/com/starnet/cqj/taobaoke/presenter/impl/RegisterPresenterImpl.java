@@ -55,6 +55,39 @@ public class RegisterPresenterImpl extends BasePresenterImpl implements IRegiste
     }
 
     @Override
+    public void checkAccount(final String mobile) {
+        RemoteDataSourceBase.INSTANCE.getUserService()
+                .isRegister(mobile)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<JsonCommon<Object>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mCompositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(JsonCommon<Object> value) {
+                        if (isValidResult(value,mViewCallback)) {
+                            sendSMS(mobile);
+                        } else {
+                            mViewCallback.toast(value.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
     public void sendSMS(String mobile) {
         RemoteDataSourceBase.INSTANCE.getCommonService()
                 .sendSMS(mobile)

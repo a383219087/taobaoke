@@ -49,7 +49,7 @@ public class OrderListActivity extends BaseActivity {
     protected void init() {
         setTitleName(R.string.my_order_title);
         mTitleRightbutton.setVisibility(View.VISIBLE);
-        mTitleRightbutton.setText("关联订单");
+        mTitleRightbutton.setText("绑定订单");
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_order, OrderHolder.class);
         mRvOrder.setLayoutManager(new LinearLayoutManager(this));
         mRvOrder.setAdapter(mAdapter);

@@ -9,6 +9,8 @@ import com.starnet.cqj.taobaoke.model.WechatUser;
 
 public interface IBindExistPresenter extends BasePresenter {
 
+    void checkAccount(String mobile);
+
     void getCode(String mobile);
 
     void bind(WechatUser user,String regId);

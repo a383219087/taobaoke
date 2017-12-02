@@ -154,9 +154,18 @@
         <activity
             android:name=".view.activity.MedalDetailActivity"
             android:theme="@style/DialogActivity"/>
-        <activity android:name=".view.activity.OrderListActivity"/>
-        <activity android:name=".view.activity.IceIntegralDetailActivity"/>
-        <activity android:name=".view.activity.WebViewActivity"/>
+        <activity
+            android:name=".view.activity.OrderListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.IceIntegralDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.WebViewActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.EditPwdActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.GetIntegralDialogActivity"
             android:theme="@style/DialogActivity"/>

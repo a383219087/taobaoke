@@ -11,6 +11,7 @@ import com.starnet.cqj.taobaoke.model.Order;
 import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.ShareContent;
 import com.starnet.cqj.taobaoke.model.User;
+import com.starnet.cqj.taobaoke.model.WithdrawalsRecord;
 
 import java.util.List;
 
@@ -90,6 +91,9 @@ public interface IUserService {
     @POST("/bindPhone")
     Observable<JsonCommon<Object>> bindPhone(@Header("Authorization") String header, @Query("phone") String phone, @Query("code") String code);
 
+    @POST("/isRegister")
+    Observable<JsonCommon<Object>> isRegister(@Query("mobile") String phone);
+
     @POST("/medals")
     Observable<JsonCommon<List<Medal>>> getMedals(@Header("Authorization") String header, @Query("type") int type);
 
@@ -145,4 +149,14 @@ public interface IUserService {
 
     @POST("/refreshToken")
     Observable<JsonCommon<User>> refreshToken(@Query("reg_id") String regId);
+
+
+    @POST("/modifyPass")
+    Observable<JsonCommon<Object>> modifyPass(@Header("Authorization") String header,@Query("old_pass") String oldPass,
+                                               @Query("new_pass") String newPass,
+                                               @Query("confirm_pass") String confirmPass);
+
+
+    @POST("/cashLog")
+    Observable<JsonCommon<ResultWrapper<WithdrawalsRecord>>> cashLog(@Header("Authorization") String header, @Query("page") int page);
 }

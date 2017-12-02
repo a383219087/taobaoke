@@ -11,6 +11,8 @@ import com.starnet.cqj.taobaoke.model.city.CityResult;
 
 public interface IRegisterPresenter extends BasePresenter {
 
+    void checkAccount(String mobile);
+
     void initCity(Application application);
 
     void sendSMS(String mobile);
