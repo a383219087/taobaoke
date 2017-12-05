@@ -25,12 +25,6 @@ android {
         ]
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
     signingConfigs {
         debug {
             storeFile file('taobaoke.jks')
@@ -38,7 +32,24 @@ android {
             keyAlias "keystore"
             keyPassword "123456"
         }
-
+        release {
+            storeFile file('taobaoke.jks')
+            storePassword "123456"
+            keyAlias "keystore"
+            keyPassword "123456"
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
     configurations.all {
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
