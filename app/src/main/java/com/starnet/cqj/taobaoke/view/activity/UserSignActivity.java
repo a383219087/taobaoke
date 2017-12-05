@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.Medal;
 import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.SignResult;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
@@ -90,6 +91,7 @@ public class UserSignActivity extends BaseActivity {
                         if ("200".equals(resultWrapperJsonCommon.getCode())) {
                             mSignCalendar.addMark(resultWrapperJsonCommon.getData().getDate());
                             mTvContinuity.setText("连续签到" + resultWrapperJsonCommon.getData().getCount() + "天");
+                            getMedal();
                         } else {
                             toast(resultWrapperJsonCommon.getMessage());
                         }
@@ -102,6 +104,24 @@ public class UserSignActivity extends BaseActivity {
                 });
     }
 
+    private void getMedal(){
+        RemoteDataSourceBase.INSTANCE.getUserService().promote(((BaseApplication) getApplication()).getToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<JsonCommon<Medal>>() {
+                    @Override
+                    public void accept(JsonCommon<Medal> medalJsonCommon) throws Exception {
+                        if ("200".equals(medalJsonCommon.getCode())) {
+                            GetMedalDialogActivity.start(getApplicationContext(), medalJsonCommon.getData());
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        throwable.printStackTrace();
+                    }
+                });
+    }
 
     public static void start(Context context) {
         Intent starter = new Intent(context, UserSignActivity.class);

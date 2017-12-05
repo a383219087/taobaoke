@@ -4,11 +4,14 @@ import android.app.Application;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.city.AreaBean;
 import com.starnet.cqj.taobaoke.model.city.CityBean;
 import com.starnet.cqj.taobaoke.model.city.CityResult;
 import com.starnet.cqj.taobaoke.model.city.DBManager;
 import com.starnet.cqj.taobaoke.model.city.ProvinceBean;
+import com.starnet.cqj.taobaoke.model.city.RemoteCity;
 
 import java.util.ArrayList;
 
@@ -87,5 +90,15 @@ public class CityData {
                 e.onComplete();
             }
         });
+    }
+
+    public static Observable<JsonCommon<ResultWrapper<RemoteCity>>> getProvince(){
+        return RemoteDataSourceBase.INSTANCE.getUserService()
+                .province();
+    }
+
+    public static  Observable<JsonCommon<ResultWrapper<RemoteCity>>> getCity(String parentId){
+        return RemoteDataSourceBase.INSTANCE.getUserService()
+                .region(parentId);
     }
 }

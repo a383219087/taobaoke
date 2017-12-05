@@ -34,6 +34,7 @@ public class SharePopupWindow extends PopupWindow {
 
     private Context mContext;
     private ShareContent mShareContent;
+    private String orderId;
 
     public SharePopupWindow(Context context) {
         super(context);
@@ -48,6 +49,10 @@ public class SharePopupWindow extends PopupWindow {
         setFocusable(true);
         setOnDismissListener(mOnDismissListener);
         getShareData();
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     private void getShareData(){
@@ -152,7 +157,7 @@ public class SharePopupWindow extends PopupWindow {
          */
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            GetIntegralDialogActivity.start(mContext);
+            GetIntegralDialogActivity.start(mContext, orderId);
             dismiss();
         }
 

@@ -1,8 +1,12 @@
 package com.starnet.cqj.taobaoke.view;
 
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.os.IBinder;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -12,6 +16,7 @@ import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.utils.DateUtils;
 import com.starnet.cqj.taobaoke.view.activity.LoginActivity;
+import com.starnet.cqj.taobaoke.view.service.GetMedalService;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
@@ -41,7 +46,21 @@ public class BaseApplication extends Application {
 //        EMClient.getInstance().init(getApplicationContext(), options);
 //        //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
 //        EMClient.getInstance().setDebugMode(true);
+        Intent intent = new Intent(getApplicationContext(), GetMedalService.class);
+        bindService(intent,mServiceConnection,Context.BIND_AUTO_CREATE);
     }
+
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
 
     public String getToken() {
         return getToken(true);

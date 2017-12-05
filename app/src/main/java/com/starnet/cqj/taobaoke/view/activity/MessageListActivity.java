@@ -110,7 +110,7 @@ public class MessageListActivity extends BaseActivity implements IMessagePresent
                 mPresenter.allRead(((BaseApplication) getApplication()).getToken());
                 break;
             case R.id.ll_customer_service:
-                //TODO goto huanxin
+                ServiceCustomerActivity.start(this);
                 break;
         }
     }

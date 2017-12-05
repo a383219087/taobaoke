@@ -47,7 +47,7 @@ public class OrderHolder extends BaseHolder<Order> {
 
     @Override
     public void bind(List<Order> data, int position, IParamContainer container, PublishSubject<Order> itemClick) {
-        Order order = data.get(position);
+        final Order order = data.get(position);
         if (order != null) {
             mAdapter.setAll(order.getSubList());
             mTvId.setText(order.getOrderId());
@@ -76,6 +76,7 @@ public class OrderHolder extends BaseHolder<Order> {
                 @Override
                 public void onClick(View v) {
                     SharePopupWindow sharePopupWindow = new SharePopupWindow(itemView.getContext());
+                    sharePopupWindow.setOrderId(order.getOrderId());
                     Activity activity = (Activity) itemView.getContext();
                     sharePopupWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 }

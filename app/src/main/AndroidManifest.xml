@@ -172,6 +172,7 @@
         <activity
             android:name=".view.activity.GetMedalDialogActivity"
             android:theme="@style/DialogActivity"/>
+        <activity android:name=".view.activity.ServiceCustomerActivity"/>
 
         <meta-data
             android:name="UMENG_APPKEY"

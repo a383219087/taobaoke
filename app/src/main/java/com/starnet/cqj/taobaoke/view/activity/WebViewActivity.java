@@ -39,7 +39,7 @@ public class WebViewActivity extends BaseActivity {
         mWebView.loadUrl(url);
     }
 
-    private void initWebView() {
+    protected void initWebView() {
 
         mWebView.setWebViewClient(new WebViewClient() {
             //覆写shouldOverrideUrlLoading实现内部显示网页

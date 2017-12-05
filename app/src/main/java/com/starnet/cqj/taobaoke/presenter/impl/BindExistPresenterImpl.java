@@ -100,7 +100,7 @@ public class BindExistPresenterImpl extends BasePresenterImpl implements IBindEx
                         user.getNickname(),user.getPassword(),
                         user.getPassword_confirm(),user.getAvatar(),
                         user.getUnionId(),user.getGender(),
-                        user.getCode(),user.getIs_create())
+                        user.getCode(),user.getIs_create(),"","")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<JsonCommon<User>>() {

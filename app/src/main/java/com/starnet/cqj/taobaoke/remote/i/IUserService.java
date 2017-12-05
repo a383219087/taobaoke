@@ -8,10 +8,12 @@ import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.Medal;
 import com.starnet.cqj.taobaoke.model.Message;
 import com.starnet.cqj.taobaoke.model.Order;
+import com.starnet.cqj.taobaoke.model.OrderShareScore;
 import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.ShareContent;
 import com.starnet.cqj.taobaoke.model.User;
 import com.starnet.cqj.taobaoke.model.WithdrawalsRecord;
+import com.starnet.cqj.taobaoke.model.city.RemoteCity;
 
 import java.util.List;
 
@@ -27,7 +29,7 @@ import retrofit2.http.Query;
 public interface IUserService {
 
     @POST("/register")
-    Observable<JsonCommon<Object>> register(@Query("mobile") String mobile, @Query("password") String password, @Query("password_confirm") String confirmPwd, @Query("nickname") String nickname, @Query("code") String code);
+    Observable<JsonCommon<Object>> register(@Query("mobile") String mobile, @Query("password") String password, @Query("password_confirm") String confirmPwd, @Query("nickname") String nickname, @Query("code") String code,@Query("resideprovince")String province,@Query("residecity")String city);
 
     @POST("/login")
     Observable<JsonCommon<User>> login(@Query("mobile") String mobile, @Query("password") String password, @Query("reg_id") String regId, @Query("is_wechat") String isWechat, @Query("openid") String openid);
@@ -85,7 +87,9 @@ public interface IUserService {
                                           @Query("unionid") String unionid,
                                           @Query("gender") String gender,
                                           @Query("code") String code,
-                                          @Query("is_create") String isCreate);
+                                          @Query("is_create") String isCreate,
+                                          @Query("resideprovince")String province,
+                                          @Query("residecity")String city);
 
 
     @POST("/bindPhone")
@@ -159,4 +163,18 @@ public interface IUserService {
 
     @POST("/cashLog")
     Observable<JsonCommon<ResultWrapper<WithdrawalsRecord>>> cashLog(@Header("Authorization") String header, @Query("page") int page);
+
+    @POST("/province")
+    Observable<JsonCommon<ResultWrapper<RemoteCity>>> province();
+
+    @POST("/region")
+    Observable<JsonCommon<ResultWrapper<RemoteCity>>> region(@Query("parent_id")String parentId);
+
+
+    @POST("/shareRecord")
+    Observable<JsonCommon<OrderShareScore>> shareRecord(@Header("Authorization") String header, @Query("order_id")String orderId);
+
+
+    @POST("/promote")
+    Observable<JsonCommon<Medal>> promote(@Header("Authorization") String header);
 }

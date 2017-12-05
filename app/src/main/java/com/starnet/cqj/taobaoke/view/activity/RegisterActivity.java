@@ -47,6 +47,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
 
     private IRegisterPresenter mRegisterPresenter;
     private OptionsPickerView pvOptions;//地址选择器
+    private String mProvince;
+    private String mCity;
 
     @Override
     protected void init() {
@@ -125,7 +127,17 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
             toast("两次输入的密码不一致");
             return;
         }
-        mRegisterPresenter.register(mobile, pwd, nickName, code);
+        if (TextUtils.isEmpty(mProvince)) {
+            toast("请选择地址");
+            return;
+        }
+        if (TextUtils.isEmpty(mCity)) {
+            toast("请选择地址");
+            return;
+        }
+
+        mRegisterPresenter.register(mobile, pwd, nickName, code, mProvince, mCity);
+
     }
 
     protected boolean checkNickName(String nickName) {

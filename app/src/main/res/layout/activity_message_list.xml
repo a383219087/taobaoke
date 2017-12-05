@@ -56,6 +56,9 @@
         android:layout_height="10dp"
         android:background="@color/main_gray"/>
 
+    <View
+        style="@style/row_line"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_message"
         android:layout_width="match_parent"
