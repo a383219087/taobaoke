@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.Order;
@@ -75,6 +76,10 @@ public class OrderHolder extends BaseHolder<Order> {
             mTvShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if ("1".equals(order.getIsShare())) {
+                        Toast.makeText(itemView.getContext(), "该订单已分享", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     SharePopupWindow sharePopupWindow = new SharePopupWindow(itemView.getContext());
                     sharePopupWindow.setOrderId(order.getOrderId());
                     Activity activity = (Activity) itemView.getContext();

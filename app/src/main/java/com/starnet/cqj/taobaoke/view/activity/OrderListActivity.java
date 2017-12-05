@@ -53,6 +53,11 @@ public class OrderListActivity extends BaseActivity {
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_order, OrderHolder.class);
         mRvOrder.setLayoutManager(new LinearLayoutManager(this));
         mRvOrder.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getData();
     }
 
