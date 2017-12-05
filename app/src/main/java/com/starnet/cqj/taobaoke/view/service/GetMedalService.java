@@ -35,7 +35,7 @@ public class GetMedalService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Observable.interval(1, 10, TimeUnit.SECONDS)
+        Observable.interval(1, 60, TimeUnit.SECONDS)
                 .flatMap(new Function<Long, ObservableSource<JsonCommon<Medal>>>() {
                     @Override
                     public ObservableSource<JsonCommon<Medal>> apply(Long aLong) throws Exception {

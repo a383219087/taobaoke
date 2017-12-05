@@ -54,16 +54,7 @@ public class OrderHolder extends BaseHolder<Order> {
             mTvId.setText(order.getOrderId());
             mTvScore.setText(order.getCredit());
             mTvStatus.setText(order.getOrderStatus());
-            double price = 0;
-            for (SubOrder subOrder : order.getSubList()) {
-                try {
-                    int i = Integer.parseInt(subOrder.getCount());
-                    double fee = Double.parseDouble(subOrder.getFee());
-                    price += i * fee;
-                } catch (NumberFormatException ignored) {
-                }
-            }
-            mTvPrice.setText(String.valueOf(price));
+            mTvPrice.setText(order.getOrderFee());
             if ("1".equals(order.getIsShare())) {
                 mTvShare.setSelected(true);
                 mTvShare.setText("已分享");

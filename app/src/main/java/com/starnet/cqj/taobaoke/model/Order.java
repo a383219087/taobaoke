@@ -21,11 +21,22 @@ public class Order {
     @SerializedName("credit")
     private String credit;
 
+    @SerializedName("orderfee")
+    private String orderFee;
+
     @SerializedName("is_share")
     private String isShare;
 
     @SerializedName("sub_list")
     private List<SubOrder> subList;
+
+    public String getOrderFee() {
+        return orderFee;
+    }
+
+    public void setOrderFee(String orderFee) {
+        this.orderFee = orderFee;
+    }
 
     public String getIsShare() {
         return isShare;
