@@ -11,6 +11,7 @@ import com.starnet.cqj.taobaoke.remote.CityData;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 
 import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -23,33 +24,26 @@ public class RegisterPresenterImpl extends BasePresenterImpl implements IRegiste
         mViewCallback = viewCallback;
     }
 
-    private static final String TAG = "RegisterPresenterImpl";
-
     @Override
     public void initCity(Application application) {
-        CityData.getCity(application)
+        CityData.getRemoteCity()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<CityResult>() {
+                .subscribe(new SingleObserver<CityResult>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
+                    public void onSubscribe(Disposable disposable) {
+                        mCompositeDisposable.add(disposable);
                     }
 
                     @Override
-                    public void onNext(CityResult value) {
-                        mViewCallback.onInitCity(value);
+                    public void onSuccess(CityResult result) {
+                        mViewCallback.onInitCity(result);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
+                    public void onError(Throwable throwable) {
+                        throwable.printStackTrace();
                         mViewCallback.toast(R.string.net_error);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
     }

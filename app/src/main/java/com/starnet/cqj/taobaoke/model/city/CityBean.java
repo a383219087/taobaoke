@@ -1,14 +1,16 @@
 package com.starnet.cqj.taobaoke.model.city;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 
 public class CityBean implements Serializable {
-    public int getCity_id() {
+    public String getCity_id() {
         return city_id;
     }
 
-    public void setCity_id(int city_id) {
+    public void setCity_id(String city_id) {
         this.city_id = city_id;
     }
 
@@ -45,17 +47,18 @@ public class CityBean implements Serializable {
     }
 
     //构造方法
-    public CityBean(int city_id, int province_id, String code, String name, String provincecode) {
+    public CityBean(String city_id, int province_id, String name) {
         this.city_id = city_id;
         this.province_id = province_id;
-        this.code = code;
         this.name = name;
-        this.provincecode = provincecode;
     }
 
-    private int city_id;
+    @SerializedName("id")
+    private String city_id;
+    @SerializedName("parent_id")
     private int province_id;
     private String code;
+    @SerializedName("name")
     private String name;
     private String provincecode;
 }

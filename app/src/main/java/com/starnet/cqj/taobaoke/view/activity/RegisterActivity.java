@@ -49,6 +49,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
     private OptionsPickerView pvOptions;//地址选择器
     private String mProvince;
     private String mCity;
+    private boolean initCityDone;
 
     @Override
     protected void init() {
@@ -91,7 +92,11 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
                 register();
                 break;
             case R.id.ll_choose_area:
-                pvOptions.show();
+                if (initCityDone) {
+                    pvOptions.show();
+                } else {
+                    toast("城市数据未初始化完成，请稍后...");
+                }
                 break;
         }
     }
@@ -161,6 +166,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
 
     @Override
     public void onInitCity(final CityResult result) {
+        initCityDone = true;
         pvOptions.setPicker(result.Provincestr, result.Citystr, true);
         pvOptions.setTitle("选择城市");
         //设置是否循环滚动
@@ -174,6 +180,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
                 //返回的分别是三个级别的选中位置
                 String tx = result.options1Items.get(options1).getPro_name() + ","
                         + result.options2Items.get(options1).get(option2).getName();
+                mProvince = result.options1Items.get(options1).getPro_id();
+                mCity = result.options2Items.get(options1).get(option2).getCity_id();
                 mTvAddress.setText(tx);
             }
         });

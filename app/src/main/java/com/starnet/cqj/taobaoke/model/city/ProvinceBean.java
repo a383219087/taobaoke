@@ -1,15 +1,17 @@
 package com.starnet.cqj.taobaoke.model.city;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 
 public class ProvinceBean implements Serializable {
 
-    public int getPro_id() {
+    public String getPro_id() {
         return pro_id;
     }
 
-    public void setPro_id(int pro_id) {
+    public void setPro_id(String pro_id) {
         this.pro_id = pro_id;
     }
 
@@ -37,16 +39,16 @@ public class ProvinceBean implements Serializable {
         this.pro_name2 = pro_name2;
     }
 
-    public  ProvinceBean(int pro_id, String pro_code, String pro_name, String pro_name2) {
+    public  ProvinceBean(String pro_id,String pro_name) {
         this.pro_id = pro_id;
-        this.pro_code = pro_code;
         this.pro_name = pro_name;
-        this.pro_name2 = pro_name2;
 
     }
 
-    private int pro_id;//省份id
+    @SerializedName("id")
+    private String pro_id;//省份id
     private String pro_code;//城市编码
+    @SerializedName("name")
     private String pro_name;//省份名称
     private String pro_name2;//省份别称
 }

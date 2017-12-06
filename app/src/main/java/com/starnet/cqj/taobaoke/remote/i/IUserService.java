@@ -13,7 +13,8 @@ import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.ShareContent;
 import com.starnet.cqj.taobaoke.model.User;
 import com.starnet.cqj.taobaoke.model.WithdrawalsRecord;
-import com.starnet.cqj.taobaoke.model.city.RemoteCity;
+import com.starnet.cqj.taobaoke.model.city.CityBean;
+import com.starnet.cqj.taobaoke.model.city.ProvinceBean;
 
 import java.util.List;
 
@@ -165,10 +166,10 @@ public interface IUserService {
     Observable<JsonCommon<ResultWrapper<WithdrawalsRecord>>> cashLog(@Header("Authorization") String header, @Query("page") int page);
 
     @POST("/province")
-    Observable<JsonCommon<ResultWrapper<RemoteCity>>> province();
+    Observable<JsonCommon<ResultWrapper<ProvinceBean>>> province();
 
     @POST("/region")
-    Observable<JsonCommon<ResultWrapper<RemoteCity>>> region(@Query("parent_id")String parentId);
+    Observable<JsonCommon<ResultWrapper<CityBean>>> region(@Query("parent_id")String parentId);
 
 
     @POST("/shareRecord")
