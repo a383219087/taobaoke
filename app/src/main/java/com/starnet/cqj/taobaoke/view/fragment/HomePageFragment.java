@@ -20,8 +20,8 @@ import com.starnet.cqj.taobaoke.presenter.impl.HomePagePresenterImpl;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.activity.HelpCenterActivity;
 import com.starnet.cqj.taobaoke.view.activity.MessageListActivity;
+import com.starnet.cqj.taobaoke.view.activity.ProductDetailActivity;
 import com.starnet.cqj.taobaoke.view.activity.SearchActivity;
-import com.starnet.cqj.taobaoke.view.activity.WebViewActivity;
 import com.starnet.cqj.taobaoke.view.adapter.HasHeaderSpaceDecoration;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.ProductHolder;
@@ -94,7 +94,7 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
                     public void accept(Product product) throws Exception {
                         String url = product.getUrl();
                         url = URLDecoder.decode(url);
-                        WebViewActivity.start(getActivity(), url);
+                        ProductDetailActivity.start(getActivity(), url);
                     }
                 });
         mSrRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

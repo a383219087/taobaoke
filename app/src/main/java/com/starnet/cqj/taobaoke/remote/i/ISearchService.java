@@ -50,4 +50,8 @@ public interface ISearchService {
     @POST("/ppq")
     Observable<JsonCommon<ResultWrapper<Product>>> ppq(@Query("page") int page, @Query("typename") String typename, @Query("minfee") String minfee, @Query("maxfee") String maxfee,@Query("cate_id") String cateId);
 
+    @POST("/itemdetail")
+    Observable<JsonCommon<Product>> itemDetail(@Query("url") String url);
+
+
 }

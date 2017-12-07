@@ -162,7 +162,7 @@ public class ProductListActivity extends BaseActivity implements IProductListPre
                     public void accept(Product product) throws Exception {
                         String url = product.getUrl();
                         url = URLDecoder.decode(url);
-                        WebViewActivity.start(ProductListActivity.this, url);
+                        ProductDetailActivity.start(ProductListActivity.this, url);
                     }
                 });
         mRvProduct.addOnScrollListener(mHelper.getOnScrollListener());

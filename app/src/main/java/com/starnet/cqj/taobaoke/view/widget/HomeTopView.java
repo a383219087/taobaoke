@@ -26,6 +26,7 @@ import com.starnet.cqj.taobaoke.model.SearchType;
 import com.starnet.cqj.taobaoke.presenter.IHomePagePresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.HomePagePresenterImpl;
 import com.starnet.cqj.taobaoke.remote.Constant;
+import com.starnet.cqj.taobaoke.view.activity.ProductDetailActivity;
 import com.starnet.cqj.taobaoke.view.activity.ProductListActivity;
 import com.starnet.cqj.taobaoke.view.activity.WebViewActivity;
 import com.starnet.cqj.taobaoke.view.adapter.LinearLayoutManagerWrapper;
@@ -149,7 +150,7 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
                     public void accept(Product product) throws Exception {
                         String url = product.getUrl();
                         url = URLDecoder.decode(url);
-                        WebViewActivity.start(getContext(), url);
+                        ProductDetailActivity.start(getContext(), url);
                     }
                 });
     }

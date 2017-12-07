@@ -28,6 +28,51 @@ public class Product {
     @SerializedName("title")
     private String title;//商品标题
 
+    @SerializedName("detail")
+    private String detail;//详细描述文案
+
+    @SerializedName("coupon_rate")
+    private String couponRate;//优惠券比例
+
+    @SerializedName("click")
+    private String clickUrl;//淘宝地址
+
+
+    @SerializedName("coupon_last")
+    private String couponLast;//优惠券剩余
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public String getCouponRate() {
+        return couponRate;
+    }
+
+    public void setCouponRate(String couponRate) {
+        this.couponRate = couponRate;
+    }
+
+    public String getClickUrl() {
+        return clickUrl;
+    }
+
+    public void setClickUrl(String clickUrl) {
+        this.clickUrl = clickUrl;
+    }
+
+    public String getCouponLast() {
+        return couponLast;
+    }
+
+    public void setCouponLast(String couponLast) {
+        this.couponLast = couponLast;
+    }
+
     public String getId() {
         return id;
     }
