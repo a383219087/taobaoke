@@ -173,6 +173,8 @@
             android:name=".view.activity.GetMedalDialogActivity"
             android:theme="@style/DialogActivity"/>
         <activity android:name=".view.activity.ServiceCustomerActivity"/>
+        <activity android:name=".view.activity.AwardRecordActivity"/>
+        <activity android:name=".view.activity.ActionWebActivity"/>
 
         <service android:name=".view.service.GetMedalService"/>
 

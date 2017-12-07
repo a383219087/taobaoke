@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/share_btn_selector"
-            android:text="分享"
+            android:text="分享得积分"
             android:textColor="@color/order_share_btn_text_color"
             android:textSize="13sp"/>
 

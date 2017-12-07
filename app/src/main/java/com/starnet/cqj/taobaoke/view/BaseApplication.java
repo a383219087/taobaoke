@@ -14,6 +14,7 @@ import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.User;
 import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
+import com.starnet.cqj.taobaoke.utils.CrashHandler;
 import com.starnet.cqj.taobaoke.utils.DateUtils;
 import com.starnet.cqj.taobaoke.view.activity.LoginActivity;
 import com.starnet.cqj.taobaoke.view.service.GetMedalService;
@@ -48,6 +49,8 @@ public class BaseApplication extends Application {
 //        EMClient.getInstance().setDebugMode(true);
         Intent intent = new Intent(getApplicationContext(), GetMedalService.class);
         bindService(intent,mServiceConnection,Context.BIND_AUTO_CREATE);
+        CrashHandler instance = CrashHandler.getInstance();
+        instance.init(this);
     }
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {

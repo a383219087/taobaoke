@@ -55,6 +55,12 @@ public abstract class BaseActivity extends RxAppCompatActivity{
         }
     }
 
+    public void setTitleName(String name) {
+        if (mTvTitleName != null) {
+            mTvTitleName.setText(name);
+        }
+    }
+
     @LayoutRes
     protected abstract int getContentView();
 
