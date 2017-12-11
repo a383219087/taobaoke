@@ -61,7 +61,7 @@ public class OrderHolder extends BaseHolder<Order> {
                 mTvShare.setClickable(false);
             } else {
                 mTvShare.setSelected(false);
-                mTvShare.setText("分享");
+                mTvShare.setText("分享得积分");
                 mTvShare.setClickable(true);
             }
             mTvShare.setOnClickListener(new View.OnClickListener() {

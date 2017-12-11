@@ -21,6 +21,8 @@ public class GetMedalDialogActivity extends BaseActivity {
     ImageView mIvMedal;
     @BindView(R.id.tv_medal)
     TextView mTvMedal;
+    @BindView(R.id.tv_grade)
+    TextView mTvGrade;
 
     @Override
     protected int getContentView() {
@@ -34,6 +36,7 @@ public class GetMedalDialogActivity extends BaseActivity {
                 .load(medal.getPic())
                 .into(mIvMedal);
         mTvMedal.setText(medal.getName());
+        mTvGrade.setText(medal.getGrade());
     }
 
     @OnClick(R.id.btn_done)

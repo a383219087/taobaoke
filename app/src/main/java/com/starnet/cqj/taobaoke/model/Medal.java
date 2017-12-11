@@ -19,6 +19,16 @@ public class Medal implements Serializable{
     private String desc;
 
     private String conditions;
+    @SerializedName("class")
+    private String grade;
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
 
     public String getIsGet() {
         return isGet;
