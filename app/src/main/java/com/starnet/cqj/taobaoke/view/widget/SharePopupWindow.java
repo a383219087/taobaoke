@@ -3,6 +3,7 @@ package com.starnet.cqj.taobaoke.view.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.umeng.socialize.media.UMWeb;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -35,6 +37,7 @@ public class SharePopupWindow extends PopupWindow {
     private Context mContext;
     private ShareContent mShareContent;
     private String orderId;
+    private Action mAction;
 
     public SharePopupWindow(Context context) {
         super(context);
@@ -49,6 +52,10 @@ public class SharePopupWindow extends PopupWindow {
         setFocusable(true);
         setOnDismissListener(mOnDismissListener);
         getShareData();
+    }
+
+    public void setDoneAction(Action action) {
+        mAction = action;
     }
 
     public void setOrderId(String orderId) {
@@ -157,7 +164,16 @@ public class SharePopupWindow extends PopupWindow {
          */
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            GetIntegralDialogActivity.start(mContext, orderId);
+            if (mAction!=null){
+                try {
+                    mAction.run();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (!TextUtils.isEmpty(orderId)) {
+                GetIntegralDialogActivity.start(mContext, orderId);
+            }
             dismiss();
         }
 
