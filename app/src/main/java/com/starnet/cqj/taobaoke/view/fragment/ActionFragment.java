@@ -2,24 +2,27 @@ package com.starnet.cqj.taobaoke.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.Gravity;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
-import com.starnet.cqj.taobaoke.model.Action;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.OtherAction;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
-import com.starnet.cqj.taobaoke.utils.RxBus;
-import com.starnet.cqj.taobaoke.utils.event.ToHomePageEvent;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
-import com.starnet.cqj.taobaoke.view.activity.UserSignActivity;
-import com.starnet.cqj.taobaoke.view.widget.SharePopupWindow;
+import com.starnet.cqj.taobaoke.view.activity.ActionWebActivity;
+import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
+import com.starnet.cqj.taobaoke.view.adapter.viewholder.OtherActionHolder;
+import com.starnet.cqj.taobaoke.view.widget.ActionTopView;
+
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -29,16 +32,13 @@ public class ActionFragment extends BaseFragment {
     ImageView mTitleBack;
     @BindView(R.id.title_name)
     TextView mTitleName;
-    @BindView(R.id.tv_action_title)
-    TextView mTvActionTitle;
-    @BindView(R.id.tv_action_start_time)
-    TextView mTvActionStartTime;
-    @BindView(R.id.tv_action_end_time)
-    TextView mTvActionEndTime;
-    @BindView(R.id.pb_action)
-    ProgressBar mPbAction;
-    @BindView(R.id.tv_action_condition)
-    TextView mTvActionCondition;
+    @BindView(R.id.rv_action)
+    RecyclerView mRvAction;
+    @BindView(R.id.sr_refresh)
+    SwipeRefreshLayout mSrRefresh;
+
+    private ActionTopView mActionTopView;
+    private RecyclerBaseAdapter<OtherAction, OtherActionHolder> mAdapter;
 
     public ActionFragment() {
         // Required empty public constructor
@@ -61,55 +61,64 @@ public class ActionFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mTitleBack.setVisibility(View.GONE);
         mTitleName.setText(R.string.action_title);
+        mActionTopView = new ActionTopView(getActivity());
+        mRvAction.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAdapter = new RecyclerBaseAdapter<>(mActionTopView, R.layout.item_other_action, OtherActionHolder.class);
+        mRvAction.setAdapter(mAdapter);
+        mSrRefresh.setColorSchemeResources(R.color.main_color);
+        initEvent();
         getData();
     }
 
+    private void initEvent() {
+        mAdapter.itemClickObserve()
+                .compose(this.<OtherAction>bindToLifecycle())
+                .subscribe(new Consumer<OtherAction>() {
+                    @Override
+                    public void accept(OtherAction otherAction) throws Exception {
+                        ActionWebActivity.start(getActivity(),otherAction.getUrl());
+                    }
+                });
+        mSrRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSrRefresh.setRefreshing(true);
+                getData();
+            }
+        });
+    }
+
     private void getData() {
+        String token = ((BaseApplication) getActivity().getApplication()).getToken(false);
+        if(TextUtils.isEmpty(token)){
+            toast("请登录");
+            mSrRefresh.setRefreshing(false);
+            return;
+        }
         RemoteDataSourceBase.INSTANCE.getActionService()
-                .active()
-                .compose(this.<JsonCommon<Action>>bindToLifecycle())
+                .activeItem(token)
+                .compose(this.<JsonCommon<List<OtherAction>>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<JsonCommon<Action>>() {
+                .subscribe(new Consumer<JsonCommon<List<OtherAction>>>() {
                     @Override
-                    public void accept(JsonCommon<Action> actionJsonCommon) throws Exception {
-                        if ("200".equals(actionJsonCommon.getCode())) {
-                            mTvActionTitle.setText(actionJsonCommon.getData().getName());
-                            mTvActionStartTime.setText(actionJsonCommon.getData().getStime());
-                            mTvActionEndTime.setText(actionJsonCommon.getData().getEtime());
-                            mTvActionCondition.setText(actionJsonCommon.getData().getMsg());
-                        } else {
-                            toast(actionJsonCommon.getMessage());
+                    public void accept(JsonCommon<List<OtherAction>> listJsonCommon) throws Exception {
+                        mSrRefresh.setRefreshing(false);
+                        if("200".equals(listJsonCommon.getCode())){
+                            mAdapter.setAll(listJsonCommon.getData());
+                        }else{
+                            toast(listJsonCommon.getMessage());
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        mSrRefresh.setRefreshing(false);
                         throwable.printStackTrace();
+                        toast(R.string.net_error);
                     }
                 });
     }
 
-    @OnClick({R.id.ll_action_sign, R.id.action_share, R.id.btn_action_buy})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.ll_action_sign:
-                if (((BaseApplication) getActivity().getApplication()).getToken() == null) {
-                    return;
-                }
-                UserSignActivity.start(getActivity());
-                break;
-            case R.id.action_share:
-                if (((BaseApplication) getActivity().getApplication()).getToken() == null) {
-                    return;
-                }
-                SharePopupWindow sharePopupWindow = new SharePopupWindow(getActivity());
-                sharePopupWindow.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
-                break;
-            case R.id.btn_action_buy:
-                RxBus.getInstance().send(new ToHomePageEvent());
-                break;
-        }
-    }
 
 }

@@ -1,7 +1,7 @@
 package com.starnet.cqj.taobaoke.model;
 
 
-public class Action {
+public class BuyAction {
 
     private String name;
 
@@ -9,7 +9,38 @@ public class Action {
 
     private String etime;
 
+    //需要的订单总数
+    private String orders;
+    //奖励的积分
+    private String score;
+    //已完成订单数
+    private String count;
+
     private String msg;
+
+    public String getOrders() {
+        return orders;
+    }
+
+    public void setOrders(String orders) {
+        this.orders = orders;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
 
     public String getName() {
         return name;

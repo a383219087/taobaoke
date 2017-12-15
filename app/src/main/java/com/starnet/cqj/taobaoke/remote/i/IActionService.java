@@ -1,9 +1,12 @@
 package com.starnet.cqj.taobaoke.remote.i;
 
-import com.starnet.cqj.taobaoke.model.Action;
+import com.starnet.cqj.taobaoke.model.BuyAction;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.OtherAction;
 import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.SignResult;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Header;
@@ -23,7 +26,9 @@ public interface IActionService {
     Observable<JsonCommon<ResultWrapper<String>>> signList(@Header("Authorization") String header);
 
     @POST("/active")
-    Observable<JsonCommon<Action>> active();
+    Observable<JsonCommon<BuyAction>> active();
 
+    @POST("/activeItem")
+    Observable<JsonCommon<List<OtherAction>>> activeItem(@Header("Authorization") String header);
 
 }

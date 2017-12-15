@@ -23,6 +23,6 @@ public class Constant {
     public static final String KEY_TOKEN = "token";
     public static final String KEY_TOKEN_DATE ="token_save_date";
 
-    public static final int TOKEN_REFRESH_DAY = 10;
+    public static final int TOKEN_REFRESH_DAY = 3;
     public static final int BANNER_AUTO_TIME = 5000;
 }

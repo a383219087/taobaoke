@@ -85,7 +85,7 @@ public class SearchActivity extends BaseActivity implements ISearchPresenter.IVi
                     public void accept(Product product) throws Exception {
                         String url = product.getUrl();
                         url = URLDecoder.decode(url);
-                        WebViewActivity.start(SearchActivity.this, url);
+                        ProductDetailActivity.start(SearchActivity.this, url);
                     }
                 });
         mHistoryAdapter.itemClickObserve()

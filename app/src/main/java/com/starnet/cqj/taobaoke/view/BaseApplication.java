@@ -104,6 +104,9 @@ public class BaseApplication extends Application {
                                 @Override
                                 public void onError(Throwable throwable) {
                                     throwable.printStackTrace();
+                                    Toast.makeText(BaseApplication.this, "请重新登录", Toast.LENGTH_SHORT).show();
+                                    setToken("");
+                                    LoginActivity.start(getApplicationContext());
                                 }
 
                                 @Override

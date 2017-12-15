@@ -94,7 +94,7 @@ public class MineFragment extends BaseFragment {
     }
 
     private void refresh() {
-        if (mApplication.getToken(false) != null) {
+        if (!TextUtils.isEmpty(mApplication.getToken(false))) {
             mBtnLogout.setVisibility(View.VISIBLE);
             getData();
         } else {
@@ -114,7 +114,7 @@ public class MineFragment extends BaseFragment {
             R.id.btn_logout,
             R.id.ll_bind_cncbk})
     public void onViewClicked(View view) {
-        if (mApplication.getToken() == null) {
+        if (TextUtils.isEmpty(mApplication.getToken())) {
             return;
         }
         switch (view.getId()) {
@@ -154,27 +154,14 @@ public class MineFragment extends BaseFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
+                                mApplication.setToken("");
+                                refresh();
                                 RemoteDataSourceBase.INSTANCE.getUserService()
                                         .logout(mApplication.getToken())
                                         .compose(MineFragment.this.<JsonCommon<Object>>bindToLifecycle())
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new Consumer<JsonCommon<Object>>() {
-                                            @Override
-                                            public void accept(JsonCommon<Object> objectJsonCommon) throws Exception {
-                                                if ("200".equals(objectJsonCommon.getCode())) {
-                                                    mApplication.setToken("");
-                                                    refresh();
-                                                } else {
-                                                    toast(objectJsonCommon.getMessage());
-                                                }
-                                            }
-                                        }, new Consumer<Throwable>() {
-                                            @Override
-                                            public void accept(Throwable throwable) throws Exception {
-                                                throwable.printStackTrace();
-                                            }
-                                        });
+                                        .subscribe();
                             }
                         })
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {

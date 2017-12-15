@@ -6,6 +6,7 @@ import android.support.annotation.StringRes;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -143,7 +144,7 @@ public class HomePageFragment extends BaseFragment implements IHomePagePresenter
 
     @OnClick(R.id.homepage_message)
     void toMessage() {
-        if (((BaseApplication) getActivity().getApplication()).getToken() == null) {
+        if (TextUtils.isEmpty(((BaseApplication) getActivity().getApplication()).getToken())) {
             return;
         }
         MessageListActivity.start(getActivity());

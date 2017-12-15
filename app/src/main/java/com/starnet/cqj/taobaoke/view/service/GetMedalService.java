@@ -39,7 +39,7 @@ public class GetMedalService extends Service {
                 .flatMap(new Function<Long, ObservableSource<JsonCommon<Medal>>>() {
                     @Override
                     public ObservableSource<JsonCommon<Medal>> apply(Long aLong) throws Exception {
-                        return RemoteDataSourceBase.INSTANCE.getUserService().promote(((BaseApplication) getApplication()).getToken());
+                        return RemoteDataSourceBase.INSTANCE.getUserService().promote(((BaseApplication) getApplication()).getToken(false));
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -79,15 +79,18 @@ public class GetMedalService extends Service {
 
     @Override
     public boolean onUnbind(Intent intent) {
-        if (mDisposable != null) {
-            mDisposable.dispose();
-        }
+        stopInterval();
         return super.onUnbind(intent);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        stopInterval();
+    }
+
+    private void stopInterval() {
+        Log.e(TAG, "stopInterval: ");
         if (mDisposable != null) {
             mDisposable.dispose();
         }
