@@ -1,5 +1,6 @@
 package com.starnet.cqj.taobaoke.view.adapter.viewholder;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,15 +47,20 @@ public class MedalItemHolder extends BaseHolder<Medal> {
             Glide.with(itemView.getContext())
                     .load(medal.getPic())
                     .into(mIvMedal);
-            if("0".equals(medal.getIsGet())){
+            if ("0".equals(medal.getIsGet())) {
                 mLlMedalItem.setSelected(false);
                 mTvTime.setText("未获得");
                 mTvGrade.setVisibility(View.GONE);
-            }else{
+            } else {
                 mLlMedalItem.setSelected(true);
                 mTvTime.setText(medal.getTime());
-                mTvGrade.setVisibility(View.VISIBLE);
-                mTvGrade.setText(medal.getGrade());
+                String grade = medal.getGrade();
+                if (!TextUtils.isEmpty(grade) && !"0".equals(grade)) {
+                    mTvGrade.setVisibility(View.VISIBLE);
+                    mTvGrade.setText(grade);
+                }else {
+                    mTvGrade.setVisibility(View.GONE);
+                }
             }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

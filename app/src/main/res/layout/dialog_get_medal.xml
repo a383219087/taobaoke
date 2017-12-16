@@ -55,6 +55,7 @@
                     android:textSize="13sp"
                     android:paddingLeft="4dp"
                     android:id="@+id/tv_grade"
+                    android:visibility="gone"
                     android:text="0"
                     android:background="@drawable/medal_grade_icon"/>
             </RelativeLayout>

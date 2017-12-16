@@ -2,6 +2,8 @@ package com.starnet.cqj.taobaoke.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,7 +38,13 @@ public class GetMedalDialogActivity extends BaseActivity {
                 .load(medal.getPic())
                 .into(mIvMedal);
         mTvMedal.setText(medal.getName());
-        mTvGrade.setText(medal.getGrade());
+        String grade = medal.getGrade();
+        if (!TextUtils.isEmpty(grade) && !"0".equals(grade)) {
+            mTvGrade.setVisibility(View.VISIBLE);
+            mTvGrade.setText(grade);
+        }else {
+            mTvGrade.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.btn_done)

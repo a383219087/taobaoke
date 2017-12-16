@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:layout_marginBottom="13dp"
+    android:layout_marginLeft="13dp"
+    android:layout_marginRight="13dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@color/main_color"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="8dp"
+    >
 
-    <android.support.v7.widget.CardView
+    <ImageView
+        android:id="@+id/iv_other_action"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:layout_marginBottom="13dp"
-        android:layout_marginLeft="13dp"
-        android:layout_marginRight="13dp"
-        android:orientation="vertical"
-        app:cardBackgroundColor="@color/main_color"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="8dp"
-        >
-
-        <ImageView
-            android:id="@+id/iv_other_action"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:scaleType="fitXY"/>
-    </android.support.v7.widget.CardView>
-</LinearLayout>
+        android:scaleType="fitXY"/>
+</android.support.v7.widget.CardView>
