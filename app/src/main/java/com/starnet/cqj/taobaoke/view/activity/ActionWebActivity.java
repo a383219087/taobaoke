@@ -17,7 +17,6 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -54,12 +53,12 @@ public class ActionWebActivity extends WebViewActivity {
     @OnClick(R.id.title_rightbutton)
     void OnClick(View view){
         SharePopupWindow sharePopupWindow = new SharePopupWindow(this);
-        sharePopupWindow.setDoneAction(new Action() {
-            @Override
-            public void run() throws Exception {
-                addCount();
-            }
-        });
+//        sharePopupWindow.setDoneAction(new Action() {
+//            @Override
+//            public void run() throws Exception {
+//                addCount();
+//            }
+//        });
         sharePopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
