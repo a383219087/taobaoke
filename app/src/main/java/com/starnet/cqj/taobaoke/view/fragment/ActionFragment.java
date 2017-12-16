@@ -76,7 +76,7 @@ public class ActionFragment extends BaseFragment {
                 .subscribe(new Consumer<OtherAction>() {
                     @Override
                     public void accept(OtherAction otherAction) throws Exception {
-                        ActionWebActivity.start(getActivity(),otherAction.getUrl());
+                        ActionWebActivity.start(getActivity(),otherAction.getUrl(),otherAction.getId());
                     }
                 });
         mSrRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

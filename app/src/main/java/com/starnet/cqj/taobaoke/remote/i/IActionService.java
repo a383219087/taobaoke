@@ -11,6 +11,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by mini on 17/11/18.
@@ -30,5 +31,9 @@ public interface IActionService {
 
     @POST("/activeItem")
     Observable<JsonCommon<List<OtherAction>>> activeItem(@Header("Authorization") String header);
+
+
+    @POST("/active/addTimes")
+    Observable<JsonCommon<Object>> addTimes(@Header("Authorization") String header, @Query("active_id")String activeId);
 
 }

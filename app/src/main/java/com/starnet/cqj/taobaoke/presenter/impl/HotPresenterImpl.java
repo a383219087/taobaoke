@@ -91,7 +91,34 @@ public class HotPresenterImpl extends BasePresenterImpl implements IHotPresenter
 
     @Override
     public void getMoreList(int page, String itemId) {
+        RemoteDataSourceBase.INSTANCE.getHotService()
+                .getMoreArticle(page, itemId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<JsonCommon<ResultWrapper<Article>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mCompositeDisposable.add(d);
+                    }
 
+                    @Override
+                    public void onNext(JsonCommon<ResultWrapper<Article>> value) {
+                        if (isValidResult(value, mViewCallback)) {
+                            mViewCallback.setArticleList(value.getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override

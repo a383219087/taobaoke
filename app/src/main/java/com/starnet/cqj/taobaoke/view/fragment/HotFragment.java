@@ -68,7 +68,7 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTitleBack.setVisibility(View.GONE);
-        mTitleName.setText(R.string.action_title);
+        mTitleName.setText(R.string.hot_title);
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_hot_article, HotArticleHolder.class);
         mRvHotList.addItemDecoration(new RecyclerItemDecoration());
         mRvHotList.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -171,6 +171,9 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
         super.onDestroy();
         if (mHotAutoBanner != null) {
             mHotAutoBanner.stopAutoScroll();
+        }
+        if (mPresenter != null) {
+            mPresenter.onDestroy();
         }
     }
 }

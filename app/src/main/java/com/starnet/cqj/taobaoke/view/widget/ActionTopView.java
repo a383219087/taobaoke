@@ -17,10 +17,9 @@ import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.BuyAction;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
-import com.starnet.cqj.taobaoke.utils.RxBus;
-import com.starnet.cqj.taobaoke.utils.event.ToHomePageEvent;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.activity.UserSignActivity;
+import com.starnet.cqj.taobaoke.view.activity.WebViewActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +45,7 @@ public class ActionTopView extends LinearLayout {
 
     private Disposable mDisposable;
     private Activity mActivity;
+    private String mUrl;
 
     public ActionTopView(Context context) {
         super(context);
@@ -86,6 +86,7 @@ public class ActionTopView extends LinearLayout {
                     @Override
                     public void accept(JsonCommon<BuyAction> actionJsonCommon) throws Exception {
                         if ("200".equals(actionJsonCommon.getCode())) {
+                            mUrl = actionJsonCommon.getData().getUrl();
                             mTvActionTitle.setText(actionJsonCommon.getData().getName());
                             mTvActionStartTime.setText(actionJsonCommon.getData().getStime());
                             mTvActionEndTime.setText(actionJsonCommon.getData().getEtime());
@@ -126,7 +127,9 @@ public class ActionTopView extends LinearLayout {
                 sharePopupWindow.showAtLocation(mActivity.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.btn_action_buy:
-                RxBus.getInstance().send(new ToHomePageEvent());
+                if(!TextUtils.isEmpty(mUrl)) {
+                    WebViewActivity.start(mActivity, mUrl);
+                }
                 break;
         }
     }

@@ -24,5 +24,6 @@ public interface IHotPresenter extends BasePresenter {
         void setBanner(List<Banner> bannerList);
 
         void setArticleList(List<Article> articleList);
+
     }
 }

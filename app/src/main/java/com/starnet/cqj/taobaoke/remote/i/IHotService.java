@@ -24,5 +24,5 @@ public interface IHotService {
     Observable<JsonCommon<ResultWithBanner<Article>>> getHotArticle(@Query("type") String type);
 
     @POST("/hot/pages")
-    Observable<JsonCommon<ResultWrapper<Article>>> getMoreArticle(@Query("page") int page, @Query("type") int type);
+    Observable<JsonCommon<ResultWrapper<Article>>> getMoreArticle(@Query("page") int page, @Query("type") String type);
 }

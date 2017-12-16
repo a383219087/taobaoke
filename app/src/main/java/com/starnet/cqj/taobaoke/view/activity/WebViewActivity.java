@@ -12,6 +12,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
 
@@ -21,6 +22,8 @@ import butterknife.BindView;
 public class WebViewActivity extends BaseActivity {
 
     public static final String KEY_URL = "url";
+    @BindView(R.id.title_finish)
+    TextView mTvFinish;
     @BindView(R.id.webview1)
     WebView mWebView;
     @BindView(R.id.progressBar1)
@@ -104,20 +107,42 @@ public class WebViewActivity extends BaseActivity {
 //        }
 //    }
 
+
+    @Override
+    protected void initEvent() {
+        mIvTitleBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goBack();
+            }
+        });
+        mTvFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
     //设置返回键动作（防止按返回键直接退出程序)
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mWebView.canGoBack()) {//当webview不是处于第一页面时，返回上一个页面
-                mWebView.goBack();
-                return true;
-            } else {//当webview处于第一页面时,直接退出程序
-                finish();
-            }
+            if (goBack()) return true;
 
 
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private boolean goBack() {
+        if (mWebView.canGoBack()) {//当webview不是处于第一页面时，返回上一个页面
+            mWebView.goBack();
+            return true;
+        } else {//当webview处于第一页面时,直接退出程序
+            finish();
+        }
+        return false;
     }
 
 
