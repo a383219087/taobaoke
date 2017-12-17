@@ -180,8 +180,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
                 //返回的分别是三个级别的选中位置
                 String tx = result.options1Items.get(options1).getPro_name() + ","
                         + result.options2Items.get(options1).get(option2).getName();
-                mProvince = result.options1Items.get(options1).getPro_id();
-                mCity = result.options2Items.get(options1).get(option2).getCity_id();
+                mProvince = result.options1Items.get(options1).getPro_name();
+                mCity = result.options2Items.get(options1).get(option2).getName();
                 mTvAddress.setText(tx);
             }
         });
