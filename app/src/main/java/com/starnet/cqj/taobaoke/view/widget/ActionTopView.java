@@ -1,6 +1,5 @@
 package com.starnet.cqj.taobaoke.view.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -20,12 +19,12 @@ import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.activity.UserSignActivity;
 import com.starnet.cqj.taobaoke.view.activity.WebViewActivity;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -42,9 +41,10 @@ public class ActionTopView extends LinearLayout {
     ProgressBar mPbAction;
     @BindView(R.id.tv_action_condition)
     TextView mTvActionCondition;
+    @BindView(R.id.btn_action_get)
+    TextView mBtnActionBuy;
 
-    private Disposable mDisposable;
-    private Activity mActivity;
+    private RxAppCompatActivity mActivity;
     private String mUrl;
 
     public ActionTopView(Context context) {
@@ -66,7 +66,7 @@ public class ActionTopView extends LinearLayout {
         setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.view_action_top, this, true);
         ButterKnife.bind(this);
-        mActivity = (Activity) getContext();
+        mActivity = (RxAppCompatActivity) getContext();
         getData();
     }
 
@@ -75,13 +75,7 @@ public class ActionTopView extends LinearLayout {
                 .active()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .doOnSubscribe(new Consumer<Disposable>() {
-
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        mDisposable = disposable;
-                    }
-                })
+                .compose(mActivity.<JsonCommon<BuyAction>>bindToLifecycle())
                 .subscribe(new Consumer<JsonCommon<BuyAction>>() {
                     @Override
                     public void accept(JsonCommon<BuyAction> actionJsonCommon) throws Exception {
@@ -98,6 +92,18 @@ public class ActionTopView extends LinearLayout {
                             } catch (NumberFormatException ignored) {
                             }
                             mTvActionCondition.setText(actionJsonCommon.getData().getMsg());
+                            if(actionJsonCommon.getData().isOver()){
+                                mBtnActionBuy.setVisibility(VISIBLE);
+                                if(actionJsonCommon.getData().isReceive()){
+                                    mBtnActionBuy.setEnabled(false);
+                                    mBtnActionBuy.setText(R.string.get_buy_action_done);
+                                }else{
+                                    mBtnActionBuy.setEnabled(true);
+                                    mBtnActionBuy.setText(R.string.get_buy_action);
+                                }
+                            }else{
+                                mBtnActionBuy.setVisibility(GONE);
+                            }
                         } else {
                             Toast.makeText(getContext(), actionJsonCommon.getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -110,7 +116,7 @@ public class ActionTopView extends LinearLayout {
                 });
     }
 
-    @OnClick({R.id.ll_action_sign, R.id.action_share, R.id.btn_action_buy})
+    @OnClick({R.id.ll_action_sign, R.id.action_share, R.id.btn_action_get, R.id.card_buy_action})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_action_sign:
@@ -126,17 +132,36 @@ public class ActionTopView extends LinearLayout {
                 SharePopupWindow sharePopupWindow = new SharePopupWindow(mActivity);
                 sharePopupWindow.showAtLocation(mActivity.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
-            case R.id.btn_action_buy:
+            case R.id.card_buy_action:
                 if(!TextUtils.isEmpty(mUrl)) {
                     WebViewActivity.start(mActivity, mUrl);
                 }
                 break;
+            case R.id.btn_action_get:
+                RemoteDataSourceBase.INSTANCE.getUserService()
+                        .activeReceive(((BaseApplication) mActivity.getApplication()).getToken())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .compose(mActivity.<JsonCommon<Object>>bindToLifecycle())
+                        .subscribe(new Consumer<JsonCommon<Object>>() {
+                            @Override
+                            public void accept(JsonCommon<Object> objectJsonCommon) throws Exception {
+                                if("200".equals(objectJsonCommon.getCode())){
+                                    Toast.makeText(mActivity, "领取成功", Toast.LENGTH_SHORT).show();
+                                    mBtnActionBuy.setEnabled(false);
+                                    mBtnActionBuy.setText(R.string.get_buy_action_done);
+                                }else{
+                                    Toast.makeText(mActivity, objectJsonCommon.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                throwable.printStackTrace();
+                            }
+                        });
+                break;
         }
     }
 
-    public void onDestroy() {
-        if (mDisposable != null) {
-            mDisposable.dispose();
-        }
-    }
 }

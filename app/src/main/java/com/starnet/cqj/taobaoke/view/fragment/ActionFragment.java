@@ -37,7 +37,6 @@ public class ActionFragment extends BaseFragment {
     @BindView(R.id.sr_refresh)
     SwipeRefreshLayout mSrRefresh;
 
-    private ActionTopView mActionTopView;
     private RecyclerBaseAdapter<OtherAction, OtherActionHolder> mAdapter;
 
     public ActionFragment() {
@@ -61,9 +60,9 @@ public class ActionFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mTitleBack.setVisibility(View.GONE);
         mTitleName.setText(R.string.action_title);
-        mActionTopView = new ActionTopView(getActivity());
+        ActionTopView actionTopView = new ActionTopView(getActivity());
         mRvAction.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new RecyclerBaseAdapter<>(mActionTopView, R.layout.item_other_action, OtherActionHolder.class);
+        mAdapter = new RecyclerBaseAdapter<>(actionTopView, R.layout.item_other_action, OtherActionHolder.class);
         mRvAction.setAdapter(mAdapter);
         mSrRefresh.setColorSchemeResources(R.color.main_color);
         initEvent();

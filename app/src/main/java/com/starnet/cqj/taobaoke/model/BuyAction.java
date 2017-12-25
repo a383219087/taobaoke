@@ -1,6 +1,8 @@
 package com.starnet.cqj.taobaoke.model;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class BuyAction {
 
     private String name;
@@ -19,6 +21,28 @@ public class BuyAction {
     private String msg;
 
     private String url;
+
+    @SerializedName("is_over")
+    private String isOver;
+
+    @SerializedName("is_receive")
+    private String isReceive;
+
+    public boolean isOver() {
+        return "1".equals(isOver);
+    }
+
+    public void setIsOver(String isOver) {
+        this.isOver = isOver;
+    }
+
+    public boolean isReceive() {
+        return "1".equals(isReceive);
+    }
+
+    public void setIsReceive(String isReceive) {
+        this.isReceive = isReceive;
+    }
 
     public String getUrl() {
         return url;

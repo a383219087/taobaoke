@@ -84,6 +84,7 @@ dependencies {
     compile 'cn.jiguang.sdk:jpush:3.0.9'  // 此处以JPush 3.0.9 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.7'  // 此处以JCore 1.1.7 版本为例。
     compile 'com.hyphenate:hyphenate-sdk-lite:3.3.0'
+    compile 'com.lzy.widget:imagepicker:0.5.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

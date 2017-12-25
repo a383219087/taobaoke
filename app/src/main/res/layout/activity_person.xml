@@ -17,8 +17,10 @@
         <View style="@style/row_line"/>
 
         <LinearLayout
+            android:id="@+id/ll_change_avatar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -59,9 +61,9 @@
 
         <LinearLayout
             android:id="@+id/ll_change_nick"
-            android:background="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -103,10 +105,54 @@
         <View style="@style/row_line"/>
 
         <LinearLayout
-            android:id="@+id/ll_change_phone"
-            android:background="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="注册地区"
+                android:textColor="@color/textblack"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="20"
+                android:textColor="@color/textblack"
+                android:textSize="16sp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/right_arrow_icon"
+                android:visibility="invisible"/>
+
+        </LinearLayout>
+
+        <View style="@style/row_line"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <View style="@style/row_line"/>
+
+        <LinearLayout
+            android:id="@+id/ll_change_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -150,9 +196,9 @@
 
         <LinearLayout
             android:id="@+id/ll_edit_pwd"
-            android:background="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -174,6 +220,15 @@
         </LinearLayout>
 
         <View style="@style/row_line"/>
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_button"
+            android:text="退出登录"
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 

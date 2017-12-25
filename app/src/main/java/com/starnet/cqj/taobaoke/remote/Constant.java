@@ -6,9 +6,9 @@ package com.starnet.cqj.taobaoke.remote;
 
 public class Constant {
 
-    public static final String BASE_URL ="http://api.bfija.cn/";
+    public static final String BASE_URL ="http://api.agpiu.cn/";
 
-    public static final String IMAGE_URL ="http://api.bfija.cn";
+    public static final String IMAGE_URL ="http://api.agpiu.cn";
 
     public static final String COMMON_PREFERENCE_NAME ="tdr";
 
@@ -25,4 +25,6 @@ public class Constant {
 
     public static final int TOKEN_REFRESH_DAY = 3;
     public static final int BANNER_AUTO_TIME = 5000;
+
+    public static final int GET_MEDAL_SERVICE_SECOND =60;
 }

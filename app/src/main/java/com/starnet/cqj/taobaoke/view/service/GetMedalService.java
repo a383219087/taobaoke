@@ -4,10 +4,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.Medal;
+import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.activity.GetMedalDialogActivity;
@@ -22,20 +22,14 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-/**
- * Created by Administrator on 2017/12/05.
- */
-
 public class GetMedalService extends Service {
 
-    private static final String TAG = "GetMedalService";
-    
     private Disposable mDisposable;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Observable.interval(1, 60, TimeUnit.SECONDS)
+        Observable.interval(1, Constant.GET_MEDAL_SERVICE_SECOND, TimeUnit.SECONDS)
                 .flatMap(new Function<Long, ObservableSource<JsonCommon<Medal>>>() {
                     @Override
                     public ObservableSource<JsonCommon<Medal>> apply(Long aLong) throws Exception {
@@ -53,7 +47,6 @@ public class GetMedalService extends Service {
 
                     @Override
                     public void onNext(JsonCommon<Medal> medalJsonCommon) {
-                        Log.e(TAG, "getmedalservice: " );
                         if ("200".equals(medalJsonCommon.getCode())) {
                             GetMedalDialogActivity.start(getApplicationContext(), medalJsonCommon.getData());
                         }
@@ -90,7 +83,6 @@ public class GetMedalService extends Service {
     }
 
     private void stopInterval() {
-        Log.e(TAG, "stopInterval: ");
         if (mDisposable != null) {
             mDisposable.dispose();
         }

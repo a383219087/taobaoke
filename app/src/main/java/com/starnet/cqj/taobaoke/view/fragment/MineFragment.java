@@ -1,13 +1,10 @@
 package com.starnet.cqj.taobaoke.view.fragment;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,8 +52,6 @@ public class MineFragment extends BaseFragment {
     TextView mTvRecheck;
     @BindView(R.id.tv_to_money)
     TextView mTvToMoney;
-    @BindView(R.id.btn_logout)
-    Button mBtnLogout;
     private User mUser;
     private BaseApplication mApplication;
 
@@ -95,10 +90,8 @@ public class MineFragment extends BaseFragment {
 
     private void refresh() {
         if (!TextUtils.isEmpty(mApplication.getToken(false))) {
-            mBtnLogout.setVisibility(View.VISIBLE);
             getData();
         } else {
-            mBtnLogout.setVisibility(View.GONE);
             mTvToMoney.setText("0");
             mTvPhone.setText("");
             mTvName.setText("请登录");
@@ -111,7 +104,6 @@ public class MineFragment extends BaseFragment {
     @OnClick({R.id.ib_setting, R.id.iv_avatar,
             R.id.btn_ice, R.id.btn_recheck, R.id.btn_to_money,
             R.id.ll_order, R.id.ll_integral, R.id.ll_medal, R.id.ll_share,
-            R.id.btn_logout,
             R.id.ll_bind_cncbk})
     public void onViewClicked(View view) {
         if (TextUtils.isEmpty(mApplication.getToken())) {
@@ -145,33 +137,6 @@ public class MineFragment extends BaseFragment {
             case R.id.ll_share:
                 SharePopupWindow sharePopupWindow = new SharePopupWindow(getActivity());
                 sharePopupWindow.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
-                break;
-            case R.id.btn_logout:
-                AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                        .setTitle("提示")
-                        .setMessage("确认退出登录吗？")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                mApplication.setToken("");
-                                refresh();
-                                RemoteDataSourceBase.INSTANCE.getUserService()
-                                        .logout(mApplication.getToken())
-                                        .compose(MineFragment.this.<JsonCommon<Object>>bindToLifecycle())
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe();
-                            }
-                        })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .create();
-                alertDialog.show();
                 break;
             case R.id.ll_bind_cncbk:
                 WithdrawalsActivity.start(getActivity());
