@@ -31,6 +31,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 
@@ -147,9 +148,13 @@ public class PersonActivity extends BaseActivity {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 if (images != null && images.size() > 0 && !TextUtils.isEmpty(images.get(0).path)) {
                     File file = new File(images.get(0).path);
-                    RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                    RequestBody requestFile =
+                            RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+                    MultipartBody.Part body =
+                            MultipartBody.Part.createFormData("file", file.getName(), requestFile);
                     RemoteDataSourceBase.INSTANCE.getUserService()
-                            .updateAvatar(((BaseApplication) getApplication()).getToken(), requestBody)
+                            .updateAvatar(((BaseApplication) getApplication()).getToken(), body)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())
                             .compose(this.<JsonCommon<User>>bindToLifecycle())

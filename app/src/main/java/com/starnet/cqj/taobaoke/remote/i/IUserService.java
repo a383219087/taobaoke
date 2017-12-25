@@ -19,7 +19,7 @@ import com.starnet.cqj.taobaoke.model.city.ProvinceBean;
 import java.util.List;
 
 import io.reactivex.Observable;
-import okhttp3.RequestBody;
+import okhttp3.MultipartBody;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -184,7 +184,7 @@ public interface IUserService {
 
     @Multipart
     @POST("/avatar")
-    Observable<JsonCommon<User>> updateAvatar(@Header("Authorization") String header, @Part("file\"; filename=\"avatar.jpg\"") RequestBody imgs);
+    Observable<JsonCommon<User>> updateAvatar(@Header("Authorization") String header, @Part MultipartBody.Part body);
 
     @POST("/activeReceive")
     Observable<JsonCommon<Object>> activeReceive(@Header("Authorization") String header);
