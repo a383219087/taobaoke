@@ -157,7 +157,7 @@ public class SearchActivity extends BaseActivity implements ISearchPresenter.IVi
             if (productList == null || productList.isEmpty()) {
                 mLlEmpty.setVisibility(View.VISIBLE);
                 mAdapter.removeAll();
-                showToSuperSearch(mSearch);
+//                showToSuperSearch(mSearch);
             } else {
                 mLlEmpty.setVisibility(View.GONE);
                 mAdapter.setAll(productList);

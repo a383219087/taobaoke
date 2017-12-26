@@ -32,7 +32,7 @@ public class SearchPresenterImpl extends BasePresenterImpl implements ISearchPre
     @Override
     public void search(int page,String search) {
         RemoteDataSourceBase.INSTANCE.getSearchService()
-                .site(page,search,"moren","","","")
+                .superSearch(search, page, 0, 3)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .compose(mActivity.<JsonCommon<ResultWrapper<Product>>>bindToLifecycle())
