@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -11,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bigkoo.pickerview.OptionsPickerView;
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.User;
 import com.starnet.cqj.taobaoke.model.city.CityResult;
@@ -19,9 +19,11 @@ import com.starnet.cqj.taobaoke.presenter.IRegisterPresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.RegisterPresenterImpl;
 import com.starnet.cqj.taobaoke.utils.StringUtils;
 import com.starnet.cqj.taobaoke.view.widget.ButtonCountDown;
+import com.starnet.cqj.taobaoke.view.widget.CityPicker;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 public class RegisterActivity extends BaseActivity implements IRegisterPresenter.IView {
 
@@ -46,17 +48,36 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
     TextView mTvAddress;
 
     private IRegisterPresenter mRegisterPresenter;
-    private OptionsPickerView pvOptions;//地址选择器
+//    private OptionsPickerView pvOptions;//地址选择器
     private String mProvince;
     private String mCity;
-    private boolean initCityDone;
+    private String mArea;
+    private CityPicker mCityPicker;
+    //    private boolean initCityDone;
 
     @Override
     protected void init() {
         setTitleName(R.string.register_title);
         mRegisterPresenter = getPresenter();
-        pvOptions = new OptionsPickerView(this);
-        mRegisterPresenter.initCity(getApplication());
+        mCityPicker = new CityPicker(this);
+//        pvOptions = new OptionsPickerView(this);
+//        mRegisterPresenter.initCity(getApplication());
+    }
+
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+        mCityPicker.resultObservable()
+                .compose(this.<CityPicker.GetCityResult>bindToLifecycle())
+                .subscribe(new Consumer<CityPicker.GetCityResult>() {
+                    @Override
+                    public void accept(CityPicker.GetCityResult s) throws Exception {
+                        mProvince =s.province;
+                        mCity = s.city;
+                        mArea = s.area;
+                        mTvAddress.setText(TextUtils.isEmpty(mProvince) ? "" : mProvince + " " + mCity + " " + mArea);
+                    }
+                });
     }
 
     protected IRegisterPresenter getPresenter() {
@@ -92,11 +113,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
                 register();
                 break;
             case R.id.ll_choose_area:
-                if (initCityDone) {
-                    pvOptions.show();
-                } else {
-                    toast("城市数据未初始化完成，请稍后...");
-                }
+                mCityPicker.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
         }
     }
@@ -141,7 +158,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
             return;
         }
 
-        mRegisterPresenter.register(mobile, pwd, nickName, code, mProvince, mCity);
+        mRegisterPresenter.register(mobile, pwd, nickName, code, mProvince, mCity,mArea);
 
     }
 
@@ -166,25 +183,25 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
 
     @Override
     public void onInitCity(final CityResult result) {
-        initCityDone = true;
-        pvOptions.setPicker(result.Provincestr, result.Citystr, true);
-        pvOptions.setTitle("选择城市");
-        //设置是否循环滚动
-        pvOptions.setCyclic(false, false, false);
-        //设置默认选中的三级项目
-        //监听确定选择按钮
-        pvOptions.setSelectOptions(0, 0);
-        pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                //返回的分别是三个级别的选中位置
-                String tx = result.options1Items.get(options1).getPro_name() + ","
-                        + result.options2Items.get(options1).get(option2).getName();
-                mProvince = result.options1Items.get(options1).getPro_name();
-                mCity = result.options2Items.get(options1).get(option2).getName();
-                mTvAddress.setText(tx);
-            }
-        });
+//        initCityDone = true;
+//        pvOptions.setPicker(result.Provincestr, result.Citystr, true);
+//        pvOptions.setTitle("选择城市");
+//        //设置是否循环滚动
+//        pvOptions.setCyclic(false, false, false);
+//        //设置默认选中的三级项目
+//        //监听确定选择按钮
+//        pvOptions.setSelectOptions(0, 0);
+//        pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+//            @Override
+//            public void onOptionsSelect(int options1, int option2, int options3) {
+//                //返回的分别是三个级别的选中位置
+//                String tx = result.options1Items.get(options1).getPro_name() + ","
+//                        + result.options2Items.get(options1).get(option2).getName();
+//                mProvince = result.options1Items.get(options1).getPro_name();
+//                mCity = result.options2Items.get(options1).get(option2).getName();
+//                mTvAddress.setText(tx);
+//            }
+//        });
     }
 
     @Override

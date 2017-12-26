@@ -33,7 +33,8 @@ import retrofit2.http.Query;
 public interface IUserService {
 
     @POST("/register")
-    Observable<JsonCommon<Object>> register(@Query("mobile") String mobile, @Query("password") String password, @Query("password_confirm") String confirmPwd, @Query("nickname") String nickname, @Query("code") String code,@Query("resideprovince")String province,@Query("residecity")String city);
+    Observable<JsonCommon<Object>> register(@Query("mobile") String mobile, @Query("password") String password, @Query("password_confirm") String confirmPwd, @Query("nickname") String nickname, @Query("code") String code,
+                                            @Query("resideprovince")String province,@Query("residecity")String city,@Query("residelist")String area);
 
     @POST("/login")
     Observable<JsonCommon<User>> login(@Query("mobile") String mobile, @Query("password") String password, @Query("reg_id") String regId, @Query("is_wechat") String isWechat, @Query("openid") String openid);
@@ -93,7 +94,8 @@ public interface IUserService {
                                           @Query("code") String code,
                                           @Query("is_create") String isCreate,
                                           @Query("resideprovince")String province,
-                                          @Query("residecity")String city);
+                                          @Query("residecity")String city,
+                                          @Query("residelist")String area);
 
 
     @POST("/bindPhone")

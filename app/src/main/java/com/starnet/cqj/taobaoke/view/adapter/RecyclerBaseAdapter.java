@@ -25,6 +25,7 @@ public class RecyclerBaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerVi
 
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
+    public static final String KEY_ADAPTER = "adapter";
 
     private View mHeaderView;
     @LayoutRes
@@ -32,11 +33,13 @@ public class RecyclerBaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerVi
     private Class<VH> mClazz;
     private List<T> mDataList;
     private PublishSubject<T> mItemClick = PublishSubject.create();
+    private final HashMap<String, Object> paramContainerMap = new HashMap<>();
 
     public RecyclerBaseAdapter(@LayoutRes int layoutId, Class<VH> clazz) {
         mLayoutId = layoutId;
         mClazz = clazz;
         mDataList = new ArrayList<>();
+        paramContainerMap.put(KEY_ADAPTER,this);
     }
 
     public RecyclerBaseAdapter(View headerView, @LayoutRes int layoutId, Class<VH> clazz) {
@@ -192,8 +195,6 @@ public class RecyclerBaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerVi
     public int getItemCount() {
         return mHeaderView == null ? mDataList.size() : mDataList.size() + 1;
     }
-
-    private final HashMap<String, Object> paramContainerMap = new HashMap<>();
 
     @Override
     public Object get(String key) {

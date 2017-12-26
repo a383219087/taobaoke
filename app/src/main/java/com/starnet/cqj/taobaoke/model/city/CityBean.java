@@ -5,7 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 
-public class CityBean implements Serializable {
+public class CityBean implements Serializable ,ICityData {
+
+    private boolean isChoose;
     public String getCity_id() {
         return city_id;
     }
@@ -30,8 +32,24 @@ public class CityBean implements Serializable {
         this.code = code;
     }
 
+    @Override
+    public String getId() {
+        return city_id;
+    }
+
+    @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean isChoose() {
+        return isChoose;
+    }
+
+    @Override
+    public void setChoose(boolean isChoose) {
+        this.isChoose =isChoose;
     }
 
     public void setName(String name) {
@@ -61,4 +79,5 @@ public class CityBean implements Serializable {
     @SerializedName("name")
     private String name;
     private String provincecode;
+
 }

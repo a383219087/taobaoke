@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 
-public class ProvinceBean implements Serializable {
+public class ProvinceBean implements Serializable, ICityData {
 
     public String getPro_id() {
         return pro_id;
@@ -39,7 +39,7 @@ public class ProvinceBean implements Serializable {
         this.pro_name2 = pro_name2;
     }
 
-    public  ProvinceBean(String pro_id,String pro_name) {
+    public ProvinceBean(String pro_id, String pro_name) {
         this.pro_id = pro_id;
         this.pro_name = pro_name;
 
@@ -51,4 +51,27 @@ public class ProvinceBean implements Serializable {
     @SerializedName("name")
     private String pro_name;//省份名称
     private String pro_name2;//省份别称
+
+
+    @Override
+    public String getId() {
+        return pro_id;
+    }
+
+    @Override
+    public String getName() {
+        return pro_name;
+    }
+
+    private boolean isChoose;
+
+    @Override
+    public boolean isChoose() {
+        return isChoose;
+    }
+
+    @Override
+    public void setChoose(boolean isChoose) {
+        this.isChoose = isChoose;
+    }
 }

@@ -62,7 +62,7 @@ public class RegisterPresenterImpl extends BasePresenterImpl implements IRegiste
 
                     @Override
                     public void onNext(JsonCommon<Object> value) {
-                        if (isValidResult(value,mViewCallback)) {
+                        if (isValidResult(value, mViewCallback)) {
                             sendSMS(mobile);
                         } else {
                             mViewCallback.toast(value.getMessage());
@@ -117,9 +117,9 @@ public class RegisterPresenterImpl extends BasePresenterImpl implements IRegiste
     }
 
     @Override
-    public void register(String mobile, String pwd, String nickName, String code,String province,String city) {
+    public void register(String mobile, String pwd, String nickName, String code, String province, String city, String area) {
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .register(mobile, pwd, pwd, nickName, code, province, city)
+                .register(mobile, pwd, pwd, nickName, code, province, city, area)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<JsonCommon<Object>>() {

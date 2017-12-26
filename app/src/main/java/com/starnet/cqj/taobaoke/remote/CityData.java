@@ -155,12 +155,12 @@ public class CityData {
                 });
     }
 
-    private static Observable<JsonCommon<ResultWrapper<ProvinceBean>>> getProvince() {
+    public static Observable<JsonCommon<ResultWrapper<ProvinceBean>>> getProvince() {
         return RemoteDataSourceBase.INSTANCE.getUserService()
                 .province();
     }
 
-    private static Observable<JsonCommon<ResultWrapper<CityBean>>> getCity(String parentId) {
+    public static Observable<JsonCommon<ResultWrapper<CityBean>>> getCity(String parentId) {
         return RemoteDataSourceBase.INSTANCE.getUserService()
                 .region(parentId);
     }

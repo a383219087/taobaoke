@@ -17,7 +17,7 @@ public interface IRegisterPresenter extends BasePresenter {
 
     void sendSMS(String mobile);
 
-    void register(String mobile, String pwd, String nickName,String code,String province,String city);
+    void register(String mobile, String pwd, String nickName,String code,String province,String city,String area);
 
 //    void verifyCode(String mobile,String code);
 

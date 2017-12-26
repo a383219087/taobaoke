@@ -29,11 +29,11 @@ public class BindNewPresenterImpl extends RegisterPresenterImpl {
     }
 
     @Override
-    public void register(String mobile, String pwd, String nickName, String code,String province,String city) {
+    public void register(String mobile, String pwd, String nickName, String code,String province,String city,String area) {
         RemoteDataSourceBase.INSTANCE.getUserService()
                 .bindUser(mRegId,mobile,mUser.getOpenid(),mUser.getNickname(),
                         pwd,pwd,mUser.getAvatar(),mUser.getUnionId(),
-                        mUser.getGender(),code,"1",province,city)
+                        mUser.getGender(),code,"1",province,city,area)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<JsonCommon<User>>() {

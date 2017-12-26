@@ -1,9 +1,14 @@
 package com.starnet.cqj.taobaoke.model.city;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 
-public class AreaBean implements Serializable {
+public class AreaBean implements Serializable, ICityData {
+
+    private boolean isChoose;
+
     public int getAreaid() {
         return areaid;
     }
@@ -20,8 +25,24 @@ public class AreaBean implements Serializable {
         this.cityid = cityid;
     }
 
+    @Override
+    public String getId() {
+        return cityid + "";
+    }
+
+    @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean isChoose() {
+        return isChoose;
+    }
+
+    @Override
+    public void setChoose(boolean isChoose) {
+        this.isChoose = isChoose;
     }
 
     public void setName(String name) {
@@ -43,8 +64,13 @@ public class AreaBean implements Serializable {
         this.name = name;
     }
 
+    @SerializedName("id")
     private int areaid;//地区id
+
+    @SerializedName("parent_id")
     private int cityid;//城市id
+
+    @SerializedName("name")
     private String name;//名称
     private String citycode;//城市编码
 }
