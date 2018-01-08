@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:gravity="center"
+              android:background="@color/white"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/store_manager_checking_icon"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="审核中"
+            android:textColor="@color/main_color"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"/>
+        
+        <TextView
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:lineSpacingExtra="8dp"
+            android:text="@string/checking_remark"/>
+        
+        <Button
+            android:id="@+id/btn_apply_info"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:text="申请详情"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:background="@drawable/blue_circle_button_selector"/>
+
+    </LinearLayout>
+
+</LinearLayout>

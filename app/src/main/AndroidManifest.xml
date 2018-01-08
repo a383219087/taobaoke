@@ -168,13 +168,24 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.GetIntegralDialogActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/DialogActivity"/>
         <activity
             android:name=".view.activity.GetMedalDialogActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/DialogActivity"/>
-        <activity android:name=".view.activity.ServiceCustomerActivity"/>
-        <activity android:name=".view.activity.AwardRecordActivity"/>
-        <activity android:name=".view.activity.ActionWebActivity"/>
+        <activity
+            android:name=".view.activity.ServiceCustomerActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.AwardRecordActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.ActionWebActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.StoreManagerHomePageActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".view.service.GetMedalService"/>
 

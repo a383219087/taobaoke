@@ -157,4 +157,9 @@
     <string name="upload_avatar_failed">上传头像失败</string>
     <string name="get_buy_action_done">已领取</string>
     <string name="get_buy_action">领取</string>
+    <string name="store_manager_signup_remark">1.可选择需要申请店长的类型：金牌店长，银牌店长，或是铜牌店长。\n2.不同店长对下级的抽成不同。\n3.提交申请后，平台客服会联系您，请保持通话畅通。</string>
+    <string name="store_manager_register_title">申请成为店长</string>
+    <string name="store_manager_applying_title">店长申请</string>
+    <string name="store_manager_home_page_title">店长主页</string>
+    <string name="checking_remark">您提交的店长申请已提交至平台，平台管理员会在2个工作日内与您联系。请耐心等待，谢谢</string>
 </resources>

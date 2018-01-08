@@ -1,0 +1,27 @@
+package com.starnet.cqj.taobaoke.remote.i;
+
+import com.starnet.cqj.taobaoke.model.ApplyStatus;
+import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.StoreManagerApplyDetail;
+
+import io.reactivex.Observable;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
+
+/**
+ * Created by Administrator on 2018/01/08.
+ */
+
+public interface IStoreManagerService {
+
+    @POST("/shop/apply")
+    Observable<JsonCommon<Object>> apply(@Header("Authorization") String header, @Query("shop_type") int type,
+                                         @Query("contact") String contact,@Query("phone") String phone,@Query("remark") String remark);
+
+    @POST("/shop/get")
+    Observable<JsonCommon<StoreManagerApplyDetail>> get(@Header("Authorization") String header);
+
+    @POST("/shop/status")
+    Observable<JsonCommon<ApplyStatus>> status(@Header("Authorization") String header);
+}
