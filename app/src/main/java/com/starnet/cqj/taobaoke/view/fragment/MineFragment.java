@@ -17,6 +17,7 @@ import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.activity.IceIntegralDetailActivity;
 import com.starnet.cqj.taobaoke.view.activity.IntegralStoreActivity;
+import com.starnet.cqj.taobaoke.view.activity.MedalListActivity;
 import com.starnet.cqj.taobaoke.view.activity.OrderListActivity;
 import com.starnet.cqj.taobaoke.view.activity.PersonActivity;
 import com.starnet.cqj.taobaoke.view.activity.ReCheckIntegralDetailActivity;
@@ -104,7 +105,7 @@ public class MineFragment extends BaseFragment {
     @OnClick({R.id.ib_setting, R.id.iv_avatar,
             R.id.btn_ice, R.id.btn_recheck, R.id.btn_to_money,
             R.id.ll_order, R.id.ll_integral, R.id.ll_medal, R.id.ll_share,
-            R.id.ll_bind_cncbk})
+            R.id.ll_bind_cncbk, R.id.ll_generalize, R.id.ll_area_agency})
     public void onViewClicked(View view) {
         if (TextUtils.isEmpty(mApplication.getToken())) {
             return;
@@ -132,7 +133,7 @@ public class MineFragment extends BaseFragment {
                 IntegralStoreActivity.start(getActivity());
                 break;
             case R.id.ll_medal:
-                StoreManagerHomePageActivity.start(getActivity());
+                MedalListActivity.start(getActivity());
                 break;
             case R.id.ll_share:
                 SharePopupWindow sharePopupWindow = new SharePopupWindow(getActivity());
@@ -140,6 +141,13 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.ll_bind_cncbk:
                 WithdrawalsActivity.start(getActivity());
+                break;
+            case R.id.ll_generalize:
+                StoreManagerHomePageActivity.start(getActivity());
+                break;
+
+            case R.id.ll_area_agency:
+
                 break;
         }
     }
