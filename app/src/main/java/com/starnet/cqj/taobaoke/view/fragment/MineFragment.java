@@ -146,7 +146,7 @@ public class MineFragment extends BaseFragment {
                 StoreManagerHomePageActivity.start(getActivity());
                 break;
 
-            case R.id.ll_area_agency:
+            case R.id.ll_area_agency://区域代理
 
                 break;
         }

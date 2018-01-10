@@ -186,6 +186,7 @@
         <activity
             android:name=".view.activity.StoreManagerHomePageActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.MemberListActivity"/>
 
         <service android:name=".view.service.GetMedalService"/>
 
