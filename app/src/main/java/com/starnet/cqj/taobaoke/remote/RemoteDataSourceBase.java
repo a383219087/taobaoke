@@ -8,6 +8,7 @@ import com.starnet.cqj.taobaoke.remote.i.IHomePageService;
 import com.starnet.cqj.taobaoke.remote.i.IHotService;
 import com.starnet.cqj.taobaoke.remote.i.IMemberService;
 import com.starnet.cqj.taobaoke.remote.i.ISearchService;
+import com.starnet.cqj.taobaoke.remote.i.IStatisticsService;
 import com.starnet.cqj.taobaoke.remote.i.IStoreManagerService;
 import com.starnet.cqj.taobaoke.remote.i.IUserService;
 import com.starnet.cqj.taobaoke.remote.i.IntegralService;
@@ -74,5 +75,8 @@ public enum RemoteDataSourceBase {
 
     public IMemberService getMemberService() {
         return mRetrofit.create(IMemberService.class);
+    }
+    public IStatisticsService getStatisticsService() {
+        return mRetrofit.create(IStatisticsService.class);
     }
 }

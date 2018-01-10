@@ -15,6 +15,7 @@ import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.User;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
+import com.starnet.cqj.taobaoke.view.activity.DataStatisticsActivity;
 import com.starnet.cqj.taobaoke.view.activity.IceIntegralDetailActivity;
 import com.starnet.cqj.taobaoke.view.activity.IntegralStoreActivity;
 import com.starnet.cqj.taobaoke.view.activity.MedalListActivity;
@@ -143,11 +144,11 @@ public class MineFragment extends BaseFragment {
                 WithdrawalsActivity.start(getActivity());
                 break;
             case R.id.ll_generalize:
-                StoreManagerHomePageActivity.start(getActivity());
+                DataStatisticsActivity.start(getActivity());
                 break;
 
             case R.id.ll_area_agency://区域代理
-
+                StoreManagerHomePageActivity.start(getActivity());
                 break;
         }
     }

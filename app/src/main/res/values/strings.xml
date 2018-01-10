@@ -166,4 +166,5 @@
     <string name="my_member_title">我的会员</string>
     <string name="member_id_text">会员号：%s</string>
     <string name="member_time_text">注册时间：%s</string>
+    <string name="data_statistics_title">数据统计</string>
 </resources>
