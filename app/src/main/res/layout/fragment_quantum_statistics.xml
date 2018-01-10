@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="@color/main_gray"
               android:orientation="vertical">
 
@@ -112,98 +113,12 @@
             android:layout_marginLeft="20dp"/>
     </LinearLayout>
 
-    <LinearLayout
+    <com.starnet.cqj.taobaoke.view.widget.ThreeShowDataView
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal">
+        app:one_tip="推广用户数"
+        app:two_tip="消费订单数"
+        app:three_tip="收益积分"
+        android:id="@+id/view_three_show"/>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_user_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/textblack"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="推广用户数"
-                android:textColor="@color/gray"
-                android:textSize="12sp"/>
-
-        </LinearLayout>
-
-        <View
-            style="@style/column_line"
-            android:layout_height="50dp"/>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:id="@+id/tv_order_count"
-                android:textColor="@color/textblack"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="消费订单数"
-                android:textColor="@color/gray"
-                android:textSize="12sp"/>
-
-        </LinearLayout>
-
-        <View
-            style="@style/column_line"
-            android:layout_height="50dp"/>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:id="@+id/tv_score"
-                android:textColor="@color/textblack"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="收益积分"
-                android:textColor="@color/gray"
-                android:textSize="12sp"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.starnet.cqj.taobaoke.view.widget;
+package com.starnet.cqj.taobaoke.view.widget.topview;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -19,6 +19,7 @@ import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.activity.UserSignActivity;
 import com.starnet.cqj.taobaoke.view.activity.WebViewActivity;
+import com.starnet.cqj.taobaoke.view.widget.SharePopupWindow;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.BindView;

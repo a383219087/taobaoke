@@ -1,4 +1,4 @@
-package com.starnet.cqj.taobaoke.view.widget;
+package com.starnet.cqj.taobaoke.view.widget.topview;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -35,6 +35,7 @@ import com.starnet.cqj.taobaoke.view.adapter.NoScrollGridLayoutManager;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.LookBuyHolder;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.MainMenuHolder;
+import com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager;
 
 import java.net.URLDecoder;
 import java.util.ArrayList;

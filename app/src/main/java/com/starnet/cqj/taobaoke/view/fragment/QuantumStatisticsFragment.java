@@ -11,6 +11,7 @@ import com.starnet.cqj.taobaoke.model.Statistics;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.widget.DateTimePopupWindow;
+import com.starnet.cqj.taobaoke.view.widget.ThreeShowDataView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,12 +37,8 @@ public class QuantumStatisticsFragment extends BaseFragment {
     TextView mTvStartDate;
     @BindView(R.id.tv_end_date)
     TextView mTvEndDate;
-    @BindView(R.id.tv_user_count)
-    TextView mTvUserCount;
-    @BindView(R.id.tv_order_count)
-    TextView mTvOrderCount;
-    @BindView(R.id.tv_score)
-    TextView mTvScore;
+    @BindView(R.id.view_three_show)
+    ThreeShowDataView mThreeShowDataView;
     private Calendar mCalendar;
     private SimpleDateFormat mDateFormat;
     private DateTimePopupWindow mPopupWindow;
@@ -97,9 +94,9 @@ public class QuantumStatisticsFragment extends BaseFragment {
                     public void accept(JsonCommon<Statistics> objectJsonCommon) throws Exception {
                         if ("200".equals(objectJsonCommon.getCode())) {
                             Statistics data = objectJsonCommon.getData();
-                            mTvOrderCount.setText(data.getOrderNum());
-                            mTvUserCount.setText(data.getUserNum());
-                            mTvScore.setText(data.getScore());
+                            mThreeShowDataView.setTwoValue(data.getOrderNum());
+                            mThreeShowDataView.setOneValue(data.getUserNum());
+                            mThreeShowDataView.setThreeValue(data.getScore());
                         } else {
                             toast(objectJsonCommon.getMessage());
                         }

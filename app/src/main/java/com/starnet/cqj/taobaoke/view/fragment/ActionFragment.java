@@ -18,7 +18,7 @@ import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.activity.ActionWebActivity;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.OtherActionHolder;
-import com.starnet.cqj.taobaoke.view.widget.ActionTopView;
+import com.starnet.cqj.taobaoke.view.widget.topview.ActionTopView;
 
 import java.util.List;
 

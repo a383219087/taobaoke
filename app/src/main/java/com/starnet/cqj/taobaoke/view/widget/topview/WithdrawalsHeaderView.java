@@ -1,4 +1,4 @@
-package com.starnet.cqj.taobaoke.view.widget;
+package com.starnet.cqj.taobaoke.view.widget.topview;
 
 import android.app.Activity;
 import android.content.Context;

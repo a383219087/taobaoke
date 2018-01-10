@@ -14,7 +14,7 @@ import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.WithdrawalsRecordHolder;
 import com.starnet.cqj.taobaoke.view.widget.RecyclerViewLoadMoreHelper;
-import com.starnet.cqj.taobaoke.view.widget.WithdrawalsHeaderView;
+import com.starnet.cqj.taobaoke.view.widget.topview.WithdrawalsHeaderView;
 
 import java.util.List;
 

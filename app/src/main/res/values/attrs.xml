@@ -6,4 +6,10 @@
             <flag name="menu" value="0x02"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="ThreeShowDataView">
+        <attr name="one_tip" format="string"/>
+        <attr name="two_tip" format="string"/>
+        <attr name="three_tip" format="string"/>
+    </declare-styleable>
 </resources>

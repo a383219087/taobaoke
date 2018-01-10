@@ -1,21 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_gray">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-
-    <include layout="@layout/title_layout"/>
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/withdrawals_title_bg">
 
-    </FrameLayout>
-</LinearLayout>
+            <ImageView
+                android:id="@+id/title_back"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:src="@drawable/title_back_icon"/>
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/manager_home_page_icon"/>
+
+            <TextView
+                android:id="@+id/tv_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/icon"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="6dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_score"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:text="累计收益积分"
+                android:textColor="@color/white"
+                android:textSize="11sp"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_tip"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:orientation="horizontal"/>
+
+        <com.starnet.cqj.taobaoke.view.widget.ThreeShowDataView
+            android:id="@+id/three_view_score"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:one_tip="冻结积分"
+            app:three_tip="可提现积分"
+            app:two_tip="待确认积分"/>
+
+        <LinearLayout
+            android:id="@+id/ll_statistics"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/generalize_icon"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="数据统计"
+                android:textColor="@color/textblack"
+                android:textSize="15sp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/default_padding"
+                android:src="@drawable/right_arrow_icon"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                style="@style/row_line"
+                android:layout_width="100dp"
+                android:layout_marginRight="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="今日数据"
+                android:textColor="@color/gray"
+                android:textSize="11sp"/>
+
+            <View
+                style="@style/row_line"
+                android:layout_width="100dp"
+                android:layout_marginLeft="20dp"/>
+        </LinearLayout>
+
+        <com.starnet.cqj.taobaoke.view.widget.ThreeShowDataView
+            android:id="@+id/three_view_day"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:one_tip="推广用户数"
+            app:three_tip="收益积分"
+            app:two_tip="消费订单数"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                style="@style/row_line"
+                android:layout_width="100dp"
+                android:layout_marginRight="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="本月数据"
+                android:textColor="@color/gray"
+                android:textSize="11sp"/>
+
+            <View
+                style="@style/row_line"
+                android:layout_width="100dp"
+                android:layout_marginLeft="20dp"/>
+        </LinearLayout>
+
+        <com.starnet.cqj.taobaoke.view.widget.ThreeShowDataView
+            android:id="@+id/three_view_month"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:one_tip="推广用户数"
+            app:three_tip="收益积分"
+            app:two_tip="消费订单数"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                style="@style/row_line"
+                android:layout_width="100dp"
+                android:layout_marginRight="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="历史累计数据"
+                android:textColor="@color/gray"
+                android:textSize="11sp"/>
+
+            <View
+                style="@style/row_line"
+                android:layout_width="100dp"
+                android:layout_marginLeft="20dp"/>
+        </LinearLayout>
+
+        <com.starnet.cqj.taobaoke.view.widget.ThreeShowDataView
+            android:id="@+id/three_view_history"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:one_tip="推广用户数"
+            app:three_tip="收益积分"
+            app:two_tip="消费订单数"/>
+
+    </LinearLayout>
+</ScrollView>
