@@ -73,7 +73,11 @@ public class MemberListActivity extends BaseActivity {
                 .subscribe(new Consumer<JsonCommon<List<Member>>>() {
                     @Override
                     public void accept(JsonCommon<List<Member>> listJsonCommon) throws Exception {
-
+                        if ("200".equals(listJsonCommon.getCode())) {
+                            mAdapter.setAll(listJsonCommon.getData());
+                        } else {
+                            toast(listJsonCommon.getMessage());
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
