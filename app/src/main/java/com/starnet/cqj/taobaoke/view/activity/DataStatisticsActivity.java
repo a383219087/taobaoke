@@ -19,6 +19,7 @@ public class DataStatisticsActivity extends BaseActivity {
     public static final int TAG_DAY_STATISTICS = 1;
     public static final int TAG_MONTH_STATISTICS = 2;
     public static final int TAG_TIME_STATISTICS = 3;
+    public static final String KEY_IS_AREA = "is_area";
 
 
     @BindView(R.id.tabs)
@@ -26,6 +27,7 @@ public class DataStatisticsActivity extends BaseActivity {
     private DayMonthStatisticsFragment mDayFragment;
     private DayMonthStatisticsFragment mMonthFragment;
     private QuantumStatisticsFragment mQuantumStatisticsFragment;
+    private boolean mIsArea;
 
     @Override
     protected int getContentView() {
@@ -34,6 +36,8 @@ public class DataStatisticsActivity extends BaseActivity {
 
     @Override
     protected void init() {
+        String isAreaStr = getIntent().getStringExtra(KEY_IS_AREA);
+        mIsArea = isAreaStr.equals("1");
         setTitleName(R.string.data_statistics_title);
         TabLayout.Tab tab = mTabs.newTab();
         tab.setText("按日统计");
@@ -47,9 +51,9 @@ public class DataStatisticsActivity extends BaseActivity {
         timeTab.setText("时间段统计");
         timeTab.setTag(TAG_TIME_STATISTICS);
         mTabs.addTab(timeTab);
-        mDayFragment = DayMonthStatisticsFragment.newInstance(TAG_DAY_STATISTICS);
-        mMonthFragment = DayMonthStatisticsFragment.newInstance(TAG_MONTH_STATISTICS);
-        mQuantumStatisticsFragment = QuantumStatisticsFragment.newInstance();
+        mDayFragment = DayMonthStatisticsFragment.newInstance(TAG_DAY_STATISTICS, mIsArea);
+        mMonthFragment = DayMonthStatisticsFragment.newInstance(TAG_MONTH_STATISTICS, mIsArea);
+        mQuantumStatisticsFragment = QuantumStatisticsFragment.newInstance(mIsArea);
         getFragmentManager().beginTransaction()
                 .replace(R.id.statistics_fragment_container, mDayFragment)
                 .commit();
@@ -103,8 +107,9 @@ public class DataStatisticsActivity extends BaseActivity {
         mTabs.removeOnTabSelectedListener(mTabSelectedListener);
     }
 
-    public static void start(Context context) {
+    public static void start(Context context, String isArea) {
         Intent starter = new Intent(context, DataStatisticsActivity.class);
+        starter.putExtra(KEY_IS_AREA, isArea);
         context.startActivity(starter);
     }
 }

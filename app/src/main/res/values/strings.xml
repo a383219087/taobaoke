@@ -167,4 +167,8 @@
     <string name="member_id_text">会员号：%s</string>
     <string name="member_time_text">注册时间：%s</string>
     <string name="data_statistics_title">数据统计</string>
+    <string name="area_proxy_title">区域代理</string>
+    <string name="register_area_title">申请成为代理</string>
+    <string name="member_detail_title">会员详情</string>
+    <string name="score_total_text">累计返利积分：%s</string>
 </resources>

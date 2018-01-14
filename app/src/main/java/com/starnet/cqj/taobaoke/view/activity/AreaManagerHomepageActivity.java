@@ -3,9 +3,11 @@ package com.starnet.cqj.taobaoke.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
@@ -13,7 +15,9 @@ import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.StoreIndex;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
+import com.starnet.cqj.taobaoke.view.widget.ThreeShowDataView;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -24,13 +28,41 @@ import io.reactivex.schedulers.Schedulers;
  * Created by JohnChen on 2018/01/10.
  */
 
-public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
+public class AreaManagerHomepageActivity extends BaseActivity {
 
+    @BindView(R.id.tv_score)
+    TextView mTvScore;
+    @BindView(R.id.ll_tip)
+    LinearLayout mLlTip;
+    @BindView(R.id.three_view_score)
+    ThreeShowDataView mThreeViewScore;
+    @BindView(R.id.ll_statistics)
+    LinearLayout mLlStatistics;
+    @BindView(R.id.three_view_day)
+    ThreeShowDataView mThreeViewDay;
+    @BindView(R.id.three_view_month)
+    ThreeShowDataView mThreeViewMonth;
+    @BindView(R.id.three_view_history)
+    ThreeShowDataView mThreeViewHistory;
+    @BindView(R.id.ll_my_member)
+    LinearLayout mLlMyMember;
+    @BindView(R.id.line_my_member)
+    View line;
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_store_manager;
+    }
 
     @Override
     protected void init() {
-        setTitleName(R.string.store_manager_home_page_title);
-        RemoteDataSourceBase.INSTANCE.getAreaManagerService()
+        setTitleName(R.string.area_proxy_title);
+        mLlMyMember.setVisibility(View.VISIBLE);
+        line.setVisibility(View.VISIBLE);
+        mThreeViewScore.setValueCount(2);
+        mThreeViewScore.setOneTip("未确认");
+        mThreeViewScore.setTwoTip("已确认");
+        RemoteDataSourceBase.INSTANCE.getStoreManagerService()
                 .index(((BaseApplication) getApplication()).getToken())
                 .compose(this.<JsonCommon<StoreIndex>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -41,9 +73,8 @@ public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
                         if ("200".equals(storeIndexJsonCommon.getCode())) {
                             StoreIndex storeIndex = storeIndexJsonCommon.getData();
                             mTvScore.setText(storeIndex.getData1().getTotal());
-                            mThreeViewScore.setThreeValue(storeIndex.getData1().getCredit1());
+                            mThreeViewScore.setTwoValue(storeIndex.getData1().getCredit1());
                             mThreeViewScore.setOneValue(storeIndex.getData1().getCredit2());
-                            mThreeViewScore.setTwoValue(storeIndex.getData1().getCredit3());
                             mThreeViewDay.setOneValue(storeIndex.getData2().getUserNum());
                             mThreeViewDay.setTwoValue(storeIndex.getData2().getOrderNum());
                             mThreeViewDay.setThreeValue(storeIndex.getData2().getScore());
@@ -54,9 +85,10 @@ public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
                             mThreeViewHistory.setTwoValue(storeIndex.getData4().getOrderNum());
                             mThreeViewHistory.setThreeValue(storeIndex.getData4().getScore());
                             if ("0".equals(storeIndex.getStatus())) {
-                                addMemberSignView("-1");
+                                addMemberSignView("-1", "");
                             } else if ("1".equals(storeIndex.getStatus())) {
-                                addMemberSignView(storeIndex.getType());
+                                String area = storeIndex.getProvince() + "," + storeIndex.getCity() + "," + storeIndex.getArea();
+                                addMemberSignView(storeIndex.getType(), TextUtils.isEmpty(storeIndex.getProvince()) ? "无" : area);
                             } else {
                                 addToRegisterView();
 
@@ -74,55 +106,55 @@ public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
                 });
     }
 
-    @OnClick(R.id.ll_my_member)
-    void onClick(View view) {
-        MemberListActivity.start(this);
-    }
-
     private void addToRegisterView() {
-        View viewToRegister = LayoutInflater.from(StoreManagerHomePageActivity.this)
+        View viewToRegister = LayoutInflater.from(AreaManagerHomepageActivity.this)
                 .inflate(R.layout.view_to_register, null, false);
         viewToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StoreManagerRegisterActivity.start(StoreManagerHomePageActivity.this, "1", getIsArea());
+                StoreManagerRegisterActivity.start(AreaManagerHomepageActivity.this, "1", getIsArea());
             }
         });
+
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mLlTip.addView(viewToRegister, params);
     }
 
-    @NonNull
-    protected String getIsArea() {
-        return "0";
-    }
 
-    private void addMemberSignView(String type) {
-        View memberSignView = LayoutInflater.from(StoreManagerHomePageActivity.this)
+    private void addMemberSignView(String type, String area) {
+        View memberSignView = LayoutInflater.from(AreaManagerHomepageActivity.this)
                 .inflate(R.layout.view_member_sign, null, false);
+        TextView tvMemberTip = (TextView) memberSignView.findViewById(R.id.tv_member_tip);
         TextView tvMemberSign = (TextView) memberSignView.findViewById(R.id.tv_member_sign);
+        tvMemberTip.setText("代理区域");
         if ("-1".equals(type)) {
             tvMemberSign.setText("审核中");
             memberSignView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    StoreManagerRegisterActivity.start(StoreManagerHomePageActivity.this, "0", getIsArea());
+                    StoreManagerRegisterActivity.start(AreaManagerHomepageActivity.this, "0", getIsArea());
                 }
             });
-        } else if ("1".equals(type)) {
-            tvMemberSign.setText("金牌店长");
-        } else if ("2".equals(type)) {
-            tvMemberSign.setText("银牌店长");
-        } else if ("3".equals(type)) {
-            tvMemberSign.setText("铜牌店长");
+        } else {
+            tvMemberSign.setText(area);
         }
 
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mLlTip.addView(memberSignView, params);
     }
 
+    @OnClick(R.id.ll_statistics)
+    public void onViewClicked() {
+        DataStatisticsActivity.start(this, getIsArea());
+    }
+
+    @NonNull
+    protected String getIsArea() {
+        return "1";
+    }
+
     public static void start(Context context) {
-        Intent starter = new Intent(context, StoreManagerHomePageActivity.class);
+        Intent starter = new Intent(context, AreaManagerHomepageActivity.class);
         context.startActivity(starter);
     }
 }

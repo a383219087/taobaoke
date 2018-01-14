@@ -3,12 +3,14 @@ package com.starnet.cqj.taobaoke.remote;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.starnet.cqj.taobaoke.remote.i.IActionService;
+import com.starnet.cqj.taobaoke.remote.i.IAreaManagerService;
+import com.starnet.cqj.taobaoke.remote.i.IAreaStatisticsService;
 import com.starnet.cqj.taobaoke.remote.i.ICommonService;
 import com.starnet.cqj.taobaoke.remote.i.IHomePageService;
 import com.starnet.cqj.taobaoke.remote.i.IHotService;
 import com.starnet.cqj.taobaoke.remote.i.IMemberService;
 import com.starnet.cqj.taobaoke.remote.i.ISearchService;
-import com.starnet.cqj.taobaoke.remote.i.IStatisticsService;
+import com.starnet.cqj.taobaoke.remote.i.IStoreStatisticsService;
 import com.starnet.cqj.taobaoke.remote.i.IStoreManagerService;
 import com.starnet.cqj.taobaoke.remote.i.IUserService;
 import com.starnet.cqj.taobaoke.remote.i.IntegralService;
@@ -76,7 +78,14 @@ public enum RemoteDataSourceBase {
     public IMemberService getMemberService() {
         return mRetrofit.create(IMemberService.class);
     }
-    public IStatisticsService getStatisticsService() {
-        return mRetrofit.create(IStatisticsService.class);
+    public IStoreStatisticsService getStatisticsService() {
+        return mRetrofit.create(IStoreStatisticsService.class);
+    }
+
+    public IAreaManagerService getAreaManagerService() {
+        return mRetrofit.create(IAreaManagerService.class);
+    }
+    public IAreaStatisticsService getAreaStatisticsService() {
+        return mRetrofit.create(IAreaStatisticsService.class);
     }
 }

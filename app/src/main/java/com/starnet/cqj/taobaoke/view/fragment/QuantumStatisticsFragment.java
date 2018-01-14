@@ -21,6 +21,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -33,6 +34,7 @@ import io.reactivex.schedulers.Schedulers;
 public class QuantumStatisticsFragment extends BaseFragment {
 
 
+    private static final String KEY_IS_AREA = "is_area";
     @BindView(R.id.tv_start_date)
     TextView mTvStartDate;
     @BindView(R.id.tv_end_date)
@@ -43,11 +45,13 @@ public class QuantumStatisticsFragment extends BaseFragment {
     private SimpleDateFormat mDateFormat;
     private DateTimePopupWindow mPopupWindow;
     private TextView mCurrentChooseView;
+    private boolean mIsArea;
 
-    public static QuantumStatisticsFragment newInstance() {
+    public static QuantumStatisticsFragment newInstance(boolean isArea) {
 
         Bundle args = new Bundle();
 
+        args.putBoolean(KEY_IS_AREA, isArea);
         QuantumStatisticsFragment fragment = new QuantumStatisticsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -62,6 +66,7 @@ public class QuantumStatisticsFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mCalendar = Calendar.getInstance();
+        mIsArea = getArguments().getBoolean(KEY_IS_AREA);
         mTvStartDate.setText(mCalendar.get(Calendar.YEAR) + "-" + (mCalendar.get(Calendar.MONTH) + 1) + "-1");
         mDateFormat = new SimpleDateFormat("yyyy-M-d", Locale.getDefault());
         mTvEndDate.setText(mDateFormat.format(new Date()));
@@ -82,10 +87,7 @@ public class QuantumStatisticsFragment extends BaseFragment {
     }
 
     private void getData() {
-        RemoteDataSourceBase.INSTANCE.getStatisticsService()
-                .get(((BaseApplication) getActivity().getApplication()).getToken(), 3,
-                        mTvStartDate.getText().toString(),
-                        mTvEndDate.getText().toString())
+        getJsonCommonObservable()
                 .compose(this.<JsonCommon<Statistics>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -108,6 +110,20 @@ public class QuantumStatisticsFragment extends BaseFragment {
                         toast(R.string.net_error);
                     }
                 });
+    }
+
+    private Observable<JsonCommon<Statistics>> getJsonCommonObservable() {
+        if (mIsArea) {
+            return RemoteDataSourceBase.INSTANCE.getAreaStatisticsService()
+                    .get(((BaseApplication) getActivity().getApplication()).getToken(), 3,
+                            mTvStartDate.getText().toString(),
+                            mTvEndDate.getText().toString());
+        } else {
+            return RemoteDataSourceBase.INSTANCE.getStatisticsService()
+                    .get(((BaseApplication) getActivity().getApplication()).getToken(), 3,
+                            mTvStartDate.getText().toString(),
+                            mTvEndDate.getText().toString());
+        }
     }
 
     @OnClick({R.id.tv_start_date, R.id.tv_end_date, R.id.btn_search})

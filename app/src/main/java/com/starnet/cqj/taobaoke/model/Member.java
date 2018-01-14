@@ -16,6 +16,16 @@ public class Member {
 
     private String mobile;
 
+    private String credit;
+
+    public String getCredit() {
+        return credit;
+    }
+
+    public void setCredit(String credit) {
+        this.credit = credit;
+    }
+
     @SerializedName("ctime")
     private String time;
 

@@ -20,6 +20,7 @@ import com.starnet.cqj.taobaoke.view.widget.RecyclerViewLoadMoreHelper;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -32,17 +33,20 @@ public class DayMonthStatisticsFragment extends BaseFragment {
 
 
     public static final String KEY_TYPE = "type";
+    public static final String KEY_IS_AREA = "is_area";
     @BindView(R.id.rv_statistics)
     RecyclerView mRvStatistics;
 
     private RecyclerBaseAdapter<Statistics, StatisticsHolder> mAdapter;
     private RecyclerViewLoadMoreHelper mHelper;
     private int mSearchType;
+    private boolean mIsArea;
 
-    public static DayMonthStatisticsFragment newInstance(int searchType) {
+    public static DayMonthStatisticsFragment newInstance(int searchType, boolean isArea) {
 
         Bundle args = new Bundle();
         args.putInt(KEY_TYPE, searchType);
+        args.putBoolean(KEY_IS_AREA, isArea);
         DayMonthStatisticsFragment fragment = new DayMonthStatisticsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -57,6 +61,7 @@ public class DayMonthStatisticsFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mSearchType = getArguments().getInt(KEY_TYPE);
+        mIsArea = getArguments().getBoolean(KEY_IS_AREA);
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_statistics, StatisticsHolder.class);
         mRvStatistics.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRvStatistics.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayout.VERTICAL));
@@ -77,9 +82,8 @@ public class DayMonthStatisticsFragment extends BaseFragment {
     }
 
     private void getData() {
-        RemoteDataSourceBase.INSTANCE.getStatisticsService()
-                .get(((BaseApplication) getActivity().getApplication()).getToken(),
-                        mHelper.getPage(), mSearchType)
+
+        getJsonCommonObservable()
                 .compose(this.<JsonCommon<List<Statistics>>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -104,6 +108,18 @@ public class DayMonthStatisticsFragment extends BaseFragment {
                         toast(R.string.net_error);
                     }
                 });
+    }
+
+    private Observable<JsonCommon<List<Statistics>>> getJsonCommonObservable() {
+        if (mIsArea) {
+            return RemoteDataSourceBase.INSTANCE.getAreaStatisticsService()
+                    .get(((BaseApplication) getActivity().getApplication()).getToken(),
+                            mHelper.getPage(), mSearchType);
+        } else {
+            return RemoteDataSourceBase.INSTANCE.getStatisticsService()
+                    .get(((BaseApplication) getActivity().getApplication()).getToken(),
+                            mHelper.getPage(), mSearchType);
+        }
     }
 
 }

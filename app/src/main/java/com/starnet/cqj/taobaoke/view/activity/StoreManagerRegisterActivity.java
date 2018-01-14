@@ -4,24 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.starnet.cqj.taobaoke.R;
-import com.starnet.cqj.taobaoke.model.ApplyStatus;
-import com.starnet.cqj.taobaoke.model.JsonCommon;
-import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
-import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.fragment.StoreManagerCheckFragment;
 import com.starnet.cqj.taobaoke.view.fragment.StoreManagerRegisterFragment;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 /**
- * 店长主页
+ * 店长注册
  * Created by cqj on 2018/01/08.
  */
 
 public class StoreManagerRegisterActivity extends BaseActivity {
 
+
+    public static final String KEY_TYPE = "type";
+    public static final String KEY_IS_AREA = "is_area";
+    private boolean mIsArea;
 
     @Override
     protected int getContentView() {
@@ -30,38 +28,23 @@ public class StoreManagerRegisterActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        setTitleName(R.string.store_manager_home_page_title);
-        RemoteDataSourceBase.INSTANCE.getStoreManagerService()
-                .status(((BaseApplication) getApplication()).getToken())
-                .compose(this.<JsonCommon<ApplyStatus>>bindToLifecycle())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<JsonCommon<ApplyStatus>>() {
-                    @Override
-                    public void accept(JsonCommon<ApplyStatus> applyStatusJsonCommon) throws Exception {
-                        if ("200".equals(applyStatusJsonCommon.getCode())) {
-                            ApplyStatus status = applyStatusJsonCommon.getData();
-                            if("0".equals(status.getStatus())){
-                                applyingFragment();
-                            }else{
-                                registerFragment();
-                            }
-                        }else{
-                            registerFragment();
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        throwable.printStackTrace();
-                        toast(R.string.net_error);
-                    }
-                });
+        String type = getIntent().getStringExtra(KEY_TYPE);
+        String isArea = getIntent().getStringExtra(KEY_IS_AREA);
+        mIsArea = isArea.equals("1");
+        if (mIsArea){
+            setTitleName(R.string.register_area_title);
+        }else {
+            setTitleName(R.string.store_manager_register_title);
+        }
+        if("0".equals(type)){
+            applyingFragment();
+        }else{
+            registerFragment();
+        }
     }
 
     private void registerFragment() {
-        setTitleName(R.string.store_manager_register_title);
-        StoreManagerRegisterFragment registerFragment = StoreManagerRegisterFragment.newInstance();
+        StoreManagerRegisterFragment registerFragment = StoreManagerRegisterFragment.newInstance(mIsArea);
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, registerFragment)
@@ -77,7 +60,6 @@ public class StoreManagerRegisterActivity extends BaseActivity {
     }
 
     private void applyingFragment() {
-        setTitleName(R.string.store_manager_applying_title);
         StoreManagerCheckFragment storeManagerCheckFragment = StoreManagerCheckFragment.newInstance();
         getFragmentManager()
                 .beginTransaction()
@@ -85,8 +67,10 @@ public class StoreManagerRegisterActivity extends BaseActivity {
                 .commit();
     }
 
-    public static void start(Context context) {
+    public static void start(Context context,String status,String isArea) {
         Intent starter = new Intent(context, StoreManagerRegisterActivity.class);
+        starter.putExtra(KEY_TYPE,status);
+        starter.putExtra(KEY_IS_AREA,isArea);
         context.startActivity(starter);
     }
 

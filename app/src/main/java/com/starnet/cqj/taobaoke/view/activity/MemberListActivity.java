@@ -12,12 +12,11 @@ import android.widget.LinearLayout;
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.Member;
+import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.MemberHolder;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -64,17 +63,30 @@ public class MemberListActivity extends BaseActivity {
         getData();
     }
 
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+        mAdapter.itemClickObserve()
+                .compose(this.<Member>bindToLifecycle())
+                .subscribe(new Consumer<Member>() {
+                    @Override
+                    public void accept(Member member) throws Exception {
+                        MemberDetailActivity.start(MemberListActivity.this, member.getId());
+                    }
+                });
+    }
+
     private void getData() {
         RemoteDataSourceBase.INSTANCE.getMemberService()
-                .get(((BaseApplication) getApplication()).getToken(), TextUtils.isEmpty(mUid) ? "" : mUid)
+                .get(((BaseApplication) getApplication()).getToken(), TextUtils.isEmpty(mUid) ? "" : mUid, mEdtSearch.getText().toString())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .compose(this.<JsonCommon<List<Member>>>bindToLifecycle())
-                .subscribe(new Consumer<JsonCommon<List<Member>>>() {
+                .compose(this.<JsonCommon<ResultWrapper<Member>>>bindToLifecycle())
+                .subscribe(new Consumer<JsonCommon<ResultWrapper<Member>>>() {
                     @Override
-                    public void accept(JsonCommon<List<Member>> listJsonCommon) throws Exception {
+                    public void accept(JsonCommon<ResultWrapper<Member>> listJsonCommon) throws Exception {
                         if ("200".equals(listJsonCommon.getCode())) {
-                            mAdapter.setAll(listJsonCommon.getData());
+                            mAdapter.setAll(listJsonCommon.getData().getList());
                         } else {
                             toast(listJsonCommon.getMessage());
                         }
@@ -90,6 +102,7 @@ public class MemberListActivity extends BaseActivity {
 
     @OnClick(R.id.btn_search)
     public void onViewClicked() {
+        getData();
     }
 
     public static void start(Context context) {
