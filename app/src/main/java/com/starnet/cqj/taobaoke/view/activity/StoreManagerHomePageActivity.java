@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
@@ -14,6 +15,7 @@ import com.starnet.cqj.taobaoke.model.StoreIndex;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -27,8 +29,15 @@ import io.reactivex.schedulers.Schedulers;
 public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
 
 
+    @BindView(R.id.ll_my_member)
+    LinearLayout mLlMyMember;
+    @BindView(R.id.line_my_member)
+    View line;
+
     @Override
     protected void init() {
+        mLlMyMember.setVisibility(View.VISIBLE);
+        line.setVisibility(View.VISIBLE);
         setTitleName(R.string.store_manager_home_page_title);
         RemoteDataSourceBase.INSTANCE.getAreaManagerService()
                 .index(((BaseApplication) getApplication()).getToken())

@@ -1,5 +1,6 @@
 package com.starnet.cqj.taobaoke.remote.i;
 
+import com.starnet.cqj.taobaoke.model.Account;
 import com.starnet.cqj.taobaoke.model.Address;
 import com.starnet.cqj.taobaoke.model.CNCBKUser;
 import com.starnet.cqj.taobaoke.model.ExchangeRecord;
@@ -34,7 +35,7 @@ public interface IUserService {
 
     @POST("/register")
     Observable<JsonCommon<Object>> register(@Query("mobile") String mobile, @Query("password") String password, @Query("password_confirm") String confirmPwd, @Query("nickname") String nickname, @Query("code") String code,
-                                            @Query("resideprovince")String province,@Query("residecity")String city,@Query("residelist")String area);
+                                            @Query("resideprovince") String province, @Query("residecity") String city, @Query("residelist") String area);
 
     @POST("/login")
     Observable<JsonCommon<User>> login(@Query("mobile") String mobile, @Query("password") String password, @Query("reg_id") String regId, @Query("is_wechat") String isWechat, @Query("openid") String openid);
@@ -54,12 +55,12 @@ public interface IUserService {
 
     @POST("/saveAddress")
     Observable<JsonCommon<Object>> saveAddress(@Header("Authorization") String header,
-                                                     @Query("id") int id,
-                                                     @Query("area") String area,
-                                                     @Query("address") String address,
-                                                     @Query("is_default") int is_default,
-                                                     @Query("phone") String phone,
-                                                     @Query("name") String name
+                                               @Query("id") int id,
+                                               @Query("area") String area,
+                                               @Query("address") String address,
+                                               @Query("is_default") int is_default,
+                                               @Query("phone") String phone,
+                                               @Query("name") String name
     );
 
     @POST("/integralOrder")
@@ -84,7 +85,7 @@ public interface IUserService {
     Observable<JsonCommon<Object>> cashCNCBK(@Header("Authorization") String header, @Query("score") String score);
 
     @POST("/bindUser")
-    Observable<JsonCommon<User>> bindUser(@Query("reg_id") String regId,@Query("mobile") String mobile, @Query("openid") String openid,
+    Observable<JsonCommon<User>> bindUser(@Query("reg_id") String regId, @Query("mobile") String mobile, @Query("openid") String openid,
                                           @Query("nickname") String nickName,
                                           @Query("password") String password,
                                           @Query("password_confirm") String passwordConfirm,
@@ -93,9 +94,9 @@ public interface IUserService {
                                           @Query("gender") String gender,
                                           @Query("code") String code,
                                           @Query("is_create") String isCreate,
-                                          @Query("resideprovince")String province,
-                                          @Query("residecity")String city,
-                                          @Query("residelist")String area);
+                                          @Query("resideprovince") String province,
+                                          @Query("residecity") String city,
+                                          @Query("residelist") String area);
 
 
     @POST("/bindPhone")
@@ -162,9 +163,9 @@ public interface IUserService {
 
 
     @POST("/modifyPass")
-    Observable<JsonCommon<Object>> modifyPass(@Header("Authorization") String header,@Query("old_pass") String oldPass,
-                                               @Query("new_pass") String newPass,
-                                               @Query("confirm_pass") String confirmPass);
+    Observable<JsonCommon<Object>> modifyPass(@Header("Authorization") String header, @Query("old_pass") String oldPass,
+                                              @Query("new_pass") String newPass,
+                                              @Query("confirm_pass") String confirmPass);
 
 
     @POST("/cashLog")
@@ -174,11 +175,11 @@ public interface IUserService {
     Observable<JsonCommon<ResultWrapper<ProvinceBean>>> province();
 
     @POST("/region")
-    Observable<JsonCommon<ResultWrapper<CityBean>>> region(@Query("parent_id")String parentId);
+    Observable<JsonCommon<ResultWrapper<CityBean>>> region(@Query("parent_id") String parentId);
 
 
     @POST("/shareRecord")
-    Observable<JsonCommon<OrderShareScore>> shareRecord(@Header("Authorization") String header, @Query("order_id")String orderId);
+    Observable<JsonCommon<OrderShareScore>> shareRecord(@Header("Authorization") String header, @Query("order_id") String orderId);
 
 
     @POST("/promote")
@@ -190,4 +191,16 @@ public interface IUserService {
 
     @POST("/activeReceive")
     Observable<JsonCommon<Object>> activeReceive(@Header("Authorization") String header);
+
+    @POST("/getAccount")
+    Observable<JsonCommon<List<Account>>> getAccount(@Header("Authorization") String header, @Query("id") String id);
+
+    @POST("/withdrawAccount")
+    Observable<JsonCommon<Object>> withdrawAccount(@Header("Authorization") String header, @Query("name") String name,
+                                                   @Query("username") String userName, @Query("type") String type, @Query("bank") String bank);
+
+    @POST("/setWithStatus")
+    Observable<JsonCommon<Object>> setWithStatus(@Header("Authorization") String header, @Query("id") String id);
+
+
 }

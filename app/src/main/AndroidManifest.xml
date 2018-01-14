@@ -193,6 +193,7 @@
         <activity android:name=".view.activity.StoreManagerHomePageActivity"/>
         <activity android:name=".view.activity.AreaManagerHomepageActivity"/>
         <activity android:name=".view.activity.MemberDetailActivity"/>
+        <activity android:name=".view.activity.AddAccountActivity"/>
 
         <service android:name=".view.service.GetMedalService"/>
 

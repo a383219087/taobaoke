@@ -44,10 +44,6 @@ public class AreaManagerHomepageActivity extends BaseActivity {
     ThreeShowDataView mThreeViewMonth;
     @BindView(R.id.three_view_history)
     ThreeShowDataView mThreeViewHistory;
-    @BindView(R.id.ll_my_member)
-    LinearLayout mLlMyMember;
-    @BindView(R.id.line_my_member)
-    View line;
 
     @Override
     protected int getContentView() {
@@ -57,8 +53,6 @@ public class AreaManagerHomepageActivity extends BaseActivity {
     @Override
     protected void init() {
         setTitleName(R.string.area_proxy_title);
-        mLlMyMember.setVisibility(View.VISIBLE);
-        line.setVisibility(View.VISIBLE);
         mThreeViewScore.setValueCount(2);
         mThreeViewScore.setOneTip("未确认");
         mThreeViewScore.setTwoTip("已确认");
