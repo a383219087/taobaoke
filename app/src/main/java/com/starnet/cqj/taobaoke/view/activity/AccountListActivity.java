@@ -2,7 +2,6 @@ package com.starnet.cqj.taobaoke.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -19,7 +18,6 @@ import com.starnet.cqj.taobaoke.view.adapter.viewholder.AccountHolder;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -51,6 +49,11 @@ public class AccountListActivity extends BaseActivity {
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_account, AccountHolder.class);
         mRvAccount.setLayoutManager(new LinearLayoutManager(this));
         mRvAccount.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getData();
     }
 
@@ -86,12 +89,5 @@ public class AccountListActivity extends BaseActivity {
         Intent starter = new Intent(context, AccountListActivity.class);
         starter.putExtra(KEY_UID, uid);
         context.startActivity(starter);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }
