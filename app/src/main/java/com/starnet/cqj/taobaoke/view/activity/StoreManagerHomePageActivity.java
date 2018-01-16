@@ -36,9 +36,10 @@ public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
 
     @Override
     protected void init() {
-        mLlMyMember.setVisibility(View.VISIBLE);
-        line.setVisibility(View.VISIBLE);
         setTitleName(R.string.store_manager_home_page_title);
+    }
+
+    protected void getData() {
         RemoteDataSourceBase.INSTANCE.getStoreManagerService()
                 .index(((BaseApplication) getApplication()).getToken())
                 .compose(this.<JsonCommon<StoreIndex>>bindToLifecycle())
@@ -49,23 +50,11 @@ public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
                     public void accept(JsonCommon<StoreIndex> storeIndexJsonCommon) throws Exception {
                         if ("200".equals(storeIndexJsonCommon.getCode())) {
                             StoreIndex storeIndex = storeIndexJsonCommon.getData();
-                            mTvScore.setText(storeIndex.getData1().getTotal());
-                            mThreeViewScore.setThreeValue(storeIndex.getData1().getCredit1());
-                            mThreeViewScore.setOneValue(storeIndex.getData1().getCredit2());
-                            mThreeViewScore.setTwoValue(storeIndex.getData1().getCredit3());
-                            mThreeViewDay.setOneValue(storeIndex.getData2().getUserNum());
-                            mThreeViewDay.setTwoValue(storeIndex.getData2().getOrderNum());
-                            mThreeViewDay.setThreeValue(storeIndex.getData2().getScore());
-                            mThreeViewMonth.setOneValue(storeIndex.getData3().getUserNum());
-                            mThreeViewMonth.setTwoValue(storeIndex.getData3().getOrderNum());
-                            mThreeViewMonth.setThreeValue(storeIndex.getData3().getScore());
-                            mThreeViewHistory.setOneValue(storeIndex.getData4().getUserNum());
-                            mThreeViewHistory.setTwoValue(storeIndex.getData4().getOrderNum());
-                            mThreeViewHistory.setThreeValue(storeIndex.getData4().getScore());
                             if ("0".equals(storeIndex.getStatus())) {
                                 addMemberSignView("-1");
                             } else if ("1".equals(storeIndex.getStatus())) {
                                 addMemberSignView(storeIndex.getType());
+                                setValue(storeIndex);
                             } else {
                                 addToRegisterView();
 
@@ -81,6 +70,24 @@ public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
                         toast(R.string.net_error);
                     }
                 });
+    }
+
+    private void setValue(StoreIndex storeIndex) {
+        mLlMyMember.setVisibility(View.VISIBLE);
+        line.setVisibility(View.VISIBLE);
+        mTvScore.setText(storeIndex.getData1().getTotal());
+        mThreeViewScore.setThreeValue(storeIndex.getData1().getCredit1());
+        mThreeViewScore.setOneValue(storeIndex.getData1().getCredit2());
+        mThreeViewScore.setTwoValue(storeIndex.getData1().getCredit3());
+        mThreeViewDay.setOneValue(storeIndex.getData2().getUserNum());
+        mThreeViewDay.setTwoValue(storeIndex.getData2().getOrderNum());
+        mThreeViewDay.setThreeValue(storeIndex.getData2().getScore());
+        mThreeViewMonth.setOneValue(storeIndex.getData3().getUserNum());
+        mThreeViewMonth.setTwoValue(storeIndex.getData3().getOrderNum());
+        mThreeViewMonth.setThreeValue(storeIndex.getData3().getScore());
+        mThreeViewHistory.setOneValue(storeIndex.getData4().getUserNum());
+        mThreeViewHistory.setTwoValue(storeIndex.getData4().getOrderNum());
+        mThreeViewHistory.setThreeValue(storeIndex.getData4().getScore());
     }
 
     @OnClick(R.id.ll_my_member)

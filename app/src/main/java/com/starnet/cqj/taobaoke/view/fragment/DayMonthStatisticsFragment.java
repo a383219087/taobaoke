@@ -10,13 +10,12 @@ import android.widget.LinearLayout;
 
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.Statistics;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.StatisticsHolder;
-
-import java.util.List;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
@@ -71,14 +70,14 @@ public class DayMonthStatisticsFragment extends BaseFragment {
     private void getData() {
 
         getJsonCommonObservable()
-                .compose(this.<JsonCommon<List<Statistics>>>bindToLifecycle())
+                .compose(this.<JsonCommon<ResultWrapper<Statistics>>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<JsonCommon<List<Statistics>>>() {
+                .subscribe(new Consumer<JsonCommon<ResultWrapper<Statistics>>>() {
                     @Override
-                    public void accept(JsonCommon<List<Statistics>> listJsonCommon) throws Exception {
+                    public void accept(JsonCommon<ResultWrapper<Statistics>> listJsonCommon) throws Exception {
                         if ("200".equals(listJsonCommon.getCode())) {
-                            mAdapter.setAll(listJsonCommon.getData());
+                            mAdapter.setAll(listJsonCommon.getData().getList());
                         } else {
                             toast(listJsonCommon.getMessage());
                         }
@@ -92,7 +91,7 @@ public class DayMonthStatisticsFragment extends BaseFragment {
                 });
     }
 
-    private Observable<JsonCommon<List<Statistics>>> getJsonCommonObservable() {
+    private Observable<JsonCommon<ResultWrapper<Statistics>>> getJsonCommonObservable() {
         if (mIsArea) {
             return RemoteDataSourceBase.INSTANCE.getAreaStatisticsService()
                     .get(((BaseApplication) getActivity().getApplication()).getToken(), mSearchType);

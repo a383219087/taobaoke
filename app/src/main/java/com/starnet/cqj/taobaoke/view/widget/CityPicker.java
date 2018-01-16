@@ -3,6 +3,7 @@ package com.starnet.cqj.taobaoke.view.widget;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -250,9 +251,9 @@ public class CityPicker extends PopupWindow {
         public String area;
 
         GetCityResult(String province, String city, String area) {
-            this.province = province;
-            this.city = city;
-            this.area = area;
+            this.province = TextUtils.isEmpty(province) ? "" : province;
+            this.city = TextUtils.isEmpty(city) ? "" : city;
+            this.area = TextUtils.isEmpty(area) ? "" : area;
         }
     }
 }

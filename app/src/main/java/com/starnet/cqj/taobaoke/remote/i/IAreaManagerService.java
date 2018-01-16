@@ -16,7 +16,7 @@ import retrofit2.http.Query;
 public interface IAreaManagerService {
 
     @POST("/area/apply")
-    Observable<JsonCommon<Object>> apply(@Header("Authorization") String header, @Query("shop_type") int type,
+    Observable<JsonCommon<Object>> apply(@Header("Authorization") String header, @Query("area_type") int type,
                                          @Query("contact") String contact, @Query("phone") String phone, @Query("remark") String remark,
                                          @Query("province") String province, @Query("city") String city, @Query("area") String area);
 

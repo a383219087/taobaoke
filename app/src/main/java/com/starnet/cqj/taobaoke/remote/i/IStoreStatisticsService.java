@@ -1,9 +1,8 @@
 package com.starnet.cqj.taobaoke.remote.i;
 
 import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.model.Statistics;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Header;
@@ -18,7 +17,7 @@ import retrofit2.http.Query;
 public interface IStoreStatisticsService {
 
     @POST("/shop/statistics")
-    Observable<JsonCommon<List<Statistics>>> get(@Header("Authorization") String header, @Query("type") int type);
+    Observable<JsonCommon<ResultWrapper<Statistics>>> get(@Header("Authorization") String header, @Query("type") int type);
 
 
     @POST("/shop/statistics")

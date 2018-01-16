@@ -104,6 +104,8 @@ public class StoreManagerRegisterFragment extends BaseFragment {
             mRbCuprum.setText("区县代理");
             mTvRemarkTitle.setText("区域代理说明");
             mTvRegisterRemark.setText(R.string.area_register_remark);
+            mCityPicker.showLevel(CityPicker.ShowLevel.PROVINCE);
+            initEvent();
         }
     }
 
@@ -198,4 +200,11 @@ public class StoreManagerRegisterFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mCityPicker != null) {
+            mCityPicker.destroy();
+        }
+    }
 }
