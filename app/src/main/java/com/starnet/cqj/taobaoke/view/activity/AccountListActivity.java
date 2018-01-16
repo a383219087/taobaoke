@@ -52,6 +52,19 @@ public class AccountListActivity extends BaseActivity {
     }
 
     @Override
+    protected void initEvent() {
+        super.initEvent();
+        mAdapter.itemClickObserve()
+                .compose(this.<Account>bindToLifecycle())
+                .subscribe(new Consumer<Account>() {
+                    @Override
+                    public void accept(Account account) throws Exception {
+                        getData();
+                    }
+                });
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         getData();

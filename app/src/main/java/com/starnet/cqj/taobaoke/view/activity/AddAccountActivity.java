@@ -78,6 +78,7 @@ public class AddAccountActivity extends BaseActivity {
                 mTab.getTabAt(1).select();
                 mEdtName.setText(mAccount.getName());
                 mEdtBankAccount.setText(mAccount.getUserName());
+                mEdtBankType.setText(mAccount.getBank());
             }
         }
     }
@@ -113,43 +114,47 @@ public class AddAccountActivity extends BaseActivity {
 
     @OnClick(R.id.btn_save)
     public void onViewClicked() {
-        String name ="";
-        String account ="";
-        if("1".equals(mType)){
+        String name = "";
+        String account = "";
+        if ("1".equals(mType)) {
             name = mEdtAlipayName.getText().toString();
             account = mEdtAlipayAccount.getText().toString();
-            if(TextUtils.isEmpty(name)){
+            if (TextUtils.isEmpty(name)) {
                 toast("请输入姓名");
                 return;
             }
-            if(account.length()<11){
+            if (account.length() < 11) {
                 toast("请输入正确的账号");
                 return;
             }
-        }else{
+        } else {
             name = mEdtName.getText().toString();
             account = mEdtBankAccount.getText().toString();
-            if(TextUtils.isEmpty(name)){
+            if (TextUtils.isEmpty(name)) {
                 toast("请输入姓名");
                 return;
             }
-            if(account.length()<16){
+            if (account.length() < 16) {
                 toast("请输入正确的账号");
                 return;
             }
         }
         RemoteDataSourceBase.INSTANCE.getUserService()
-                .withdrawAccount(((BaseApplication) getApplication()).getToken(),name,account,mType,mEdtBankType.getText().toString())
+                .withdrawAccount(((BaseApplication) getApplication()).getToken(), name, account, mType, mEdtBankType.getText().toString())
                 .compose(this.<JsonCommon<Object>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Consumer<JsonCommon<Object>>() {
                     @Override
                     public void accept(JsonCommon<Object> objectJsonCommon) throws Exception {
-                        if("200".equals(objectJsonCommon.getCode())){
-                            toast("添加成功");
+                        if ("200".equals(objectJsonCommon.getCode())) {
+                            if (mAccount != null) {
+                                toast("修改成功");
+                            } else {
+                                toast("添加成功");
+                            }
                             finish();
-                        }else{
+                        } else {
                             toast(objectJsonCommon.getMessage());
                         }
                     }

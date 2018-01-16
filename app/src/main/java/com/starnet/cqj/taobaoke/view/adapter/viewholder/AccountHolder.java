@@ -1,5 +1,6 @@
 package com.starnet.cqj.taobaoke.view.adapter.viewholder;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.widget.Toast;
 
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.Account;
+import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
+import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.activity.AddAccountActivity;
 import com.starnet.cqj.taobaoke.view.adapter.BaseHolder;
 import com.starnet.cqj.taobaoke.view.adapter.IParamContainer;
@@ -17,6 +21,9 @@ import com.starnet.cqj.taobaoke.view.adapter.IParamContainer;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 
 /**
@@ -43,7 +50,7 @@ public class AccountHolder extends BaseHolder<Account> {
     }
 
     @Override
-    public void bind(List<Account> data, int position, IParamContainer container, PublishSubject<Account> itemClick) {
+    public void bind(List<Account> data, int position, IParamContainer container, final PublishSubject<Account> itemClick) {
         final Account account = data.get(position);
         if (account != null) {
             final boolean isDefault = "1".equals(account.getStatus());
@@ -73,7 +80,7 @@ public class AccountHolder extends BaseHolder<Account> {
                     if (!mCbDefault.isChecked()) {
                         mCbDefault.setChecked(true);
                     } else {
-
+                        setDefault(account,itemClick);
                     }
                 }
             });
@@ -97,5 +104,32 @@ public class AccountHolder extends BaseHolder<Account> {
                 })
                 .create();
         alertDialog.show();
+    }
+
+    private void delete(Account account){
+
+    }
+
+    private void setDefault(final Account account, final PublishSubject<Account> itemClick){
+        try {
+            final Activity activity = (Activity) itemView.getContext();
+            RemoteDataSourceBase.INSTANCE.getUserService()
+                    .setWithStatus(((BaseApplication) activity.getApplication()).getToken(),
+                            account.getId())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Consumer<JsonCommon<Object>>() {
+                        @Override
+                        public void accept(JsonCommon<Object> objectJsonCommon) throws Exception {
+                            if("200".equals(objectJsonCommon.getCode())){
+                                itemClick.onNext(account);
+                            }else{
+                                Toast.makeText(itemView.getContext(), objectJsonCommon.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
