@@ -75,7 +75,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
                         mProvince =s.province;
                         mCity = s.city;
                         mArea = s.area;
-                        mTvAddress.setText(TextUtils.isEmpty(mProvince) ? "" : mProvince + " " + mCity + " " + mArea);
+                        mTvAddress.setText(TextUtils.isEmpty(mArea) ? "" : mProvince + " " + mCity + " " + mArea);
                     }
                 });
     }

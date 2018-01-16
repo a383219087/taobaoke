@@ -103,6 +103,8 @@ public class AreaManagerHomepageActivity extends BaseActivity {
     private void addToRegisterView() {
         View viewToRegister = LayoutInflater.from(AreaManagerHomepageActivity.this)
                 .inflate(R.layout.view_to_register, null, false);
+        TextView tvTip = (TextView) viewToRegister.findViewById(R.id.tv_tip);
+        tvTip.setText("您还不是区域代理哦！");
         viewToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
