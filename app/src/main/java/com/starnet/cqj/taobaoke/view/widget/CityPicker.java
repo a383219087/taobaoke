@@ -56,6 +56,12 @@ public class CityPicker extends PopupWindow {
     private String mCity;
     private String mArea;
 
+    public enum ShowLevel {
+        PROVINCE,
+        CITY,
+        AREA
+    }
+
     public CityPicker(Context context) {
         super(context);
         mContext = context;
@@ -78,6 +84,27 @@ public class CityPicker extends PopupWindow {
         initEvent();
     }
 
+    public void showLevel(ShowLevel level) {
+        switch (level) {
+            case PROVINCE:
+                mRvCity.setVisibility(View.GONE);
+                mRvArea.setVisibility(View.GONE);
+                mRvProvince.setVisibility(View.VISIBLE);
+                break;
+            case CITY:
+                mRvProvince.setVisibility(View.VISIBLE);
+                mRvCity.setVisibility(View.VISIBLE);
+                mRvArea.setVisibility(View.GONE);
+                break;
+            case AREA:
+                mRvProvince.setVisibility(View.VISIBLE);
+                mRvCity.setVisibility(View.VISIBLE);
+                mRvArea.setVisibility(View.VISIBLE);
+            default:
+                break;
+        }
+    }
+
     private void initEvent() {
         mProvinceAdapter.itemClickObserve()
                 .doOnSubscribe(new Consumer<Disposable>() {
@@ -90,7 +117,7 @@ public class CityPicker extends PopupWindow {
                     @Override
                     public void accept(ICityData iCityData) throws Exception {
                         mProvince = iCityData.getName();
-                        mCity="";
+                        mCity = "";
                         mAreaAdapter.removeAll();
                         getCityData(iCityData, mCityAdapter);
                     }

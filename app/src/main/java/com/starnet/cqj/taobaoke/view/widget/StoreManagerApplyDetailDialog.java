@@ -63,6 +63,7 @@ public class StoreManagerApplyDetailDialog extends Dialog {
                             mTvName.setText(data.getContact());
                             mTvPhone.setText(data.getPhone());
                             mTvRemark.setText(data.getRemark());
+                            mTvType.setText(data.getShopType());
                         }else{
                             Toast.makeText(mActivity, storeManagerApplyDetailJsonCommon.getMessage(), Toast.LENGTH_SHORT).show();
                         }

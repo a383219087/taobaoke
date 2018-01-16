@@ -39,7 +39,7 @@ public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
         mLlMyMember.setVisibility(View.VISIBLE);
         line.setVisibility(View.VISIBLE);
         setTitleName(R.string.store_manager_home_page_title);
-        RemoteDataSourceBase.INSTANCE.getAreaManagerService()
+        RemoteDataSourceBase.INSTANCE.getStoreManagerService()
                 .index(((BaseApplication) getApplication()).getToken())
                 .compose(this.<JsonCommon<StoreIndex>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())

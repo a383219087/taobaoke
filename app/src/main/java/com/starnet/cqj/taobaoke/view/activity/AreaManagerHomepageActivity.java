@@ -56,7 +56,7 @@ public class AreaManagerHomepageActivity extends BaseActivity {
         mThreeViewScore.setValueCount(2);
         mThreeViewScore.setOneTip("未确认");
         mThreeViewScore.setTwoTip("已确认");
-        RemoteDataSourceBase.INSTANCE.getStoreManagerService()
+        RemoteDataSourceBase.INSTANCE.getAreaManagerService()
                 .index(((BaseApplication) getApplication()).getToken())
                 .compose(this.<JsonCommon<StoreIndex>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())

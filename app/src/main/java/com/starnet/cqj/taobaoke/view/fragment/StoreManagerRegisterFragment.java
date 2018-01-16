@@ -1,12 +1,14 @@
 package com.starnet.cqj.taobaoke.view.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -45,6 +47,12 @@ public class StoreManagerRegisterFragment extends BaseFragment {
     TextView mEdtArea;
     @BindView(R.id.ll_proxy_area)
     LinearLayout mLlProxyArea;
+    @BindView(R.id.rb_gold)
+    RadioButton mRbGold;
+    @BindView(R.id.rb_silver)
+    RadioButton mRbSilver;
+    @BindView(R.id.rb_cuprum)
+    RadioButton mRbCuprum;
     private PublishSubject<String> mDoneObservable = PublishSubject.create();
     private boolean mIsArea;
     private CityPicker mCityPicker;
@@ -84,6 +92,31 @@ public class StoreManagerRegisterFragment extends BaseFragment {
                     }
                 });
         mLlProxyArea.setVisibility(mIsArea ? View.VISIBLE : View.GONE);
+        if(mIsArea){
+            mRbGold.setText("省份代理");
+            mRbSilver.setText("城市代理");
+            mRbCuprum.setText("区县代理");
+        }
+    }
+    private void initEvent(){
+        mRgStoreManagerType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                switch (checkedId){
+                    case R.id.rb_gold:
+                        mCityPicker.showLevel(CityPicker.ShowLevel.PROVINCE);
+                        break;
+                    case R.id.rb_silver:
+                        mCityPicker.showLevel(CityPicker.ShowLevel.CITY);
+                        break;
+                    case R.id.rb_cuprum:
+                        mCityPicker.showLevel(CityPicker.ShowLevel.AREA);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     @OnClick(R.id.btn_register)
