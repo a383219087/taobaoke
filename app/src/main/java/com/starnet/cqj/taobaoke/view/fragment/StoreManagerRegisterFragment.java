@@ -21,6 +21,7 @@ import com.starnet.cqj.taobaoke.view.widget.CityPicker;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -53,6 +54,11 @@ public class StoreManagerRegisterFragment extends BaseFragment {
     RadioButton mRbSilver;
     @BindView(R.id.rb_cuprum)
     RadioButton mRbCuprum;
+    @BindView(R.id.tv_remark_title)
+    TextView mTvRemarkTitle;
+    @BindView(R.id.tv_register_remark)
+    TextView mTvRegisterRemark;
+    Unbinder unbinder;
     private PublishSubject<String> mDoneObservable = PublishSubject.create();
     private boolean mIsArea;
     private CityPicker mCityPicker;
@@ -92,17 +98,20 @@ public class StoreManagerRegisterFragment extends BaseFragment {
                     }
                 });
         mLlProxyArea.setVisibility(mIsArea ? View.VISIBLE : View.GONE);
-        if(mIsArea){
+        if (mIsArea) {
             mRbGold.setText("省份代理");
             mRbSilver.setText("城市代理");
             mRbCuprum.setText("区县代理");
+            mTvRemarkTitle.setText("区域代理说明");
+            mTvRegisterRemark.setText(R.string.area_register_remark);
         }
     }
-    private void initEvent(){
+
+    private void initEvent() {
         mRgStoreManagerType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.rb_gold:
                         mCityPicker.showLevel(CityPicker.ShowLevel.PROVINCE);
                         break;
@@ -188,4 +197,5 @@ public class StoreManagerRegisterFragment extends BaseFragment {
         mCityPicker.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
 
     }
+
 }

@@ -261,6 +261,7 @@
                         android:textSize="13sp"/>
 
                     <TextView
+                        android:id="@+id/tv_remark_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -271,6 +272,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_register_remark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"

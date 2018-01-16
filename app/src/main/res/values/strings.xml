@@ -158,6 +158,7 @@
     <string name="get_buy_action_done">已领取</string>
     <string name="get_buy_action">领取</string>
     <string name="store_manager_signup_remark">1.可选择需要申请店长的类型：金牌店长，银牌店长，或是铜牌店长。\n2.不同店长对下级的抽成不同。\n3.提交申请后，平台客服会联系您，请保持通话畅通。</string>
+    <string name="area_register_remark">1、可选择省市区县代理，代理后，可所代理的区域的营业额抽成比例\n2、平台只显示可代理区域供选择\n3、提交申请后，平台客服将会联系您</string>
     <string name="store_manager_register_title">申请成为店长</string>
     <string name="store_manager_applying_title">店长申请</string>
     <string name="store_manager_home_page_title">店长主页</string>
