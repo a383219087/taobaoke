@@ -40,9 +40,9 @@ public class BindExistPresenterImpl extends BasePresenterImpl implements IBindEx
                     @Override
                     public void onNext(JsonCommon<Object> value) {
                         if (isValidResult(value,mViewCallback)) {
-                            getCode(mobile);
+                            mViewCallback.toast("该账号未注册");
                         } else {
-                            mViewCallback.toast(value.getMessage());
+                            getCode(mobile);
                         }
                     }
 
