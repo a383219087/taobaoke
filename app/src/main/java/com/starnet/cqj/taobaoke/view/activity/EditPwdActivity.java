@@ -48,6 +48,10 @@ public class EditPwdActivity extends BaseActivity {
             toast("请输入新密码");
             return;
         }
+        if (newPwd.length()<6) {
+            toast("密码长度不够");
+            return;
+        }
         if (TextUtils.isEmpty(newConfirm)) {
             toast("请再次输入新密码");
             return;

@@ -138,6 +138,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@null"
                     android:hint="6-30位数字或字母"
+                    android:maxLength="30"
                     android:inputType="textPassword"
                     android:textSize="14sp"/>
             </LinearLayout>
@@ -163,6 +164,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@null"
                     android:hint="再次输入密码"
+                    android:maxLength="30"
                     android:inputType="textPassword"
                     android:textSize="14sp"/>
             </LinearLayout>

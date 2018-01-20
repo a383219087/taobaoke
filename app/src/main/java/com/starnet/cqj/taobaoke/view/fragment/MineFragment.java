@@ -174,6 +174,8 @@ public class MineFragment extends BaseFragment {
                                 Glide.with(getActivity())
                                         .load(mUser.getAvatar())
                                         .into(mIvAvatar);
+                            }else{
+                                mIvAvatar.setImageResource(R.drawable.default_avatar);
                             }
                         } else {
                             Toast.makeText(getActivity(), userJsonCommon.getMessage(), Toast.LENGTH_SHORT).show();

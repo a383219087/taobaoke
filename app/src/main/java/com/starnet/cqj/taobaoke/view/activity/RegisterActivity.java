@@ -132,6 +132,10 @@ public class RegisterActivity extends BaseActivity implements IRegisterPresenter
             toast("请输入密码");
             return;
         }
+        if (pwd.length()<6) {
+            toast("密码长度不够");
+            return;
+        }
         if (TextUtils.isEmpty(pwdAgain)) {
             toast("请再次输入密码");
             return;
