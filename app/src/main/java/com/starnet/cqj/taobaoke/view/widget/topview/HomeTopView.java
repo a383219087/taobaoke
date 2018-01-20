@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.oragee.banners.BannerView;
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.Banner;
 import com.starnet.cqj.taobaoke.model.BuyTip;
@@ -25,17 +26,14 @@ import com.starnet.cqj.taobaoke.model.Product;
 import com.starnet.cqj.taobaoke.model.SearchType;
 import com.starnet.cqj.taobaoke.presenter.IHomePagePresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.HomePagePresenterImpl;
-import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.view.activity.ProductDetailActivity;
 import com.starnet.cqj.taobaoke.view.activity.ProductListActivity;
 import com.starnet.cqj.taobaoke.view.activity.WebViewActivity;
 import com.starnet.cqj.taobaoke.view.adapter.LinearLayoutManagerWrapper;
-import com.starnet.cqj.taobaoke.view.adapter.MyViewPagerAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.NoScrollGridLayoutManager;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.LookBuyHolder;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.MainMenuHolder;
-import com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager;
 
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -51,7 +49,7 @@ import io.reactivex.functions.Consumer;
 
 public class HomeTopView extends LinearLayout implements IHomePagePresenter.IView{
     @BindView(R.id.main_auto_banner)
-    AutoScrollViewPager mMainAutoBanner;
+    BannerView mMainAutoBanner;
     @BindView(R.id.home_tab_rg)
     RadioGroup mHomeTabRg;
     @BindView(R.id.message_avatar)
@@ -67,7 +65,7 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
     @BindView(R.id.rv_main_menu)
     RecyclerView mRvMainMenu;
     @BindView(R.id.main_medium_banner)
-    AutoScrollViewPager mMainMediumBanner;
+    BannerView mMainMediumBanner;
     @BindView(R.id.look_buy_rv)
     RecyclerView mLookBuyRv;
     @BindView(R.id.main_ll_content)
@@ -228,9 +226,8 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
             });
             viewList.add(iv);
         }
-        MyViewPagerAdapter adapter = new MyViewPagerAdapter(viewList);
-        mMainAutoBanner.setAdapter(adapter);
-        mMainAutoBanner.startAutoScroll(Constant.BANNER_AUTO_TIME);
+        mMainAutoBanner.setViewList(viewList);
+        mMainAutoBanner.startLoop(true);
 
         List<View> viewList2 = new ArrayList<>();
         List<Banner> bannerMid = banner.getMid();
@@ -247,9 +244,8 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
             });
             viewList2.add(iv);
         }
-        MyViewPagerAdapter adapter2 = new MyViewPagerAdapter(viewList2);
-        mMainMediumBanner.setAdapter(adapter2);
-        mMainMediumBanner.startAutoScroll(Constant.BANNER_AUTO_TIME);
+        mMainMediumBanner.setViewList(viewList2);
+        mMainMediumBanner.startLoop(true);
         mHomePagePresenter.getCategory();
     }
 

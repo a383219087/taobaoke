@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.oragee.banners.BannerView;
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.Article;
 import com.starnet.cqj.taobaoke.model.Banner;
@@ -17,11 +18,9 @@ import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.adapter.LinearLayoutManagerWrapper;
-import com.starnet.cqj.taobaoke.view.adapter.MyViewPagerAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerItemDecoration;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.QuestionListHolder;
-import com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager;
 import com.starnet.cqj.taobaoke.view.widget.RecyclerViewLoadMoreHelper;
 
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ import io.reactivex.schedulers.Schedulers;
 public class HelpCenterActivity extends BaseActivity {
 
     @BindView(R.id.vp_banner)
-    AutoScrollViewPager mVpBanner;
+    BannerView mVpBanner;
 
     @BindView(R.id.help_btn_general_question)
     TextView mTvGeneralQuestion;
@@ -207,8 +206,8 @@ public class HelpCenterActivity extends BaseActivity {
             });
             viewList.add(imageView);
         }
-        mVpBanner.setAdapter(new MyViewPagerAdapter(viewList));
-        mVpBanner.startAutoScroll(Constant.BANNER_AUTO_TIME);
+        mVpBanner.setViewList(viewList);
+        mVpBanner.startLoop(true);
 
     }
 
@@ -240,9 +239,6 @@ public class HelpCenterActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mVpBanner != null) {
-            mVpBanner.stopAutoScroll();
-        }
     }
 
     public static void start(Context context) {

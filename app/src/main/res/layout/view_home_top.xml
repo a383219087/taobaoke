@@ -2,7 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-    <com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager
+    <com.oragee.banners.BannerView
         android:id="@+id/main_auto_banner"
         android:layout_width="match_parent"
         android:layout_height="150dp"/>
@@ -105,7 +105,7 @@
             android:focusableInTouchMode="false"
             />
 
-        <com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager
+        <com.oragee.banners.BannerView
             android:id="@+id/main_medium_banner"
             android:layout_width="match_parent"
             android:layout_height="110dp"

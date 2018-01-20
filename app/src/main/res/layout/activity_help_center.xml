@@ -7,7 +7,7 @@
 
     <include layout="@layout/title_layout"/>
 
-    <com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager
+    <com.oragee.banners.BannerView
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:id="@+id/vp_banner"

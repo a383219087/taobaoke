@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.oragee.banners.BannerView;
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.Article;
 import com.starnet.cqj.taobaoke.model.Banner;
@@ -19,11 +20,9 @@ import com.starnet.cqj.taobaoke.presenter.IHotPresenter;
 import com.starnet.cqj.taobaoke.presenter.impl.HotPresenterImpl;
 import com.starnet.cqj.taobaoke.remote.Constant;
 import com.starnet.cqj.taobaoke.view.activity.WebViewActivity;
-import com.starnet.cqj.taobaoke.view.adapter.MyViewPagerAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerItemDecoration;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.HotArticleHolder;
-import com.starnet.cqj.taobaoke.view.widget.AutoScrollViewPager;
 import com.starnet.cqj.taobaoke.view.widget.RecyclerViewLoadMoreHelper;
 
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
     @BindView(R.id.title_name)
     TextView mTitleName;
     @BindView(R.id.hot_auto_banner)
-    AutoScrollViewPager mHotAutoBanner;
+    BannerView mHotAutoBanner;
     @BindView(R.id.tabs)
     TabLayout mTabs;
     @BindView(R.id.rv_hot_list)
@@ -151,8 +150,8 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
             });
             viewList.add(imageView);
         }
-        mHotAutoBanner.setAdapter(new MyViewPagerAdapter(viewList));
-        mHotAutoBanner.startAutoScroll(Constant.BANNER_AUTO_TIME);
+        mHotAutoBanner.setViewList(viewList);
+        mHotAutoBanner.startLoop(true);
 
     }
 
@@ -169,9 +168,6 @@ public class HotFragment extends BaseFragment implements IHotPresenter.IView {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mHotAutoBanner != null) {
-            mHotAutoBanner.stopAutoScroll();
-        }
         if (mPresenter != null) {
             mPresenter.onDestroy();
         }
