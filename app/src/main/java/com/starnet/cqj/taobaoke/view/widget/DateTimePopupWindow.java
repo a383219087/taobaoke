@@ -101,5 +101,11 @@ public class DateTimePopupWindow extends PopupWindow {
         datePicker.updateDate(year, month, day);
     }
 
+    public void setMinDate(Date date){
+        datePicker.setMinDate(date.getTime());
+    }
 
+    public void setMaxDate(Date date){
+        datePicker.setMaxDate(date.getTime());
+    }
 }

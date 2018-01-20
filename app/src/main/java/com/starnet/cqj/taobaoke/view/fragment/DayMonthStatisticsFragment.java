@@ -86,7 +86,6 @@ public class DayMonthStatisticsFragment extends BaseFragment {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         throwable.printStackTrace();
-                        toast(R.string.net_error);
                     }
                 });
     }

@@ -40,6 +40,8 @@ public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
     }
 
     protected void getData() {
+        mLlMyMember.setVisibility(View.VISIBLE);
+        line.setVisibility(View.VISIBLE);
         RemoteDataSourceBase.INSTANCE.getStoreManagerService()
                 .index(((BaseApplication) getApplication()).getToken())
                 .compose(this.<JsonCommon<StoreIndex>>bindToLifecycle())
@@ -73,8 +75,6 @@ public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
     }
 
     private void setValue(StoreIndex storeIndex) {
-        mLlMyMember.setVisibility(View.VISIBLE);
-        line.setVisibility(View.VISIBLE);
         mTvScore.setText(storeIndex.getData1().getTotal());
         mThreeViewScore.setThreeValue(storeIndex.getData1().getCredit1());
         mThreeViewScore.setOneValue(storeIndex.getData1().getCredit2());

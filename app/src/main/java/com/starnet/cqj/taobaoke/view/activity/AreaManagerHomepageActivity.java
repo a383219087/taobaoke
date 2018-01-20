@@ -82,11 +82,9 @@ public class AreaManagerHomepageActivity extends BaseActivity {
                                         (TextUtils.isEmpty(storeIndex.getCity()) ? "" : ","+ storeIndex.getCity())   +
                                         (TextUtils.isEmpty(storeIndex.getArea()) ? "" : ","+ storeIndex.getArea());
                                 addMemberSignView(storeIndex.getType(), TextUtils.isEmpty(storeIndex.getProvince()) ? "无" : area);
-                                mLlStatistics.setVisibility(View.VISIBLE);
                                 setValue(storeIndex);
                             } else {
                                 addToRegisterView();
-                                mLlStatistics.setVisibility(View.GONE);
                             }
                         } else {
                             toast(storeIndexJsonCommon.getMessage());

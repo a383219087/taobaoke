@@ -43,8 +43,6 @@ public class QuantumStatisticsFragment extends BaseFragment {
     ThreeShowDataView mThreeShowDataView;
     private Calendar mCalendar;
     private SimpleDateFormat mDateFormat;
-    private DateTimePopupWindow mPopupWindow;
-    private TextView mCurrentChooseView;
     private boolean mIsArea;
 
     public static QuantumStatisticsFragment newInstance(boolean isArea) {
@@ -67,23 +65,9 @@ public class QuantumStatisticsFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mCalendar = Calendar.getInstance();
         mIsArea = getArguments().getBoolean(KEY_IS_AREA);
-        mTvStartDate.setText(mCalendar.get(Calendar.YEAR) + "-" + (mCalendar.get(Calendar.MONTH) + 1) + "-1");
-        mDateFormat = new SimpleDateFormat("yyyy-M-d", Locale.getDefault());
+        mDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        mTvStartDate.setText(mDateFormat.format(new Date()));
         mTvEndDate.setText(mDateFormat.format(new Date()));
-        mPopupWindow = new DateTimePopupWindow(getActivity());
-        initEvent();
-        getData();
-    }
-
-    private void initEvent() {
-        mPopupWindow.dateObservable()
-                .compose(this.<Date>bindToLifecycle())
-                .subscribe(new Consumer<Date>() {
-                    @Override
-                    public void accept(Date date) throws Exception {
-                        mCurrentChooseView.setText(mDateFormat.format(date));
-                    }
-                });
     }
 
     private void getData() {
@@ -128,14 +112,30 @@ public class QuantumStatisticsFragment extends BaseFragment {
 
     @OnClick({R.id.tv_start_date, R.id.tv_end_date, R.id.btn_search})
     public void onViewClicked(View view) {
+        String endDate = mTvEndDate.getText().toString();
+        String startDate = mTvStartDate.getText().toString();
         switch (view.getId()) {
             case R.id.tv_start_date:
-                String startDate = mTvStartDate.getText().toString();
-                showDatePicker(mTvStartDate, startDate);
+                DateTimePopupWindow dateTimePopupWindow1 = showDatePicker(mTvStartDate, startDate);
+                if (dateTimePopupWindow1 != null) {
+                    try {
+                        Date maxDate = mDateFormat.parse(endDate);
+                        dateTimePopupWindow1.setMaxDate(maxDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
             case R.id.tv_end_date:
-                String endDate = mTvEndDate.getText().toString();
-                showDatePicker(mTvEndDate, endDate);
+                DateTimePopupWindow dateTimePopupWindow = showDatePicker(mTvEndDate, endDate);
+                if (dateTimePopupWindow != null) {
+                    try {
+                        Date minDate = mDateFormat.parse(startDate);
+                        dateTimePopupWindow.setMinDate(minDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
             case R.id.btn_search:
                 getData();
@@ -143,8 +143,8 @@ public class QuantumStatisticsFragment extends BaseFragment {
         }
     }
 
-    private void showDatePicker(TextView view, String startDate) {
-        mCurrentChooseView = view;
+    private DateTimePopupWindow showDatePicker(final TextView view, String startDate) {
+        DateTimePopupWindow mPopupWindow = new DateTimePopupWindow(getActivity());
         try {
             Date date = mDateFormat.parse(startDate);
             mCalendar.setTime(date);
@@ -152,6 +152,15 @@ public class QuantumStatisticsFragment extends BaseFragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        mPopupWindow.dateObservable()
+                .compose(this.<Date>bindToLifecycle())
+                .subscribe(new Consumer<Date>() {
+                    @Override
+                    public void accept(Date date) throws Exception {
+                        view.setText(mDateFormat.format(date));
+                    }
+                });
         mPopupWindow.showAsDropDown(view);
+        return mPopupWindow;
     }
 }

@@ -95,7 +95,6 @@ public class MemberListActivity extends BaseActivity {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         throwable.printStackTrace();
-                        toast(R.string.net_error);
                     }
                 });
     }
