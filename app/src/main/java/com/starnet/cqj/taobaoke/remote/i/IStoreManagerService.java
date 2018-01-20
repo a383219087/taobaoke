@@ -29,4 +29,9 @@ public interface IStoreManagerService {
 
     @POST("/shop/index")
     Observable<JsonCommon<StoreIndex>> index(@Header("Authorization") String header);
+
+
+    @POST("/withdraw")
+    Observable<JsonCommon<Object>> withdraw(@Header("Authorization") String header,@Query("name") String name,@Query("username") String username,
+                                                @Query("money") String money,@Query("type") int type,@Query("bank") String bank);
 }

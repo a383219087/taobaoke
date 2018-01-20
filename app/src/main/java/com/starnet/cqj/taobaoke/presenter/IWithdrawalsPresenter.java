@@ -16,6 +16,8 @@ public interface IWithdrawalsPresenter extends BasePresenter {
 
     void cashCNCBK(String header,String score);
 
+    void cashMoney(String header,String name,String userName,String money);
+
     interface IView extends BasePresenter.IView{
 
         void setScore(String score);

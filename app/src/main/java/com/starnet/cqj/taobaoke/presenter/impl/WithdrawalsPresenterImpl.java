@@ -1,5 +1,6 @@
 package com.starnet.cqj.taobaoke.presenter.impl;
 
+import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.CNCBKUser;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.User;
@@ -139,6 +140,38 @@ public class WithdrawalsPresenterImpl extends BasePresenterImpl implements IWith
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void cashMoney(String header, String name, String userName, String money) {
+        RemoteDataSourceBase.INSTANCE.getStoreManagerService()
+                .withdraw(header,name,userName,money,1,"")
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<JsonCommon<Object>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mCompositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(JsonCommon<Object> value) {
+                        if (isValidResult(value, mViewCallback)) {
+                            mViewCallback.onCash();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        mViewCallback.toast(R.string.net_error);
                     }
 
                     @Override

@@ -146,7 +146,7 @@
     <string name="ice_integral_title">冻结白积分</string>
     <string name="use_integral_title">可提现白积分</string>
     <string name="recheck_integral_title">待确认白积分</string>
-    <string name="net_error">网络错误</string>
+    <string name="net_error">服务器异常</string>
     <string name="login_title">登录</string>
     <string name="edit_pwd_title">修改密码</string>
     <string name="customer_service_title">客服</string>
@@ -173,4 +173,6 @@
     <string name="member_detail_title">会员详情</string>
     <string name="score_total_text">累计返利积分：%s</string>
     <string name="account_list_title">提现账号</string>
+    <string name="withdrawals_money_tip">1、每月只能提取2次，每次不能少于1元。\n2、微信提取2000元以内，即时到账，2000元以上需人工审核。\n3、提取3000以上才能用支付宝。\n4、根据国家法律规定，推广费按照劳务费缴税，税率为4.46%，暂由新肌会承担。</string>
+    <string name="money_unit">%d元</string>
 </resources>

@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:background="@color/white"
               android:focusable="true"
               android:focusableInTouchMode="true"
-              android:background="@color/white"
               android:orientation="vertical">
 
 
@@ -52,332 +52,644 @@
 
     </RelativeLayout>
 
+    <RadioGroup
+        android:id="@+id/home_tab_rg"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/main_tab_color"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/home_tab_rb1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/main_tab_left_selector"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="提现到CNCBK"
+            android:textColor="@color/main_bottom_text_color"
+            android:textSize="15sp"/>
+
+        <RadioButton
+            android:id="@+id/home_tab_rb2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/main_tab_right_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:text="提现成现金"
+            android:textColor="@color/main_bottom_text_color"
+            android:textSize="15sp"/>
+
+    </RadioGroup>
+
     <LinearLayout
-        android:id="@+id/ll_add_account"
+        android:id="@+id/ll_withdrawals_cncbk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/ll_add_account"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_marginTop="13dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cncbk_user_name"
+                    android:textColor="@color/textblack"
+                    android:textSize="15sp"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="CNCBK白积分到账方式：官方充值"
+                    android:textColor="@color/gray"
+                    android:textSize="11sp"/>
+
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_user_name"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_arrow"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/cncbk_user_name"
-                android:textColor="@color/textblack"
-                android:textSize="15sp"/>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="CNCBK白积分到账方式：官方充值"
+                android:drawablePadding="4dp"
+                android:drawableRight="@drawable/withdrawals_arrow_selector"
+                android:text="请添加账号"
                 android:textColor="@color/gray"
-                android:textSize="11sp"/>
-
+                android:textSize="13sp"/>
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/ll_bind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@drawable/login_edit_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CNCBK用户名"
+                    android:textColor="@color/main_color"
+                    android:textSize="15sp"/>
+
+                <EditText
+                    android:id="@+id/edt_bind_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/transparent"
+                    android:gravity="right|center_vertical"
+                    android:hint="请输入账号"
+                    android:lines="1"
+                    android:textColor="@color/textblack"
+                    android:textColorHint="@color/gray"
+                    android:textSize="13sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/login_edit_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="手机号码"
+                    android:textColor="@color/main_color"
+                    android:textSize="15sp"/>
+
+                <EditText
+                    android:id="@+id/edt_bind_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/transparent"
+                    android:gravity="right|center_vertical"
+                    android:hint="请输入绑定手机号"
+                    android:inputType="phone"
+                    android:lines="1"
+                    android:maxLength="12"
+                    android:textColor="@color/textblack"
+                    android:textColorHint="@color/gray"
+                    android:textSize="13sp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_bind"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/main_color_circle_btn_selector"
+                android:gravity="center"
+                android:text="绑定CNCBK用户名"
+                android:textColor="@color/main_color"
+                android:textSize="13sp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/main_gray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="本次提现"
+                android:textColor="@color/textblack"
+                android:textSize="15sp"/>
+
+            <EditText
+                android:id="@+id/edt_withdrawals_integral"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/transparent"
+                android:gravity="right|center_vertical"
+                android:hint="请输入提现CNCBK积分"
+                android:inputType="numberDecimal"
+                android:lines="1"
+                android:textColor="@color/textblack"
+                android:textColorHint="@color/gray"
+                android:textSize="13sp"/>
+
+        </LinearLayout>
+
+        <View
+            style="@style/row_line"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="★"
+                android:textColor="@color/main_color"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="温馨提醒"
+                android:textColor="@color/main_color"
+                android:textSize="11sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.每"
+                android:textColor="@color/gray"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textColor="@color/main_color"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="天可以提取一次"
+                android:textColor="@color/gray"
+                android:textSize="13sp"/>
+        </LinearLayout>
+
+
         <TextView
-            android:id="@+id/tv_arrow"
+            android:id="@+id/tv_tip_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="4dp"
-            android:drawableRight="@drawable/withdrawals_arrow_selector"
-            android:text="请添加账号"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/gray"
             android:textSize="13sp"/>
 
+        <TextView
+            android:id="@+id/tv_tip_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/gray"
+            android:textSize="13sp"/>
+
+        <Button
+            android:id="@+id/btn_withdrawals"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_button"
+            android:gravity="center"
+            android:text="我要提现"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+
+        <View
+            style="@style/row_line"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <View
+                style="@style/column_line"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="时间"
+                android:textColorHint="@color/textblack"
+                android:textSize="14sp"/>
+
+            <View
+                style="@style/column_line"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="CNCBK积分"
+                android:textColorHint="@color/textblack"
+                android:textSize="14sp"/>
+
+            <View
+                style="@style/column_line"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="事件"
+                android:textColorHint="@color/textblack"
+                android:textSize="14sp"/>
+
+
+            <View
+                style="@style/column_line"/>
+
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_bind"
+        android:id="@+id/ll_withdrawals_money"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="gone">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="@drawable/login_edit_bg"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CNCBK用户名"
-                android:textColor="@color/main_color"
-                android:textSize="15sp"/>
-
-            <EditText
-                android:id="@+id/edt_bind_account"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:background="@color/transparent"
-                android:gravity="right|center_vertical"
-                android:hint="请输入账号"
-                android:lines="1"
-                android:textColor="@color/textblack"
-                android:textColorHint="@color/gray"
-                android:textSize="13sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/login_edit_bg"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="手机号码"
-                android:textColor="@color/main_color"
-                android:textSize="15sp"/>
-
-            <EditText
-                android:id="@+id/edt_bind_phone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:background="@color/transparent"
-                android:gravity="right|center_vertical"
-                android:hint="请输入绑定手机号"
-                android:inputType="phone"
-                android:lines="1"
-                android:maxLength="12"
-                android:textColor="@color/textblack"
-                android:textColorHint="@color/gray"
-                android:textSize="13sp"/>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_bind"
-            android:layout_width="150dp"
-            android:layout_height="30dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/main_color_circle_btn_selector"
-            android:gravity="center"
-            android:text="绑定CNCBK用户名"
-            android:textColor="@color/main_color"
-            android:textSize="13sp"/>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/main_gray"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="本次提现"
-            android:textColor="@color/textblack"
+            android:padding="10dp"
+            android:text="提现到支付宝"
             android:textSize="15sp"/>
 
-        <EditText
-            android:id="@+id/edt_withdrawals_integral"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@drawable/login_edit_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="姓名"
+                    android:textColor="@color/main_color"
+                    android:textSize="15sp"/>
+
+                <EditText
+                    android:id="@+id/edt_alipay_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/transparent"
+                    android:gravity="right|center_vertical"
+                    android:hint="请输入姓名"
+                    android:lines="1"
+                    android:textColor="@color/textblack"
+                    android:textColorHint="@color/gray"
+                    android:textSize="13sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/login_edit_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="账号"
+                    android:textColor="@color/main_color"
+                    android:textSize="15sp"/>
+
+                <EditText
+                    android:id="@+id/edt_alipay_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/transparent"
+                    android:gravity="right|center_vertical"
+                    android:hint="请输入账号"
+                    android:inputType="phone"
+                    android:lines="1"
+                    android:maxLength="12"
+                    android:textColor="@color/textblack"
+                    android:textColorHint="@color/gray"
+                    android:textSize="13sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/main_gray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="本次提现："
+                android:textColor="@color/textblack"
+                android:textSize="15sp"/>
+
+            <EditText
+                android:id="@+id/edt_withdrawals_integral_to_money"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:hint="当前可提现积分0"
+                android:inputType="numberDecimal"
+                android:lines="1"
+                android:textColor="@color/textblack"
+                android:textColorHint="@color/gray"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/btn_get_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="计算现金"
+                android:textColor="@color/order_share_btn_text_color"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+        <View
+            style="@style/row_line"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="0元"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="提现现金金额"
+            android:textColor="@color/gray"
+            android:textSize="15sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="★"
+                android:textColor="@color/main_color"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="温馨提醒"
+                android:textColor="@color/main_color"
+                android:textSize="11sp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@color/transparent"
-            android:gravity="right|center_vertical"
-            android:hint="请输入提现CNCBK积分"
-            android:inputType="numberDecimal"
-            android:lines="1"
-            android:textColor="@color/textblack"
-            android:textColorHint="@color/gray"
-            android:textSize="13sp"/>
-
-    </LinearLayout>
-
-    <View
-        style="@style/row_line"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="★"
-            android:textColor="@color/main_color"
-            android:textSize="13sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="温馨提醒"
-            android:textColor="@color/main_color"
-            android:textSize="11sp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1.每"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="@dimen/activity_horizontal_margin"
+            android:text="@string/withdrawals_money_tip"
             android:textColor="@color/gray"
             android:textSize="13sp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btn_withdrawals_to_money"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_button"
+            android:gravity="center"
+            android:text="我要提现"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+
+        <View
+            style="@style/row_line"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1"
-            android:textColor="@color/main_color"
-            android:textSize="13sp"/>
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="天可以提取一次"
-            android:textColor="@color/gray"
-            android:textSize="13sp"/>
+            <View
+                style="@style/column_line"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="时间"
+                android:textColorHint="@color/textblack"
+                android:textSize="14sp"/>
+
+            <View
+                style="@style/column_line"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="CNCBK积分"
+                android:textColorHint="@color/textblack"
+                android:textSize="14sp"/>
+
+            <View
+                style="@style/column_line"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="事件"
+                android:textColorHint="@color/textblack"
+                android:textSize="14sp"/>
+
+
+            <View
+                style="@style/column_line"/>
+        </LinearLayout>
     </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/tv_tip_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/gray"
-        android:textSize="13sp"/>
-
-    <TextView
-        android:id="@+id/tv_tip_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/gray"
-        android:textSize="13sp"/>
-
-    <Button
-        android:id="@+id/btn_withdrawals"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/shape_button"
-        android:gravity="center"
-        android:text="我要提现"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:textStyle="bold"/>
-
-
-    <View
-        style="@style/row_line"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <View
-            style="@style/column_line"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textSize="14sp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:textColorHint="@color/textblack"
-            android:text="时间"
-            android:gravity="center"
-            android:layout_height="wrap_content"/>
-
-        <View
-            style="@style/column_line"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textSize="14sp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:textColorHint="@color/textblack"
-            android:text="CNCBK积分"
-            android:gravity="center"
-            android:layout_height="wrap_content"/>
-
-        <View
-            style="@style/column_line"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textSize="14sp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:textColorHint="@color/textblack"
-            android:text="事件"
-            android:gravity="center"
-            android:layout_height="wrap_content"/>
-
-
-        <View
-            style="@style/column_line"/>
-
-    </LinearLayout>
-
 
 </LinearLayout>
