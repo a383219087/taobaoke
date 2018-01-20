@@ -79,8 +79,8 @@ public class AreaManagerHomepageActivity extends BaseActivity {
                                 addMemberSignView("-1", "");
                             } else if ("1".equals(storeIndex.getStatus())) {
                                 String area = storeIndex.getProvince() +
-                                        (TextUtils.isEmpty(storeIndex.getCity()) ? "" : ",")  + storeIndex.getCity() +
-                                        (TextUtils.isEmpty(storeIndex.getArea()) ? "" : ",") + storeIndex.getArea();
+                                        (TextUtils.isEmpty(storeIndex.getCity()) ? "" : ","+ storeIndex.getCity())   +
+                                        (TextUtils.isEmpty(storeIndex.getArea()) ? "" : ","+ storeIndex.getArea());
                                 addMemberSignView(storeIndex.getType(), TextUtils.isEmpty(storeIndex.getProvince()) ? "无" : area);
                                 mLlStatistics.setVisibility(View.VISIBLE);
                                 setValue(storeIndex);

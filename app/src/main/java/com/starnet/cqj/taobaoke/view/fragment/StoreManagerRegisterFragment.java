@@ -143,6 +143,10 @@ public class StoreManagerRegisterFragment extends BaseFragment {
             toast("请输入电话");
             return;
         }
+        if (TextUtils.isEmpty(remark)) {
+            toast("请输入备注");
+            return;
+        }
         int type = 1;
         switch (mRgStoreManagerType.getCheckedRadioButtonId()) {
             case R.id.rb_gold:

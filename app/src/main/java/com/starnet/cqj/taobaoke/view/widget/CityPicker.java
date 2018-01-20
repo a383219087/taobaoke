@@ -1,5 +1,6 @@
 package com.starnet.cqj.taobaoke.view.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.starnet.cqj.taobaoke.model.city.CityBean;
 import com.starnet.cqj.taobaoke.model.city.ICityData;
 import com.starnet.cqj.taobaoke.model.city.ProvinceBean;
 import com.starnet.cqj.taobaoke.remote.CityData;
+import com.starnet.cqj.taobaoke.utils.AppUtils;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.PickerDataHolder;
 
@@ -67,7 +69,8 @@ public class CityPicker extends PopupWindow {
         mContext = context;
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         setHeight(500);
-        setOutsideTouchable(false);
+        setFocusable(true);
+        AppUtils.hideInput((Activity) context);
         View contentView = LayoutInflater.from(context).inflate(R.layout.popup_city_picker, null, false);
         setContentView(contentView);
         ButterKnife.bind(this, contentView);
