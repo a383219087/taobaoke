@@ -41,7 +41,7 @@ public class StoreManagerApplyDetailDialog extends Dialog {
     private RxAppCompatActivity mActivity;
 
     public StoreManagerApplyDetailDialog(@NonNull Context context) {
-        super(context,R.style.DialogActivity);
+        super(context, R.style.DialogActivity);
         View contentView = LayoutInflater.from(context).inflate(R.layout.dialog_apply_detail, null, false);
         setContentView(contentView);
         ButterKnife.bind(this, contentView);
@@ -58,13 +58,14 @@ public class StoreManagerApplyDetailDialog extends Dialog {
                 .subscribe(new Consumer<JsonCommon<StoreManagerApplyDetail>>() {
                     @Override
                     public void accept(JsonCommon<StoreManagerApplyDetail> storeManagerApplyDetailJsonCommon) throws Exception {
-                        if("200".equals(storeManagerApplyDetailJsonCommon.getCode())){
+                        if ("200".equals(storeManagerApplyDetailJsonCommon.getCode())) {
                             StoreManagerApplyDetail data = storeManagerApplyDetailJsonCommon.getData();
                             mTvName.setText(data.getContact());
                             mTvPhone.setText(data.getPhone());
                             mTvRemark.setText(data.getRemark());
-                            mTvType.setText(data.getShopType());
-                        }else{
+                            String shopType = getShopTypeText(data.getShopType());
+                            mTvType.setText(shopType);
+                        } else {
                             Toast.makeText(mActivity, storeManagerApplyDetailJsonCommon.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -75,6 +76,28 @@ public class StoreManagerApplyDetailDialog extends Dialog {
                         Toast.makeText(mActivity, R.string.net_error, Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private String getShopTypeText(String shopType) {
+        String text = shopType;
+        try {
+            int type = Integer.parseInt(shopType);
+            switch (type) {
+                case 1:
+                    text = "金牌店长";
+                    break;
+                case 2:
+                    text = "银牌店长";
+                    break;
+                case 3:
+                    text = "铜牌店长";
+                    break;
+
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return text;
     }
 
     @OnClick(R.id.btn_done)

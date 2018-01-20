@@ -16,6 +16,9 @@ import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.StatisticsHolder;
+import com.starnet.cqj.taobaoke.view.widget.RecyclerViewLoadMoreHelper;
+
+import java.util.List;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
@@ -36,6 +39,7 @@ public class DayMonthStatisticsFragment extends BaseFragment {
     RecyclerView mRvStatistics;
 
     private RecyclerBaseAdapter<Statistics, StatisticsHolder> mAdapter;
+    private RecyclerViewLoadMoreHelper mHelper;
     private int mSearchType;
     private boolean mIsArea;
 
@@ -63,9 +67,20 @@ public class DayMonthStatisticsFragment extends BaseFragment {
         mRvStatistics.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRvStatistics.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayout.VERTICAL));
         mRvStatistics.setAdapter(mAdapter);
+        mHelper = new RecyclerViewLoadMoreHelper();
+        mRvStatistics.addOnScrollListener(mHelper.getOnScrollListener());
+        initEvent();
         getData();
     }
 
+    private void initEvent() {
+        mHelper.setLoadMoreCallback(new RecyclerViewLoadMoreHelper.LoadMoreCallback() {
+            @Override
+            public void loadMore() {
+                getData();
+            }
+        });
+    }
 
     private void getData() {
 
@@ -77,7 +92,13 @@ public class DayMonthStatisticsFragment extends BaseFragment {
                     @Override
                     public void accept(JsonCommon<ResultWrapper<Statistics>> listJsonCommon) throws Exception {
                         if ("200".equals(listJsonCommon.getCode())) {
-                            mAdapter.setAll(listJsonCommon.getData().getList());
+                            List<Statistics> datas = listJsonCommon.getData().getList();
+                            mHelper.setNoMore(datas == null || datas.isEmpty());
+                            if (mHelper.isFirstPage()) {
+                                mAdapter.setAll(datas);
+                            } else {
+                                mAdapter.addAll(datas);
+                            }
                         } else {
                             toast(listJsonCommon.getMessage());
                         }
@@ -93,11 +114,11 @@ public class DayMonthStatisticsFragment extends BaseFragment {
     private Observable<JsonCommon<ResultWrapper<Statistics>>> getJsonCommonObservable() {
         if (mIsArea) {
             return RemoteDataSourceBase.INSTANCE.getAreaStatisticsService()
-                    .get(((BaseApplication) getActivity().getApplication()).getToken(), mSearchType);
+                    .get(((BaseApplication) getActivity().getApplication()).getToken(), mSearchType, mHelper.getPage());
         } else {
             return RemoteDataSourceBase.INSTANCE.getStatisticsService()
                     .get(((BaseApplication) getActivity().getApplication()).getToken(),
-                            mSearchType);
+                            mSearchType, mHelper.getPage());
         }
     }
 

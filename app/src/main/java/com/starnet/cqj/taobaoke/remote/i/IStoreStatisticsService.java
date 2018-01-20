@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 public interface IStoreStatisticsService {
 
     @POST("/shop/statistics")
-    Observable<JsonCommon<ResultWrapper<Statistics>>> get(@Header("Authorization") String header, @Query("type") int type);
+    Observable<JsonCommon<ResultWrapper<Statistics>>> get(@Header("Authorization") String header, @Query("type") int type, @Query("page") int page);
 
 
     @POST("/shop/statistics")
