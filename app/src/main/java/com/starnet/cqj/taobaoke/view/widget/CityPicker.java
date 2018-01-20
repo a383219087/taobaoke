@@ -93,11 +93,14 @@ public class CityPicker extends PopupWindow {
                 mRvCity.setVisibility(View.GONE);
                 mRvArea.setVisibility(View.GONE);
                 mRvProvince.setVisibility(View.VISIBLE);
+                mCity = "";
+                mArea = "";
                 break;
             case CITY:
                 mRvProvince.setVisibility(View.VISIBLE);
                 mRvCity.setVisibility(View.VISIBLE);
                 mRvArea.setVisibility(View.GONE);
+                mArea = "";
                 break;
             case AREA:
                 mRvProvince.setVisibility(View.VISIBLE);
