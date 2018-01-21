@@ -19,7 +19,6 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends RxFragment {
 
-
     private Unbinder mUnbinder;
 
     @Nullable

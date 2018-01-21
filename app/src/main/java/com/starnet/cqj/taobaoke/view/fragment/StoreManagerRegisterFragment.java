@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -12,18 +13,24 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.alipay.sdk.app.PayTask;
 import com.starnet.cqj.taobaoke.R;
+import com.starnet.cqj.taobaoke.model.AgencyFee;
+import com.starnet.cqj.taobaoke.model.AlipayRequest;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.utils.StoreManagerType;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.widget.CityPicker;
 
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 
@@ -59,12 +66,16 @@ public class StoreManagerRegisterFragment extends BaseFragment {
     TextView mTvRegisterRemark;
     @BindView(R.id.tv_type)
     TextView mTvType;
+    @BindView(R.id.tv_money)
+    TextView mTvMoney;
     private PublishSubject<String> mDoneObservable = PublishSubject.create();
     private boolean mIsArea;
     private CityPicker mCityPicker;
     private String mProvince;
     private String mCity;
     private String mArea;
+    private AgencyFee mAgencyFee;
+    private boolean isSuccess;
 
     public static StoreManagerRegisterFragment newInstance(boolean isArea) {
 
@@ -106,8 +117,9 @@ public class StoreManagerRegisterFragment extends BaseFragment {
             mTvRemarkTitle.setText("区域代理说明");
             mTvRegisterRemark.setText(R.string.area_register_remark);
             mCityPicker.showLevel(CityPicker.ShowLevel.PROVINCE);
-            initEvent();
         }
+        initEvent();
+        getPrice();
     }
 
     private void initEvent() {
@@ -116,19 +128,47 @@ public class StoreManagerRegisterFragment extends BaseFragment {
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_gold:
-                        mCityPicker.showLevel(CityPicker.ShowLevel.PROVINCE);
+                        if (mIsArea) {
+                            mCityPicker.showLevel(CityPicker.ShowLevel.PROVINCE);
+                            setMoney(mAgencyFee == null ? "" : mAgencyFee.getProvince());
+                        } else {
+                            setMoney(mAgencyFee == null ? "" : mAgencyFee.getGold());
+                        }
+
                         break;
                     case R.id.rb_silver:
-                        mCityPicker.showLevel(CityPicker.ShowLevel.CITY);
+                        if (mIsArea) {
+                            mCityPicker.showLevel(CityPicker.ShowLevel.CITY);
+                            setMoney(mAgencyFee == null ? "" : mAgencyFee.getCity());
+                        } else {
+                            setMoney(mAgencyFee == null ? "" : mAgencyFee.getSilver());
+                        }
                         break;
                     case R.id.rb_cuprum:
-                        mCityPicker.showLevel(CityPicker.ShowLevel.AREA);
+                        if (mIsArea) {
+                            mCityPicker.showLevel(CityPicker.ShowLevel.AREA);
+                            setMoney(mAgencyFee == null ? "" : mAgencyFee.getRegion());
+                        } else {
+                            setMoney(mAgencyFee == null ? "" : mAgencyFee.getCopper());
+                        }
                         break;
                     default:
                         break;
                 }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isSuccess) {
+            mDoneObservable.onNext("");
+        }
+    }
+
+    private void setMoney(String gold) {
+        mTvMoney.setText(gold);
     }
 
     @OnClick(R.id.btn_register)
@@ -163,16 +203,71 @@ public class StoreManagerRegisterFragment extends BaseFragment {
                 break;
         }
         getApply(name, phone, remark, type)
-                .compose(this.<JsonCommon<Object>>bindToLifecycle())
+                .map(new Function<JsonCommon<AlipayRequest>, Pair<String,String>>() {
+                    @Override
+                    public Pair<String,String> apply(JsonCommon<AlipayRequest> alipayRequestJsonCommon) throws Exception {
+                        if ("200".equals(alipayRequestJsonCommon.getCode())) {
+                            PayTask alipay = new PayTask(getActivity());
+                            Map<String, String> map = alipay.payV2(alipayRequestJsonCommon.getData().getAlipay(), true);
+                            String resultStatus = map.get("resultStatus");
+                            if(resultStatus.equals("9000")){
+                                isSuccess =true;
+                                return Pair.create(resultStatus,"支付成功");
+                            }else{
+                                return Pair.create(resultStatus,map.get("memo"));
+                            }
+                        } else {
+                            return Pair.create("-1",alipayRequestJsonCommon.getMessage());
+                        }
+                    }
+                })
+                .compose(this.<Pair<String,String>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<JsonCommon<Object>>() {
+                .subscribe(new Consumer<Pair<String,String>>() {
                     @Override
-                    public void accept(JsonCommon<Object> objectJsonCommon) throws Exception {
+                    public void accept(Pair<String,String> result) throws Exception {
+                        if(result.first.equals("9000")){
+                            mDoneObservable.onNext(result.second);
+                        }
+                        toast(result.second);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        throwable.printStackTrace();
+                        toast(R.string.net_error);
+                    }
+                });
+    }
+
+    private static final String TAG = "StoreManagerRegisterFra";
+
+    private Observable<JsonCommon<AlipayRequest>> getApply(String name, String phone, String remark, int type) {
+        if (mIsArea) {
+            return RemoteDataSourceBase.INSTANCE.getAreaManagerService()
+                    .orderApply(((BaseApplication) getActivity().getApplication()).getToken(), type, name, phone, remark, mTvMoney.getText().toString(), mProvince, mCity, mArea);
+        }
+        return RemoteDataSourceBase.INSTANCE.getStoreManagerService()
+                .orderApply(((BaseApplication) getActivity().getApplication()).getToken(), type, name, phone, remark, mTvMoney.getText().toString());
+    }
+
+    private void getPrice() {
+        RemoteDataSourceBase.INSTANCE.getStoreManagerService()
+                .agencyFee(((BaseApplication) getActivity().getApplication()).getToken())
+                .compose(this.<JsonCommon<AgencyFee>>bindToLifecycle())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer<JsonCommon<AgencyFee>>() {
+                    @Override
+                    public void accept(JsonCommon<AgencyFee> objectJsonCommon) throws Exception {
                         if ("200".equals(objectJsonCommon.getCode())) {
-                            String s = "提交成功";
-                            toast(s);
-                            mDoneObservable.onNext(s);
+                            mAgencyFee = objectJsonCommon.getData();
+                            if (mIsArea) {
+                                setMoney(mAgencyFee.getProvince());
+                            } else {
+                                setMoney(mAgencyFee.getGold());
+                            }
                         } else {
                             toast(objectJsonCommon.getMessage());
                         }
@@ -184,16 +279,9 @@ public class StoreManagerRegisterFragment extends BaseFragment {
                         toast(R.string.net_error);
                     }
                 });
+
     }
 
-    private Observable<JsonCommon<Object>> getApply(String name, String phone, String remark, int type) {
-        if (mIsArea) {
-            return RemoteDataSourceBase.INSTANCE.getAreaManagerService()
-                    .apply(((BaseApplication) getActivity().getApplication()).getToken(), type, name, phone, remark, mProvince, mCity, mArea);
-        }
-        return RemoteDataSourceBase.INSTANCE.getStoreManagerService()
-                .apply(((BaseApplication) getActivity().getApplication()).getToken(), type, name, phone, remark);
-    }
 
     public Observable<String> doneObservable() {
         return mDoneObservable;

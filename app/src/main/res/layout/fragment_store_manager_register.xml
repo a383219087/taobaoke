@@ -43,6 +43,23 @@
                         android:text="申请信息"
                         android:textColor="@color/text_black"
                         android:textSize="13sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="￥"
+
+                        android:textColor="@color/main_color"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:text="0"
+                        android:textColor="@color/main_color"
+                        android:textSize="13sp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -62,6 +79,7 @@
                         android:text="店长类型"
                         android:textColor="@color/textblack"
                         android:textSize="13sp"/>
+
 
                     <RadioGroup
                         android:id="@+id/rg_store_manager_type"

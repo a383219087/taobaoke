@@ -68,7 +68,7 @@ public class StoreManagerRegisterActivity extends BaseActivity {
                                 registerFragment();
                             }
                         } else {
-                            toast(applyStatusJsonCommon.getMessage());
+                            registerFragment();
                         }
                     }
                 }, new Consumer<Throwable>() {

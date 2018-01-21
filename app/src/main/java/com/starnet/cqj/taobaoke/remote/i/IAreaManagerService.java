@@ -1,5 +1,6 @@
 package com.starnet.cqj.taobaoke.remote.i;
 
+import com.starnet.cqj.taobaoke.model.AlipayRequest;
 import com.starnet.cqj.taobaoke.model.ApplyStatus;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.StoreIndex;
@@ -19,6 +20,12 @@ public interface IAreaManagerService {
     Observable<JsonCommon<Object>> apply(@Header("Authorization") String header, @Query("area_type") int type,
                                          @Query("contact") String contact, @Query("phone") String phone, @Query("remark") String remark,
                                          @Query("province") String province, @Query("city") String city, @Query("area") String area);
+
+
+    @POST("/area/orderApply")
+    Observable<JsonCommon<AlipayRequest>> orderApply(@Header("Authorization") String header, @Query("area_type") int type,
+                                                     @Query("contact") String contact, @Query("phone") String phone, @Query("remark") String remark, @Query("money") String money,
+                                                     @Query("province") String province, @Query("city") String city, @Query("area") String area);
 
     @POST("/shop/status")
     Observable<JsonCommon<ApplyStatus>> status(@Header("Authorization") String header);

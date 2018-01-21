@@ -47,7 +47,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 
-public class HomeTopView extends LinearLayout implements IHomePagePresenter.IView{
+public class HomeTopView extends LinearLayout implements IHomePagePresenter.IView {
     @BindView(R.id.main_auto_banner)
     BannerView mMainAutoBanner;
     @BindView(R.id.home_tab_rg)
@@ -77,6 +77,7 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
     private RecyclerBaseAdapter<Product, LookBuyHolder> mLookBuyAdapter;
     private Callback mCallback;
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+    private boolean canShowTip = true;
 
     public HomeTopView(Context context) {
         super(context);
@@ -115,10 +116,14 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
                 if (i == R.id.home_tab_rb1) {
                     mMainLlContent.setVisibility(View.VISIBLE);
                     mTabOther.setVisibility(View.GONE);
+                    mMainLlMessage.setVisibility(VISIBLE);
                     mCallback.tabChange(true);
+                    canShowTip = true;
                 } else {
                     mMainLlContent.setVisibility(View.GONE);
                     mTabOther.setVisibility(View.VISIBLE);
+                    mMainLlMessage.setVisibility(GONE);
+                    canShowTip = false;
                     mCallback.tabChange(false);
                 }
             }
@@ -164,8 +169,8 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
         mRvMainMenu.clearFocus();
     }
 
-    public void getData(){
-        if(mHomePagePresenter!=null){
+    public void getData() {
+        if (mHomePagePresenter != null) {
             mHomePagePresenter.getBanner();
         }
     }
@@ -264,7 +269,7 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
 
     @Override
     public void setTip(BuyTip tip) {
-        if (tip != null) {
+        if (tip != null && canShowTip) {
             mMainLlMessage.setVisibility(View.VISIBLE);
             mTvMessageName.setText(tip.getName());
             mTvMessageContent.setText(tip.getContent());
@@ -277,14 +282,14 @@ public class HomeTopView extends LinearLayout implements IHomePagePresenter.IVie
 
     }
 
-    public void onDestroy(){
+    public void onDestroy() {
         if (mHomePagePresenter != null) {
             mHomePagePresenter.onDestroy();
         }
         mCompositeDisposable.dispose();
     }
 
-    public interface Callback{
+    public interface Callback {
         void refreshDone(boolean success);
 
         void tabChange(boolean isShow);
