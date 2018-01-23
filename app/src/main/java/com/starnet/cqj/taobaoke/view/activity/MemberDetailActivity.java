@@ -55,6 +55,8 @@ public class MemberDetailActivity extends BaseActivity {
     TextView mTvEndDate;
     @BindView(R.id.rv_get_detail)
     RecyclerView mRvGetDetail;
+    @BindView(R.id.btn_his_member)
+    TextView mBtnHisMember;
 
 
     private Calendar mCalendar;
@@ -74,29 +76,14 @@ public class MemberDetailActivity extends BaseActivity {
         setTitleName(R.string.member_detail_title);
         mUid = getIntent().getStringExtra(KEY_UID);
         mCalendar = Calendar.getInstance();
-        mTvStartDate.setText(mCalendar.get(Calendar.YEAR) + "-" + (mCalendar.get(Calendar.MONTH) + 1) + "-1");
-        mDateFormat = new SimpleDateFormat("yyyy-M-d", Locale.getDefault());
+        mDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        mTvStartDate.setText(mDateFormat.format(new Date()));
         mTvEndDate.setText(mDateFormat.format(new Date()));
         mPopupWindow = new DateTimePopupWindow(this);
         mRvGetDetail.setLayoutManager(new LinearLayoutManagerWrapper(this));
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_member_detail, MemberDetailItemHolder.class);
         mRvGetDetail.setAdapter(mAdapter);
         getData();
-    }
-
-    public void initEvent() {
-        mPopupWindow.dateObservable()
-                .compose(this.<Date>bindToLifecycle())
-                .subscribe(new Consumer<Date>() {
-                    @Override
-                    public void accept(Date date) throws Exception {
-                        mCurrentChooseView.setText(mDateFormat.format(date));
-                        if (!TextUtils.isEmpty(mTvStartDate.getText().toString())
-                                && !TextUtils.isEmpty(mTvEndDate.getText().toString())) {
-                            getDetail();
-                        }
-                    }
-                });
     }
 
     private void getDetail() {
@@ -137,9 +124,10 @@ public class MemberDetailActivity extends BaseActivity {
                                     .load(member.getAvatar())
                                     .into(mIvAvatar);
                             mTvName.setText(member.getNickName());
-                            mTvMemberId.setText(getResources().getString(R.string.member_id_text, member.getId()));
+                            mTvMemberId.setText(getResources().getString(R.string.member_id_text, member.getMobile()));
                             mTvTime.setText(getResources().getString(R.string.member_time_text, member.getTime()));
                             mTvScoreTotal.setText(getString(R.string.score_total_text, member.getCredit()));
+                            mBtnHisMember.setText(getString(R.string.members_sub_btn,member.getCount()));
                         } else {
                             toast(memberJsonCommon.getMessage());
                         }
@@ -155,23 +143,39 @@ public class MemberDetailActivity extends BaseActivity {
 
     @OnClick({R.id.btn_his_member, R.id.tv_start_date, R.id.tv_end_date})
     public void onViewClicked(View view) {
+        String endDate = mTvEndDate.getText().toString();
+        String startDate = mTvStartDate.getText().toString();
         switch (view.getId()) {
             case R.id.btn_his_member:
                 MemberListActivity.start(this, mUid, mTvName.getText().toString());
                 break;
             case R.id.tv_start_date:
-                String startDate = mTvStartDate.getText().toString();
-                showDatePicker(mTvStartDate, startDate);
+                DateTimePopupWindow dateTimePopupWindow1 = showDatePicker(mTvStartDate, startDate);
+                if (dateTimePopupWindow1 != null) {
+                    try {
+                        Date maxDate = mDateFormat.parse(endDate);
+                        dateTimePopupWindow1.setMaxDate(maxDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
             case R.id.tv_end_date:
-                String endDate = mTvEndDate.getText().toString();
-                showDatePicker(mTvEndDate, endDate);
+                DateTimePopupWindow dateTimePopupWindow = showDatePicker(mTvEndDate, endDate);
+                if (dateTimePopupWindow != null) {
+                    try {
+                        Date minDate = mDateFormat.parse(startDate);
+                        dateTimePopupWindow.setMinDate(minDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
         }
     }
 
-    private void showDatePicker(TextView view, String startDate) {
-        mCurrentChooseView = view;
+    private DateTimePopupWindow showDatePicker(final TextView view, String startDate) {
+        DateTimePopupWindow mPopupWindow = new DateTimePopupWindow(this);
         try {
             Date date = mDateFormat.parse(startDate);
             mCalendar.setTime(date);
@@ -179,7 +183,20 @@ public class MemberDetailActivity extends BaseActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        mPopupWindow.dateObservable()
+                .compose(this.<Date>bindToLifecycle())
+                .subscribe(new Consumer<Date>() {
+                    @Override
+                    public void accept(Date date) throws Exception {
+                        view.setText(mDateFormat.format(date));
+                        if (!TextUtils.isEmpty(mTvStartDate.getText().toString())
+                                && !TextUtils.isEmpty(mTvEndDate.getText().toString())) {
+                            getDetail();
+                        }
+                    }
+                });
         mPopupWindow.showAsDropDown(view);
+        return mPopupWindow;
     }
 
     public static void start(Context context, String uid) {

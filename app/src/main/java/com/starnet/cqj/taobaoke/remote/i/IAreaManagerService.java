@@ -27,7 +27,7 @@ public interface IAreaManagerService {
                                                      @Query("contact") String contact, @Query("phone") String phone, @Query("remark") String remark, @Query("money") String money,
                                                      @Query("province") String province, @Query("city") String city, @Query("area") String area);
 
-    @POST("/shop/status")
+    @POST("/area/status")
     Observable<JsonCommon<ApplyStatus>> status(@Header("Authorization") String header);
 
 

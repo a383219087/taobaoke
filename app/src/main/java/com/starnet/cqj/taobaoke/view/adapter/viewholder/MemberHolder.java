@@ -38,7 +38,7 @@ public class MemberHolder extends BaseHolder<Member> {
     public void bind(List<Member> data, int position, IParamContainer container, final PublishSubject<Member> itemClick) {
         final Member member = data.get(position);
         if (member != null) {
-            mTvMemberId.setText(itemView.getContext().getResources().getString(R.string.member_id_text, member.getId()));
+            mTvMemberId.setText(itemView.getContext().getResources().getString(R.string.member_id_text, member.getMobile()));
             mTvName.setText(member.getNickName());
             mTvRegisterTime.setText(itemView.getContext().getResources().getString(R.string.member_time_text, member.getTime()));
             Glide.with(itemView.getContext())

@@ -165,7 +165,7 @@
     <string name="checking_remark">您提交的店长申请已提交至平台，平台管理员会在2个工作日内与您联系。请耐心等待，谢谢</string>
     <string name="others_member_title">%s的会员</string>
     <string name="my_member_title">我的会员</string>
-    <string name="member_id_text">会员号：%s</string>
+    <string name="member_id_text">手机号：%s</string>
     <string name="member_time_text">注册时间：%s</string>
     <string name="data_statistics_title">数据统计</string>
     <string name="area_proxy_title">区域代理</string>
@@ -175,4 +175,5 @@
     <string name="account_list_title">提现账号</string>
     <string name="withdrawals_money_tip">1、每月只能提取2次，每次不能少于1元。\n2、微信提取2000元以内，即时到账，2000元以上需人工审核。\n3、提取3000以上才能用支付宝。\n4、根据国家法律规定，推广费按照劳务费缴税，税率为4.46%，暂由新肌会承担。</string>
     <string name="money_unit">%d元</string>
+    <string name="members_sub_btn">%s位》</string>
 </resources>
