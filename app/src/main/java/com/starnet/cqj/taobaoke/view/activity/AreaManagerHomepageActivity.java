@@ -115,6 +115,7 @@ public class AreaManagerHomepageActivity extends BaseActivity {
     }
 
     private void addToRegisterView() {
+        mLlTip.removeAllViews();
         View viewToRegister = LayoutInflater.from(AreaManagerHomepageActivity.this)
                 .inflate(R.layout.view_to_register, null, false);
         TextView tvTip = (TextView) viewToRegister.findViewById(R.id.tv_tip);
@@ -132,6 +133,7 @@ public class AreaManagerHomepageActivity extends BaseActivity {
 
 
     private void addMemberSignView(String type, String area) {
+        mLlTip.removeAllViews();
         View memberSignView = LayoutInflater.from(AreaManagerHomepageActivity.this)
                 .inflate(R.layout.view_member_sign, null, false);
         TextView tvMemberTip = (TextView) memberSignView.findViewById(R.id.tv_member_tip);

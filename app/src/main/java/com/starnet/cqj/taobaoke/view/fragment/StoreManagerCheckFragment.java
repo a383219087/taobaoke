@@ -14,15 +14,18 @@ import butterknife.OnClick;
 
 public class StoreManagerCheckFragment extends BaseFragment {
 
-    public static StoreManagerCheckFragment newInstance() {
-        
+    public static final String KEY_IS_AREA = "is_area";
+    private boolean mIsArea;
+
+    public static StoreManagerCheckFragment newInstance(boolean isArea) {
+
         Bundle args = new Bundle();
-        
+        args.putBoolean(KEY_IS_AREA, isArea);
         StoreManagerCheckFragment fragment = new StoreManagerCheckFragment();
         fragment.setArguments(args);
         return fragment;
     }
-    
+
     @Override
     int getContentRes() {
         return R.layout.fragment_store_manager_check;
@@ -31,7 +34,8 @@ public class StoreManagerCheckFragment extends BaseFragment {
 
     @OnClick(R.id.btn_apply_info)
     public void onViewClicked() {
-        StoreManagerApplyDetailDialog detailDialog = new StoreManagerApplyDetailDialog(getActivity());
+        mIsArea = getArguments().getBoolean(KEY_IS_AREA, false);
+        StoreManagerApplyDetailDialog detailDialog = new StoreManagerApplyDetailDialog(getActivity(),mIsArea);
         detailDialog.show();
     }
 }

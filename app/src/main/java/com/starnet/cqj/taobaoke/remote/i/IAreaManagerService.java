@@ -4,6 +4,7 @@ import com.starnet.cqj.taobaoke.model.AlipayRequest;
 import com.starnet.cqj.taobaoke.model.ApplyStatus;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
 import com.starnet.cqj.taobaoke.model.StoreIndex;
+import com.starnet.cqj.taobaoke.model.StoreManagerApplyDetail;
 
 import io.reactivex.Observable;
 import retrofit2.http.Header;
@@ -33,4 +34,7 @@ public interface IAreaManagerService {
 
     @POST("/area/index")
     Observable<JsonCommon<StoreIndex>> index(@Header("Authorization") String header);
+
+    @POST("/area/get")
+    Observable<JsonCommon<StoreManagerApplyDetail>> get(@Header("Authorization") String header);
 }

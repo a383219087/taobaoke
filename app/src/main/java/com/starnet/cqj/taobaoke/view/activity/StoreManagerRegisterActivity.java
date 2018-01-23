@@ -12,6 +12,7 @@ import com.starnet.cqj.taobaoke.view.fragment.StoreManagerCheckFragment;
 import com.starnet.cqj.taobaoke.view.fragment.StoreManagerRegisterFragment;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -26,6 +27,7 @@ public class StoreManagerRegisterActivity extends BaseActivity {
     public static final String KEY_TYPE = "type";
     public static final String KEY_IS_AREA = "is_area";
     private boolean mIsArea;
+    private Disposable mDisposable;
 
     @Override
     protected int getContentView() {
@@ -38,7 +40,7 @@ public class StoreManagerRegisterActivity extends BaseActivity {
         String isArea = getIntent().getStringExtra(KEY_IS_AREA);
         mIsArea = isArea.equals("1");
         if (mIsArea) {
-            setTitleName(R.string.register_area_title);
+            setTitleName("代理查询");
             getAreaApplyStatus();
         } else {
             setTitleName(R.string.store_manager_register_title);
@@ -61,13 +63,17 @@ public class StoreManagerRegisterActivity extends BaseActivity {
                     public void accept(JsonCommon<ApplyStatus> applyStatusJsonCommon) throws Exception {
                         if ("200".equals(applyStatusJsonCommon.getCode())) {
                             if ("0".equals(applyStatusJsonCommon.getData().getStatus())) {
+                                setTitleName(R.string.register_area_title);
                                 applyingFragment();
                             } else if ("1".equals(applyStatusJsonCommon.getData().getStatus())) {
                                 AreaManagerHomepageActivity.start(StoreManagerRegisterActivity.this);
+                                finish();
                             } else {
+                                setTitleName(R.string.register_area_title);
                                 registerFragment();
                             }
                         } else {
+                            setTitleName(R.string.register_area_title);
                             registerFragment();
                         }
                     }
@@ -87,7 +93,14 @@ public class StoreManagerRegisterActivity extends BaseActivity {
                 .replace(R.id.fragment_container, registerFragment)
                 .commit();
         registerFragment.doneObservable()
-                .compose(this.<String>bindToLifecycle())
+                .doOnSubscribe(new Consumer<Disposable>() {
+
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+
+                        mDisposable = disposable;
+                    }
+                })
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
@@ -97,11 +110,19 @@ public class StoreManagerRegisterActivity extends BaseActivity {
     }
 
     private void applyingFragment() {
-        StoreManagerCheckFragment storeManagerCheckFragment = StoreManagerCheckFragment.newInstance();
+        StoreManagerCheckFragment storeManagerCheckFragment = StoreManagerCheckFragment.newInstance(mIsArea);
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, storeManagerCheckFragment)
                 .commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mDisposable != null) {
+            mDisposable.dispose();
+        }
     }
 
     public static void start(Context context, String status, String isArea) {

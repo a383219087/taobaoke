@@ -221,7 +221,6 @@ public class StoreManagerRegisterFragment extends BaseFragment {
                         }
                     }
                 })
-                .compose(this.<Pair<String,String>>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Consumer<Pair<String,String>>() {

@@ -96,6 +96,7 @@ public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
     }
 
     private void addToRegisterView() {
+        mLlTip.removeAllViews();
         View viewToRegister = LayoutInflater.from(StoreManagerHomePageActivity.this)
                 .inflate(R.layout.view_to_register, null, false);
         viewToRegister.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +115,7 @@ public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
     }
 
     private void addMemberSignView(String type) {
+        mLlTip.removeAllViews();
         View memberSignView = LayoutInflater.from(StoreManagerHomePageActivity.this)
                 .inflate(R.layout.view_member_sign, null, false);
         TextView tvMemberSign = (TextView) memberSignView.findViewById(R.id.tv_member_sign);

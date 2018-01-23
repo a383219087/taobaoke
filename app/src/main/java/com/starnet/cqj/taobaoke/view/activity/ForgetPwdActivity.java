@@ -69,6 +69,10 @@ public class ForgetPwdActivity extends BaseActivity implements IForgetPwdPresent
                     toast("请输入密码");
                     return;
                 }
+                if(newPwd.length()<6){
+                    toast("密码长度不够");
+                    return;
+                }
                 if (TextUtils.isEmpty(newPwdAgain)) {
                     toast("请再次输入密码");
                     return;
