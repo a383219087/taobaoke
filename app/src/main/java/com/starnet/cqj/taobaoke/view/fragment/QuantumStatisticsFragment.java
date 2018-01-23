@@ -68,6 +68,9 @@ public class QuantumStatisticsFragment extends BaseFragment {
         mDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         mTvStartDate.setText(mDateFormat.format(new Date()));
         mTvEndDate.setText(mDateFormat.format(new Date()));
+        if (mIsArea) {
+            mThreeShowDataView.setOneTip("消费用户数");
+        }
     }
 
     private void getData() {

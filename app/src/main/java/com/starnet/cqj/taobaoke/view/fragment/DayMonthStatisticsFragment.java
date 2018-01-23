@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
@@ -37,6 +38,8 @@ public class DayMonthStatisticsFragment extends BaseFragment {
     public static final String KEY_IS_AREA = "is_area";
     @BindView(R.id.rv_statistics)
     RecyclerView mRvStatistics;
+    @BindView(R.id.tv_user_count_tip)
+    TextView mTvUserCountTip;
 
     private RecyclerBaseAdapter<Statistics, StatisticsHolder> mAdapter;
     private RecyclerViewLoadMoreHelper mHelper;
@@ -63,6 +66,9 @@ public class DayMonthStatisticsFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mSearchType = getArguments().getInt(KEY_TYPE);
         mIsArea = getArguments().getBoolean(KEY_IS_AREA);
+        if (mIsArea) {
+            mTvUserCountTip.setText("消费用户数");
+        }
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_statistics, StatisticsHolder.class);
         mRvStatistics.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRvStatistics.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayout.VERTICAL));
