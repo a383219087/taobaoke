@@ -56,6 +56,9 @@ public class AreaManagerHomepageActivity extends BaseActivity {
         mThreeViewScore.setValueCount(2);
         mThreeViewScore.setOneTip("未确认");
         mThreeViewScore.setTwoTip("已确认");
+        mThreeViewDay.setOneTip("消费用户数");
+        mThreeViewMonth.setOneTip("消费用户数");
+        mThreeViewHistory.setOneTip("消费用户数");
     }
 
     @Override

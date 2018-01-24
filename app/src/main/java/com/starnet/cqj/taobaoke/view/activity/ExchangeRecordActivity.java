@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.ExchangeRecord;
 import com.starnet.cqj.taobaoke.model.JsonCommon;
+import com.starnet.cqj.taobaoke.model.ResultWrapper;
 import com.starnet.cqj.taobaoke.remote.RemoteDataSourceBase;
 import com.starnet.cqj.taobaoke.view.BaseApplication;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
@@ -53,7 +54,7 @@ public class ExchangeRecordActivity extends BaseActivity {
                 getData();
             }
         });
-
+        getData();
     }
 
     private void getData() {
@@ -61,18 +62,19 @@ public class ExchangeRecordActivity extends BaseActivity {
                 .integralRecord(((BaseApplication) getApplication()).getToken(), mHelper.getPage())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .compose(this.<JsonCommon<List<ExchangeRecord>>>bindToLifecycle())
-                .subscribe(new Consumer<JsonCommon<List<ExchangeRecord>>>() {
+                .compose(this.<JsonCommon<ResultWrapper<ExchangeRecord>>>bindToLifecycle())
+                .subscribe(new Consumer<JsonCommon<ResultWrapper<ExchangeRecord>>>() {
                     @Override
-                    public void accept(JsonCommon<List<ExchangeRecord>> listJsonCommon) throws Exception {
+                    public void accept(JsonCommon<ResultWrapper<ExchangeRecord>> listJsonCommon) throws Exception {
                         mSrRefresh.setRefreshing(false);
                         mHelper.setLoading(false);
                         if ("200".equals(listJsonCommon.getCode())) {
-                            mHelper.setNoMore(listJsonCommon.getData() == null || listJsonCommon.getData().isEmpty());
+                            List<ExchangeRecord> list = listJsonCommon.getData().getList();
+                            mHelper.setNoMore(list == null || list.isEmpty());
                             if (mHelper.isFirstPage()) {
-                                mAdapter.setAll(listJsonCommon.getData());
+                                mAdapter.setAll(list);
                             } else {
-                                mAdapter.addAll(listJsonCommon.getData());
+                                mAdapter.addAll(list);
                             }
                         } else {
                             toast(listJsonCommon.getMessage());

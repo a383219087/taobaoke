@@ -73,7 +73,7 @@ public interface IUserService {
     );
 
     @POST("/integralRecord")
-    Observable<JsonCommon<List<ExchangeRecord>>> integralRecord(@Header("Authorization") String header, @Query("page") int page);
+    Observable<JsonCommon<ResultWrapper<ExchangeRecord>>> integralRecord(@Header("Authorization") String header, @Query("page") int page);
 
     @POST("/cncbk")
     Observable<JsonCommon<CNCBKUser>> cncbk(@Header("Authorization") String header);
