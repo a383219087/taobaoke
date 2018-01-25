@@ -1,11 +1,14 @@
 package com.starnet.cqj.taobaoke.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by mini on 17/11/14.
  */
 
 public class ExchangeRecord {
 
+    @SerializedName("order_id")
     private String id;
     private String title;
     private String pic;
