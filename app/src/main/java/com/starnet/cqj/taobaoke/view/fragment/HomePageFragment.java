@@ -26,8 +26,8 @@ import com.starnet.cqj.taobaoke.view.activity.SearchActivity;
 import com.starnet.cqj.taobaoke.view.adapter.HasHeaderSpaceDecoration;
 import com.starnet.cqj.taobaoke.view.adapter.RecyclerBaseAdapter;
 import com.starnet.cqj.taobaoke.view.adapter.viewholder.ProductHolder;
-import com.starnet.cqj.taobaoke.view.widget.topview.HomeTopView;
 import com.starnet.cqj.taobaoke.view.widget.RecyclerViewLoadMoreHelper;
+import com.starnet.cqj.taobaoke.view.widget.topview.HomeTopView;
 
 import java.net.URLDecoder;
 import java.util.List;

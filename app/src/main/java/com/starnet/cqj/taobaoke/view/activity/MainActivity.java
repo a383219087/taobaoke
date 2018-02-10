@@ -3,6 +3,7 @@ package com.starnet.cqj.taobaoke.view.activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.widget.RadioGroup;
 
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.utils.RxBus;
+import com.starnet.cqj.taobaoke.utils.SharedPreferenceUtil;
 import com.starnet.cqj.taobaoke.utils.event.ToHomePageEvent;
 import com.starnet.cqj.taobaoke.view.fragment.ActionFragment;
 import com.starnet.cqj.taobaoke.view.fragment.HomePageFragment;
@@ -23,6 +25,7 @@ import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseActivity {
+    public static final String CLIP_HISTORY = "clip_history";
     @BindView(R.id.rg)
     RadioGroup mRg;
     @BindView(R.id.rb_home)
@@ -98,6 +101,28 @@ public class MainActivity extends BaseActivity {
             }
             mCurrentFragment = fragment;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        parseClipContent();
+    }
+
+    //获取剪切板的内容
+    private void parseClipContent() {
+        ClipboardManager mClipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        String text = mClipboardManager.getText().toString();
+        if (text.contains("（") && text.contains("）")
+                && text.contains("【") && text.contains("】http")) {
+            String content = text.substring(text.indexOf("（") + 1, text.indexOf("）"));
+            String history = SharedPreferenceUtil.getString(this, CLIP_HISTORY);
+            if (!content.equals(history)) {
+                SharedPreferenceUtil.putString(this,CLIP_HISTORY,content);
+                SearchDialogActivity.start(this, content);
+            }
+        }
+
     }
 
     @Override

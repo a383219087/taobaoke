@@ -190,10 +190,14 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.DataStatisticsActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.StoreManagerHomePageActivity"/>
-        <activity android:name=".view.activity.AreaManagerHomepageActivity"/>
-        <activity android:name=".view.activity.MemberDetailActivity"/>
-        <activity android:name=".view.activity.AddAccountActivity"/>
+        <activity android:name=".view.activity.StoreManagerHomePageActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.AreaManagerHomepageActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.MemberDetailActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.AddAccountActivity"
+                  android:screenOrientation="portrait"/>
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
@@ -209,6 +213,9 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
+        <activity android:name=".view.activity.SearchDialogActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/DialogActivity"/>
 
 
         <service android:name=".view.service.GetMedalService"/>

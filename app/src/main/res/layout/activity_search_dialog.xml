@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/transparent"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="240dp">
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="210dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_white_with_corder"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_search_title"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="70dp"
+                android:layout_weight="1"
+                android:textColor="@color/textblack"
+                android:textSize="13sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_search_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/search_dialog_cancel_btn"
+                    android:textSize="15sp"
+                    android:textColor="@color/gray"
+                    android:text="取消"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:textColor="@color/white"
+                    android:text="立即搜索"
+                    android:id="@+id/btn_search_buy"
+                    android:background="@drawable/search_dialog_done_btn"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/search_dialog_icon"/>
+    </RelativeLayout>
+</LinearLayout>

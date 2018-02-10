@@ -114,7 +114,7 @@ public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
         return "0";
     }
 
-    private void addMemberSignView(String type) {
+    private void addMemberSignView(final String type) {
         mLlTip.removeAllViews();
         View memberSignView = LayoutInflater.from(StoreManagerHomePageActivity.this)
                 .inflate(R.layout.view_member_sign, null, false);
@@ -127,12 +127,24 @@ public class StoreManagerHomePageActivity extends AreaManagerHomepageActivity {
                     StoreManagerRegisterActivity.start(StoreManagerHomePageActivity.this, "0", getIsArea());
                 }
             });
-        } else if ("1".equals(type)) {
-            tvMemberSign.setText("金牌店长");
-        } else if ("2".equals(type)) {
-            tvMemberSign.setText("银牌店长");
-        } else if ("3".equals(type)) {
-            tvMemberSign.setText("铜牌店长");
+        } else {
+            memberSignView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(type.equals("1")){
+                        toast("您已经是金牌店长啦，无法再升级了");
+                        return;
+                    }
+                    StoreManagerRegisterActivity.start(StoreManagerHomePageActivity.this, "1", getIsArea(),type);
+                }
+            });
+            if ("1".equals(type)) {
+                tvMemberSign.setText("金牌店长");
+            } else if ("2".equals(type)) {
+                tvMemberSign.setText("银牌店长");
+            } else if ("3".equals(type)) {
+                tvMemberSign.setText("铜牌店长");
+            }
         }
 
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);

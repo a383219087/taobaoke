@@ -42,6 +42,7 @@ import io.reactivex.subjects.PublishSubject;
 public class StoreManagerRegisterFragment extends BaseFragment {
 
     public static final String KEY_IS_AREA = "is_area";
+    public static final String KEY_TYPE = "type";
     @BindView(R.id.rg_store_manager_type)
     RadioGroup mRgStoreManagerType;
     @BindView(R.id.edt_name)
@@ -77,11 +78,11 @@ public class StoreManagerRegisterFragment extends BaseFragment {
     private AgencyFee mAgencyFee;
     private boolean isSuccess;
 
-    public static StoreManagerRegisterFragment newInstance(boolean isArea) {
+    public static StoreManagerRegisterFragment newInstance(boolean isArea, String type) {
 
         Bundle args = new Bundle();
         args.putBoolean(KEY_IS_AREA, isArea);
-
+        args.putString(KEY_TYPE, type);
         StoreManagerRegisterFragment fragment = new StoreManagerRegisterFragment();
         fragment.setArguments(args);
         return fragment;
@@ -97,6 +98,7 @@ public class StoreManagerRegisterFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mIsArea = getArguments().getBoolean(KEY_IS_AREA);
         mCityPicker = new CityPicker(getActivity());
+        setStoreUp();
         mCityPicker.resultObservable()
                 .compose(this.<CityPicker.GetCityResult>bindToLifecycle())
                 .subscribe(new Consumer<CityPicker.GetCityResult>() {
@@ -120,6 +122,16 @@ public class StoreManagerRegisterFragment extends BaseFragment {
         }
         initEvent();
         getPrice();
+    }
+
+    private void setStoreUp() {
+        String type = getArguments().getString(KEY_TYPE);
+        if ("2".equals(type)) {
+            mRbSilver.setEnabled(false);
+            mRbCuprum.setEnabled(false);
+        } else if ("3".equals(type)) {
+            mRbCuprum.setEnabled(false);
+        }
     }
 
     private void initEvent() {
@@ -203,30 +215,30 @@ public class StoreManagerRegisterFragment extends BaseFragment {
                 break;
         }
         getApply(name, phone, remark, type)
-                .map(new Function<JsonCommon<AlipayRequest>, Pair<String,String>>() {
+                .map(new Function<JsonCommon<AlipayRequest>, Pair<String, String>>() {
                     @Override
-                    public Pair<String,String> apply(JsonCommon<AlipayRequest> alipayRequestJsonCommon) throws Exception {
+                    public Pair<String, String> apply(JsonCommon<AlipayRequest> alipayRequestJsonCommon) throws Exception {
                         if ("200".equals(alipayRequestJsonCommon.getCode())) {
                             PayTask alipay = new PayTask(getActivity());
                             Map<String, String> map = alipay.payV2(alipayRequestJsonCommon.getData().getAlipay(), true);
                             String resultStatus = map.get("resultStatus");
-                            if(resultStatus.equals("9000")){
-                                isSuccess =true;
-                                return Pair.create(resultStatus,"支付成功");
-                            }else{
-                                return Pair.create(resultStatus,map.get("memo"));
+                            if (resultStatus.equals("9000")) {
+                                isSuccess = true;
+                                return Pair.create(resultStatus, "支付成功");
+                            } else {
+                                return Pair.create(resultStatus, map.get("memo"));
                             }
                         } else {
-                            return Pair.create("-1",alipayRequestJsonCommon.getMessage());
+                            return Pair.create("-1", alipayRequestJsonCommon.getMessage());
                         }
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<Pair<String,String>>() {
+                .subscribe(new Consumer<Pair<String, String>>() {
                     @Override
-                    public void accept(Pair<String,String> result) throws Exception {
-                        if(result.first.equals("9000")){
+                    public void accept(Pair<String, String> result) throws Exception {
+                        if (result.first.equals("9000")) {
                             mDoneObservable.onNext(result.second);
                         }
                         toast(result.second);

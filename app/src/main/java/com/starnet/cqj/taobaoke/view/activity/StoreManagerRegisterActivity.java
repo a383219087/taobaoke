@@ -2,6 +2,7 @@ package com.starnet.cqj.taobaoke.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 
 import com.starnet.cqj.taobaoke.R;
 import com.starnet.cqj.taobaoke.model.ApplyStatus;
@@ -26,8 +27,10 @@ public class StoreManagerRegisterActivity extends BaseActivity {
 
     public static final String KEY_TYPE = "type";
     public static final String KEY_IS_AREA = "is_area";
+    public static final String KEY_UP_STORE_TYPE = "type";
     private boolean mIsArea;
     private Disposable mDisposable;
+    private String mType;
 
     @Override
     protected int getContentView() {
@@ -39,11 +42,16 @@ public class StoreManagerRegisterActivity extends BaseActivity {
         String type = getIntent().getStringExtra(KEY_TYPE);
         String isArea = getIntent().getStringExtra(KEY_IS_AREA);
         mIsArea = isArea.equals("1");
+        mType = getIntent().getStringExtra(KEY_UP_STORE_TYPE);
         if (mIsArea) {
             setTitleName("代理查询");
             getAreaApplyStatus();
         } else {
-            setTitleName(R.string.store_manager_register_title);
+            if(TextUtils.isEmpty(mType)) {
+                setTitleName(R.string.store_manager_register_title);
+            }else{
+                setTitleName("店长升级");
+            }
             if ("0".equals(type)) {
                 applyingFragment();
             } else {
@@ -87,7 +95,7 @@ public class StoreManagerRegisterActivity extends BaseActivity {
     }
 
     private void registerFragment() {
-        StoreManagerRegisterFragment registerFragment = StoreManagerRegisterFragment.newInstance(mIsArea);
+        StoreManagerRegisterFragment registerFragment = StoreManagerRegisterFragment.newInstance(mIsArea,mType);
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, registerFragment)
@@ -129,6 +137,14 @@ public class StoreManagerRegisterActivity extends BaseActivity {
         Intent starter = new Intent(context, StoreManagerRegisterActivity.class);
         starter.putExtra(KEY_TYPE, status);
         starter.putExtra(KEY_IS_AREA, isArea);
+        context.startActivity(starter);
+    }
+
+    public static void start(Context context, String status, String isArea,String upStoreType) {
+        Intent starter = new Intent(context, StoreManagerRegisterActivity.class);
+        starter.putExtra(KEY_TYPE, status);
+        starter.putExtra(KEY_IS_AREA, isArea);
+        starter.putExtra(KEY_UP_STORE_TYPE,upStoreType);
         context.startActivity(starter);
     }
 

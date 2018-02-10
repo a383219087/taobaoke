@@ -38,6 +38,7 @@ import io.reactivex.functions.Consumer;
 
 public class SearchActivity extends BaseActivity implements ISearchPresenter.IView {
     public static final String KEY_SEARCH_HISTORY = "search_history";
+    public static final String KEY_SEARCH_CONTENT = "search_content";
     @BindView(R.id.edt_search)
     EditText mEdtSearch;
     @BindView(R.id.rv_search_result)
@@ -72,7 +73,11 @@ public class SearchActivity extends BaseActivity implements ISearchPresenter.IVi
         mAdapter = new RecyclerBaseAdapter<>(R.layout.item_product, ProductHolder.class);
         mRvSearchResult.setAdapter(mAdapter);
         mRvSearchResult.addOnScrollListener(mHelper.getOnScrollListener());
-
+        String searchContent = getIntent().getStringExtra(KEY_SEARCH_CONTENT);
+        if (!TextUtils.isEmpty(searchContent)) {
+            mEdtSearch.setText(searchContent);
+            get();
+        }
     }
 
     @Override
@@ -202,6 +207,12 @@ public class SearchActivity extends BaseActivity implements ISearchPresenter.IVi
 
     public static void start(Context context) {
         Intent starter = new Intent(context, SearchActivity.class);
+        context.startActivity(starter);
+    }
+
+    public static void start(Context context,String content) {
+        Intent starter = new Intent(context, SearchActivity.class);
+        starter.putExtra(KEY_SEARCH_CONTENT,content);
         context.startActivity(starter);
     }
 }
